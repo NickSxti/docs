@@ -11,11 +11,24 @@
   "search": {
     "prompt": "Search Qonversion docs..."
   },
+  "appearance": {
+    "default": "system"
+  },
   "feedback": {
-    "thumbsRating": true
+    "thumbsRating": true,
+    "suggestEdit": true
   },
   "seo": {
     "indexing": "all"
+  },
+  "repository": {
+    "url": "https://github.com/nicksxti/docs",
+    "branch": "main"
+  },
+  "footerSocials": {
+    "github": "https://github.com/qonversion",
+    "x": "https://x.com/qonabornikov",
+    "linkedin": "https://www.linkedin.com/company/qonversion"
   },
   "api": {
     "playground": {
@@ -32,6 +45,10 @@
         "href": "https://qonversion.io"
       },
       {
+        "label": "Dashboard",
+        "href": "https://dash.qonversion.io"
+      },
+      {
         "label": "Status",
         "href": "https://status.qonversion.io"
       }
@@ -44,6 +61,7 @@
         "groups": [
           {
             "group": "Overview",
+            "icon": "house",
             "pages": [
               "docs/qonversion-platform",
               "docs/how-qonversion-works",
@@ -56,6 +74,7 @@
           },
           {
             "group": "Get Started",
+            "icon": "rocket",
             "pages": [
               "docs/quickstart",
               {
@@ -120,6 +139,7 @@
           },
           {
             "group": "Testing",
+            "icon": "flask-vial",
             "pages": [
               "docs/testing",
               "docs/troubleshooting",
@@ -129,6 +149,7 @@
           },
           {
             "group": "Features",
+            "icon": "star",
             "pages": [
               {
                 "group": "Customers",
@@ -208,6 +229,7 @@
           },
           {
             "group": "No-Code Builder",
+            "icon": "paintbrush",
             "pages": [
               "docs/no-codes",
               {
@@ -248,6 +270,7 @@
           },
           {
             "group": "Remote Config",
+            "icon": "sliders",
             "pages": [
               "docs/offerings",
               {
@@ -261,6 +284,7 @@
           },
           {
             "group": "Experiments",
+            "icon": "flask",
             "pages": [
               "docs/paywall-experiments",
               "docs/launch-experiments",
@@ -272,6 +296,7 @@
           },
           {
             "group": "Platform Resources",
+            "icon": "mobile",
             "pages": [
               {
                 "group": "Apple App Store",
@@ -309,6 +334,7 @@
           },
           {
             "group": "Store Credentials",
+            "icon": "key",
             "pages": [
               "docs/app-specific-shared-secret",
               "docs/service-account-key-android"
@@ -316,6 +342,7 @@
           },
           {
             "group": "SDK Migration Guides",
+            "icon": "arrow-up-right-dots",
             "pages": [
               "docs/jan-2026-migration-guide-cordova-7",
               "docs/jan-2026-migration-guide-capacitor-1",
@@ -372,6 +399,7 @@
           },
           {
             "group": "AI-Ready",
+            "icon": "microchip-ai",
             "pages": [
               "docs/llmtxt"
             ]
