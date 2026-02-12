@@ -1,0 +1,128 @@
+---
+title: "Offline SDK mode"
+description: "Qonversion SDKs work when there is no internet connection on the device, or Qonversion API is inaccessible for a short time. Please take a look at the details of this mode below."
+---
+
+## Products and Offerings
+
+The information about your Products and Offerings is crucial to show a paywall and create a purchase. Qonversion SDKs have a built-in cache that preprocesses this data and makes it available to help you offer top-notch UX for your customers.
+
+## Entitlements
+
+Entitlements are the central part of subscription-based access management. Once your app user purchases using our SDK, the SDK returns the currently available subscription status or the cached status during a lack of internet connection or issues with Qonversion API. **The cached subscription state is available for one month by default.**
+
+You can change the duration according to your needs while configuring Qonversion as follows:
+
+<CodeGroup>
+  ```bash bash
+  let config = Configuration(projectKey: "projectKey", launchMode: .subscriptionManagement)
+  config.setEntitlementsCacheLifetime(.year)
+  Qonversion.initWithConfig(config)
+  ```
+
+  ```bash bash
+  QONConfiguration *configuration = [[QONConfiguration alloc] initWithProjectKey:@"projectKey" launchMode:QONLaunchModeSubscriptionManagement];
+  [configuration setEntitlementsCacheLifetime:QONEntitlementsCacheLifetimeYear];
+  [Qonversion initWithConfig:configuration];
+  ```
+
+  ```bash bash
+  final QonversionConfig qonversionConfig = new QonversionConfig.Builder(
+          this,
+          "projectKey",
+          QLaunchMode.SubscriptionManagement
+  )
+          .setEntitlementsCacheLifetime(QEntitlementsCacheLifetime.Year)
+          .build();
+  Qonversion.initialize(qonversionConfig);
+  ```
+
+  ```bash bash
+  val qonversionConfig = QonversionConfig.Builder(
+      this,
+      "projectKey",
+      QLaunchMode.SubscriptionManagement
+  )
+      .setEntitlementsCacheLifetime(QEntitlementsCacheLifetime.Year)
+      .build()
+  Qonversion.initialize(qonversionConfig)
+  ```
+
+  ```bash bash
+  final config = new QonversionConfigBuilder(
+    	'projectKey',
+    	QLaunchMode.subscriptionManagement
+  )
+    	.setEntitlementsCacheLifetime(QEntitlementsCacheLifetime.year)
+    	.build();
+  Qonversion.initialize(config);
+  ```
+
+  ```bash bash
+  const config = new QonversionConfigBuilder(
+    'projectKey',
+    LaunchMode.SUBSCRIPTION_MANAGEMENT
+  )
+    .setEntitlementsCacheLifetime(EntitlementsCacheLifetime.YEAR)
+    .build();
+  Qonversion.initialize(config);
+  ```
+
+  ```bash bash
+  QonversionConfig config = new QonversionConfigBuilder(
+          "projectKey",
+          LaunchMode.SubscriptionManagement
+      )
+          .SetEntitlementsCacheLifetime(EntitlementsCacheLifetime.Year)
+          .Build();
+  Qonversion.Initialize(config);
+  ```
+
+  ```bash bash
+  const config = new Qonversion.ConfigBuilder(
+    'projectKey',
+    Qonversion.LaunchMode.SUBSCRIPTION_MANAGEMENT
+  )
+    .setEntitlementsCacheLifetime(Qonversion.EntitlementsCacheLifetime.YEAR)
+    .build();
+  Qonversion.initialize(config);
+  ```
+
+  ```bash bash
+  const config = new QonversionConfigBuilder(
+    'projectKey',
+    LaunchMode.SUBSCRIPTION_MANAGEMENT
+  )
+    .setEntitlementsCacheLifetime(EntitlementsCacheLifetime.YEAR)
+    .build();
+  Qonversion.initialize(config);
+  ```
+</CodeGroup>
+
+Let's have a look at the following hypothetical example:
+
+1. A user purchases a *weekly* subscription.
+2. He sets off on a long journey without internet access. But he wants to continue using your premium features offline.
+3. Qonversion SDK will be returning information that this particular user is eligible for premium access for one month if the user does not connect to the internet during this period.
+4. Eventually, when he opens the app with an internet connection available, Qonversion will update subscription statuses and show the current state accordingly.
+
+## Purchases
+
+Purchases are the third critical part of subscription management. We guarantee data completeness in this case as well. If, for some reason, our SDK cannot complete the purchase through Qonversion API in real-time, the SDK stores the data on the device and resends it at the next app launch. Your users will have a seamless experience: even if we cannot get a response from our servers (network or API outages), we will locally determine entitlements (based on previously loaded information) and provide correct user access. Then, we will also update the eligibility with the first successful request to our API.
+
+## SDK versions to use this feature
+
+| SDK          | Version |
+| ------------ | ------- |
+| IOS          | 2.20.0+ |
+| Android      | 3.3.0+  |
+| Unity        | 3.5.0+  |
+| Flutter      | 4.4.0+  |
+| React Native | 3.4.0+  |
+| Cordova      | 2.0.0+  |
+
+***
+
+[Subscription Status](/docs/check-permissions)
+
+[User Identifiers](/docs/user-identifiers)

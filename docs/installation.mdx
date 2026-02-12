@@ -1,0 +1,253 @@
+---
+title: "Installation"
+description: "Connect your app to Qonversion SDK"
+---
+
+Before you start building screens in the No-Code Builder, make sure your app is connected to the Qonversion SDK. The SDK handles screen **display**, **product data**, **analytics,** and **purchase tracking.**
+
+You only need to install it once — then you can display and update No-Code screens anytime, without additional code changes.
+
+<Info>
+  On Android the No-Codes SDK is distributed as a separate package, but it includes the Qonversion SDK as a dependency.
+
+  For iOS and other supported cross-platform frameworks, No-Codes SDK comes with the Qonversion SDK. If you already use Qonversion SDK, then simply upgrade it to the minimal required version, described below. If not, add the latest version to your project following this guide.
+</Info>
+
+***
+
+### Supported platforms
+
+| Platform         | SDK Version     |
+| ---------------- | --------------- |
+| iOS              | 6.0.0+          |
+| Android          | No-Codes 1.0.0+ |
+| React Native     | 10.0.0+         |
+| Flutter SDK      | 11.0.0+         |
+| Unity SDK        | 9.0.0+          |
+| Cordova Plugin   | 7.0.0+          |
+| Capacitor Plugin | 1.0.0+          |
+
+***
+
+# 1. Install SDKs
+
+## Install iOS SDK
+
+### iOS (Swift Package Manager)
+
+Open Xcode, go to **File → App packages...** and enter the package URL `https://github.com/qonversion-ios-sdk` to the search bar to import the package.
+
+### Or using CocoaPods:
+
+Add dependency to `Podfile`.
+
+<CodeGroup>
+  ```bash bash
+  pod 'Qonversion'
+  ```
+</CodeGroup>
+
+Run `pod install` in the project directory to download the dependency.
+
+<CodeGroup>
+  ```bash bash
+  pod install
+  ```
+</CodeGroup>
+
+## Install Android SDK
+
+Add Qonversion dependency to your package level `build.gradle` file.
+
+<CodeGroup>
+  ```bash bash
+  implementation 'io.qonversion:no-codes:1.+'
+  ```
+</CodeGroup>
+
+<Warning>
+  ### Migrating to the latest Qonversion SDK version
+
+  If you are utilizing our subscription management and analytics SDK (`io.qonversion.android.sdk:sdk`), please be aware that the No-Codes SDK includes the latest version of the Qonversion SDK. Therefore, you need to manage the migration from previous major versions to the latest ones. Our migration guides located in the relevant documentation section will assist you with this process.
+
+  After that you can remove the Qonversion SDK dependency from your `build.gradle` file and leave only the No-Codes SDK dependency there.
+</Warning>
+
+## Install React Native SDK
+
+Install via npm or Yarn:
+
+<CodeGroup>
+  ```bash bash
+  npm install @qonversion/react-native-sdk --save
+  ```
+</CodeGroup>
+
+<CodeGroup>
+  ```bash bash
+  yarn add @qonversion/react-native-sdk
+  ```
+</CodeGroup>
+
+After installation, make sure to install the iOS pods:
+
+<CodeGroup>
+  ```bash bash
+  cd ios && pod install
+  ```
+</CodeGroup>
+
+## Install Flutter SDK
+
+To use Qonversion in your Flutter app, add qonversion as a dependency in your pubspec.yaml file:
+
+<CodeGroup>
+  ```bash bash
+  dependencies:
+    qonversion_flutter: ^11.0.0
+  ```
+</CodeGroup>
+
+Then install the dependency
+
+<CodeGroup>
+  ```bash bash
+  flutter pub get
+  ```
+</CodeGroup>
+
+After installation, make sure to install the iOS pods:
+
+<CodeGroup>
+  ```bash bash
+  cd ios && pod install
+  ```
+</CodeGroup>
+
+## Install Unity SDK
+
+Follow the steps described [here](unity-sdk).
+
+## Install Cordova Plugin
+
+Install via npm or Yarn:
+
+<CodeGroup>
+  ```bash bash
+  npm install @qonversion/cordova-plugin --save
+  ```
+</CodeGroup>
+
+<CodeGroup>
+  ```bash bash
+  yarn add @qonversion/cordova-plugin
+  ```
+</CodeGroup>
+
+After installation, make sure to install the iOS pods:
+
+<CodeGroup>
+  ```bash bash
+  cd ios && pod install
+  ```
+</CodeGroup>
+
+## Install Capacitor Plugin
+
+Install via npm or Yarn:
+
+<CodeGroup>
+  ```bash bash
+  npm install @qonversion/capacitor-plugin --save
+  ```
+</CodeGroup>
+
+<CodeGroup>
+  ```bash bash
+  yarn add @qonversion/capacitor-plugin
+  ```
+</CodeGroup>
+
+After installation, make sure to install the iOS pods:
+
+<CodeGroup>
+  ```bash bash
+  cd ios && pod install
+  ```
+</CodeGroup>
+
+***
+
+# 2. Get Your Project Key
+
+1. Go to \*\*Qonversion Dashboard \*\*→ **Settings** → **General** Tab.
+2. Copy your **Project Key**.
+3. Use this key in your SDK initialization.
+
+This key connects your app to the correct project, enabling the Builder to display published screens and track metrics.
+
+***
+
+# 3. Initialize SDK
+
+<CodeGroup>
+  ```bash bash
+  // You can initialize using only project key
+  let configuration = NoCodesConfiguration(projectKey: "projectKey")
+  NoCodes.initialize(with: configuration)
+  ```
+
+  ```bash bash
+  // You can initialize using only project key
+  val noCodesConfig = NoCodesConfig.Builder(this, "projectKey").build()
+  NoCodes.initialize(noCodesConfig)
+  ```
+
+  ```bash bash
+  // You can initialize using only project key
+  final NoCodesConfig noCodesConfig = new NoCodesConfig.Builder(this, "projectKey").build();
+  NoCodes.initialize(noCodesConfig);
+  ```
+
+  ```bash bash
+  // You can initialize using only project key
+  const noCodesConfig = new NoCodesConfigBuilder('projectKey')
+    .build();
+  NoCodes.initialize(noCodesConfig);
+  ```
+
+  ```bash bash
+  final noCodesConfig = new NoCodesConfigBuilder(projectKey).build();
+  NoCodes.initialize(noCodesConfig);
+  ```
+
+  ```bash bash
+  // You can initialize using only project key
+  const noCodesConfig = new Qonversion.NoCodesConfigBuilder('projectKey')
+    .build();
+  Qonversion.NoCodes.initialize(noCodesConfig);
+  ```
+
+  ```bash bash
+  // You can initialize using only project key
+  const noCodesConfig = new NoCodesConfigBuilder('projectKey')
+    .build();
+  NoCodes.initialize(noCodesConfig);
+  ```
+</CodeGroup>
+
+***
+
+# What’s Next
+
+After the SDK is connected, you can:
+
+* [Create your first No-Code Screen](https://documentation.qonversion.io/update/docs/create-no-codes-screen#/)
+* [Display screens in your app](https://documentation.qonversion.io/update/docs/displaying-no-codes#/)
+* [Set up fallback screens](https://documentation.qonversion.io/update/docs/fallbacks#/)
+
+***
+
+[Qonversion No-Code Builder](/docs/no-codes)
+
+[Product Setup & Store Connection](/docs/product-setup-store-connection-1)

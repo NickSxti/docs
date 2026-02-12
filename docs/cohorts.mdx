@@ -1,0 +1,46 @@
+---
+title: "Cohorts"
+description: "Cohort analytics allows you to see a complete picture of how your subscriptions evolve over their lifetime"
+---
+
+In Qonversion, you can analyse your cohorts' progression using the following metrics: Revenue Retention and Subscriber Retention.
+
+## 1. Net Revenue Retention
+
+* The first two columns show the month and the initial revenue (net of refunds) from customers who installed the app in the corresponding month.
+
+* Column 0 shows the initial cohort's revenue (net of refunds), calculated as a sum of Subscription Started and Trial Converted Event.
+
+* The following columns (1, 2, 3, etc.) represent the number of **consecutive renewal periods** since the customers subscribed (months for a monthly subscription, weeks for a weekly subscription, etc.).
+
+* The last column shows the total revenue from the corresponding cohort of users.
+
+<Frame caption="Cohorts Dashboard - Revenue Retention">
+  <img src="/images/docs/b9c3b3d-Cohort_Documentation_Screeenshots_v2.pptx.png" />
+</Frame>
+
+## 2. Subscriber Retention and ARPPU
+
+* The first two columns show the month and the initial number of paying customers who installed the app in that month.
+
+* Column 0 shows the initial number of customers who converted to paying after the app was installed.
+
+* The columns (1, 2, 3, etc.) represent the number of **consecutive renewal periods** since the customers subscribed (months for a monthly subscription, weeks for a weekly subscription, etc.).
+
+* The last column shows the ARP(P)U - Average Revenue Per (Paying) User. It is calculated as the cohort's cumulative revenue divided by the number of subscribers at its start. In other words, ARPPU is the actual historic LTV of your subscribers.
+
+<Frame caption="Subscriber Retention and ARPU">
+  <img src="/images/docs/7a43724-Cohorts_-_Subscribers_and_ARPU.PNG" />
+</Frame>
+
+## 3. Include the Current Month Data
+
+You can choose to include or exclude the current month's data. If the current month switch is on, you will see the current month cohort data, and all previous cohorts will include the subscription renewals that happened during the current month. Since the current month is still ongoing, the last period's retention values typically will appear to be lower. That will also affect average retention numbers.
+
+![](/images/docs/5711135-Current_month_data.PNG "Current month data.PNG")
+
+***
+
+[Events](/docs/events-analytics)
+
+[Integrations](/docs/integrations-overview)

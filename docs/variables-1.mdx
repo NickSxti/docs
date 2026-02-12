@@ -1,0 +1,154 @@
+---
+title: "Variables"
+description: "Variables let you display dynamic product data — such as price, currency, and trial period — directly inside your paywall or onboarding screen."
+---
+
+They automatically pull real-time values from your connected stores (App Store, Google Play) through Qonversion, so your content always stays accurate without manual edits.
+
+<Frame caption="Using Text Variables">
+  <img src="/images/docs/1824b4a0cf4a73ab2586111dbcc74662ee62f4bff48052dca7b480cc0088464f-Adding_Price.gif" />
+</Frame>
+
+***
+
+# What You Can Do with Variables
+
+* **Display live pricing and offer details** inside Text, Heading, or Button components.
+* **Localize values automatically** based on the user’s store region.
+* **Avoid app updates** — when prices or durations change in the store, your screen updates instantly.
+
+***
+
+## Accessing Variables
+
+You can add a variable in any **Text**, **Heading**, or **Button** by typing or `{{`in the text field — or by opening the **Variables** picker from the right panel.
+
+**The picker shows:**
+
+* A searchable list of all available variables.
+* Example values for each variable, pulled from your connected products.
+* Product selection dropdown (to link variables with a specific product).
+
+<Info>
+  Tip: Make sure your products are connected in Qonversion before using variables — the picker displays only sample data
+</Info>
+
+<Frame caption="Variables Dropdown">
+  <img src="/images/docs/0a24811c2801af71ef7bdef88991cc8038de863e72385ea842e37864bfac86d4-Variables_menu.gif" />
+</Frame>
+
+***
+
+## How Variables Work
+
+Each variable is tied to a product identifier and a specific property (like price or duration). You can insert them using the `${{}}` syntax inside text or button labels:
+
+```
+{{products.product_id.price_per_month}} / month
+```
+
+When the screen loads, this will automatically show something like: **$8.99 / month**
+
+***
+
+## Example Use Cases
+
+| **Use Case**                | **Example Variable**                                                                  | **Rendered Output** |
+| --------------------------- | ------------------------------------------------------------------------------------- | ------------------- |
+| Show annual price per month | `{{products.annual.price_per_month}} / month`                                         | $8.99 / month       |
+| Show monthly price per year | `{{products.monthly.price_per_year}} / year`                                          | $49.99 / year       |
+| Show trial info             | `{{products.monthly.trial_period_unit_count}} {{products.monthly.trial_period_unit}}` | 7 days              |
+| Show currency               | `{{products.monthly.currency_symbol}}`                                                | $                   |
+| Show full price             | `{{products.monthly.price}}`                                                          | $14.99              |
+
+***
+
+## Variable Reference
+
+| **Variable**              | **Example Value** | **Description**                           |
+| ------------------------- | ----------------- | ----------------------------------------- |
+| `store_name`              | `annual`          | Internal product name.                    |
+| `price`                   | `$14.99`          | Formatted current product price.          |
+| `price_raw`               | `14.99`           | Numeric price without currency.           |
+| `price_per_day`           | `0.16`            | Price per day (calculated).               |
+| `price_per_week`          | `1.15`            | Price per week (calculated).              |
+| `price_per_month`         | `5.00`            | Price per month (calculated).             |
+| `price_per_year`          | `59.96`           | Price per year (calculated).              |
+| `currency_code`           | `USD`             | ISO currency code.                        |
+| `currency_symbol`         | `$`               | Currency symbol.                          |
+| `period_unit`             | `month`           | Product period (e.g., week, month, year). |
+| `period_unit_count`       | `3`               | Number of units in the billing period.    |
+| `period_iso`              | `P3M`             | ISO 8601 formatted period.                |
+| `trial_period_unit`       | `week`            | Trial period unit.                        |
+| `trial_period_unit_count` | `1`               | Trial duration count.                     |
+| `intro_price`             | `10.99`           | Introductory offer price.                 |
+| `intro_period_unit`       | `week`            | Unit for introductory period.             |
+| `intro_period_unit_count` | `1`               | Count of introductory units.              |
+
+***
+
+## More Usage Examples
+
+| Variable                                        | Weekly Example | Monthly Example | 2 Month Example | 3 Month Example | 6 Month Example | Annual Example | Lifetime Example |
+| ----------------------------------------------- | -------------- | --------------- | --------------- | --------------- | --------------- | -------------- | ---------------- |
+| products.product\_id.store\_name                | Premium        | Premium         | Premium         | Premium         | Premium         | Premium        | Premium          |
+| products.product\_id.price                      | $3.99          | $10.99          | $19.99          | $28.99          | $54.99          | $99.99         | $199.99          |
+| products.product\_id.price\_raw                 | 3.99           | 10.99           | 19.99           | 28.99           | 54.99           | 99.99          | 199.99           |
+| products.product\_id.price\_per\_day            | 0.57           | 0.37            | 0.33            | 0.32            | 0.30            | 0.27           | 199.99           |
+| products.product\_id.price\_per\_week           | 3.99           | 2.75            | 2.50            | 2.41            | 2.29            | 1.92           | 199.99           |
+| products.product\_id.price\_per\_month          | 15.96          | 10.99           | 9.99            | 9.66            | 9.17            | 8.33           | 199.99           |
+| products.product\_id.price\_per\_year           | 207.48         | 131.88          | 119.94          | 115.96          | 109.98          | 99.99          | 199.99           |
+| products.product\_id.currency\_symbol           | $              | $               | $               | $               | $               | $              | $                |
+| products.product\_id.currency\_code             | USD            | USD             | USD             | USD             | USD             | USD            | USD              |
+| products.product\_id.period\_unit               | week           | month           | month           | month           | month           | year           | *                |
+| products.product\_id.period\_unit\_count        | 1              | 1               | 2               | 3               | 6               | 1              | -                |
+| products.product\_id.periodly                   | weekly         | monthly         | 2 months        | 3 months        | 6 months        | annually       | lifetime         |
+| products.product\_id.period\_iso                | P1W            | P1M             | P2M             | P3M             | P6M             | P1Y            | *                |
+| products.product\_id.trial\_period\_unit        | day            | week            | week            | week            | month           | month          | -                |
+| products.product\_id.trial\_period\_unit\_count | 3              | 1               | 1               | 1               | 1               | 1              | *                |
+| products.product\_id.intro\_price               | $2.99          | $8.99           | $17.99          | $25.99          | $49.99          | $89.99         | -                |
+| products.product\_id.intro\_period\_unit        | day            | week            | week            | week            | month           | month          | *                |
+| products.product\_id.intro\_period\_unit\_count | 3              | 1               | 1               | 1               | 1               | 1              | -                |
+
+***
+
+# Using Variables with Products
+
+When adding variables, you can select which product context they apply to.
+
+The dropdown in the variable picker lets you choose between:
+
+* **Selected** – the product currently selected by user interaction (e.g., via “Select Product” action).
+* **Specific product ID** – manually assign variables to monthly, annual, weekly, or custom product identifiers.
+
+***
+
+### Best Practices
+
+* Always **[link products before using variables](https://documentation.qonversion.io/update/docs/product-setup-store-connection-1#/)** — otherwise, the picker won’t display sample data.
+* Use `{{products.selected.price}}` for global CTAs (e.g., “Continue for $4.99/month”).
+* Combine trial and price variables to create clear, conversion-oriented text.
+* Keep variables inside **Text** or **Heading** components for best layout control
+
+***
+
+### Example: Dynamic Pricing Message
+
+```
+Get {{products.selected.trial_period_unit_count}}-day free trial,
+then {{products.selected.price_per_month}}{{products.selected.currency_symbol}}/month.
+```
+
+Output example:
+
+> “Get 7-day free trial, then $4.99/month.”
+
+<Frame caption="Complex Variable Use Case">
+  <img src="/images/docs/9eadcea296cdef42d3ef0d7a669c82bdf8359a4c9366221d774a1f4f412a672f-Complex_Variables.gif" />
+</Frame>
+
+***
+
+[Properties Reference](/docs/properties-reference)
+
+[Localization](/docs/ai-localization)

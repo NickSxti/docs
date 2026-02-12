@@ -1,0 +1,45 @@
+---
+title: "iOS App Extensions"
+description: "Learn how to enable data sharing in Qonversion for Apple App Extensions."
+---
+
+[App Extensions](https://developer.apple.com/app-extensions/) in Apple operating systems are important features that let you extend custom functionality and content beyond your app and make it available to users while they’re interacting with other apps or the system. Qonversion also supports this feature.
+
+[Understand How an App Extension Works](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionOverview.html#//apple_ref/doc/uid/TP40014214-CH2-SW2)
+
+# Configuring the App
+
+First, you need to enable data sharing between your app and shared extensions.
+
+1. [Enable app groups](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionScenarios.html#//apple_ref/doc/uid/TP40014214-CH21-SW1) for the containing app and extension via Xcode or the Developer portal. Choose your App target in Xcode. Select `Signing & Capabilities`, click `+ Capability` and select `App Groups`.
+2. [Register the app group](https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html#//apple_ref/doc/uid/TP40011195-CH4-SW19) in the portal. In Xcode, add the new App Group ID.
+3. Choose that App Group ID for the extension and containing app.
+4. Pass user defaults instance created with a suite name to Qonversion via Qonversion.Configuration `setCustomUserDefaults()` function.
+
+<CodeGroup>
+  ```bash bash
+  let config = Qonversion.Configuration(projectKey: "project_key", launchMode: .subscriptionManagement)
+  ...
+  // any other configurations
+  ...
+  config.setCustomUserDefaults(.init(suiteName: "app_groups_id_from_previous_step"))
+  Qonversion.initWithConfig(config)
+  ```
+
+  ```bash bash
+  QONConfiguration *configuration = [[QONConfiguration alloc] initWithProjectKey:@"project_key" launchMode:QONLaunchModeSubscriptionManagement];
+  ...
+  // any other configurations
+  ...
+  [configuration setCustomUserDefaults:[[NSUserDefaults alloc] initWithSuiteName:@"app_groups_id_from_previous_step"]];
+  [Qonversion initWithConfig:configuration];
+  ```
+</CodeGroup>
+
+After those steps, all content stored in the user defaults will be shared between the shared extension and containing App.
+
+***
+
+[macOS / Catalyst](/docs/macos-catalyst)
+
+[Kids Mode](/docs/kids-mode-sdk)

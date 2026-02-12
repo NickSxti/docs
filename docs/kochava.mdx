@@ -1,0 +1,103 @@
+---
+title: "Kochava"
+description: "Send iOS and Android in-app subscription events to Kochava with Qonversion."
+---
+
+Qonversion sends subscription data for iOS and Android apps to your Kochava account to help you understand your marketing performance. Measure what drives your revenue by tracking trial-to-paying-user conversion, subscription renewals, refunds, and other useful subscription events.
+
+## 1. Set up the SDKs
+
+1. You need to have Kochava SDK integrated into your app before starting with this integration. If you do not have Kochava integration yet, please use [this documentation](https://www.kochava.com/download-the-sdk/).
+
+2. Set Qonversion SDKs following [installing the SDKs](doc:install-sdk) guides.
+
+3. Provide to Qonversion Kochava deviceId through user-properties:
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().setUserProperty(.kochavaDeviceID, value: KochavaTracker.shared.deviceIdString)
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] setUserProperty:QONUserPropertyKeyKochavaDeviceID, value: [KochavaTracker.shared deviceIdString]];
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(QUserPropertyKey.KochavaDeviceId, Tracker.getDeviceId());
+  ```
+
+  ```bash bash
+  Qonversion.shared.setUserProperty(QUserPropertyKey.KochavaDeviceId, Tracker.getDeviceId())
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(QUserPropertyKey.kochavaDeviceId, 'your kochava device id');
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(UserPropertyKey.KOCHAVA_DEVICE_ID, 'your kochava device id');
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().SetUserProperty(UserPropertyKey.KochavaDeviceId, "your kochava device id");
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(Qonversion.UserPropertyKey.KOCHAVA_DEVICE_ID, 'your kochava device id');
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(UserPropertyKey.KOCHAVA_DEVICE_ID, 'your kochava device id');
+  ```
+</CodeGroup>
+
+**→[Read more about User Properties here](doc:user-properties)**
+
+## 2. Configure the Kochava Integration
+
+1. Log in to Kochava. Create and copy your API Key, also copy your Secret Key. Follow [this documentation](https://support.kochava.com/analytics-reports-api/create-and-manage-application-programming-interface-key/) to find how to create and manage API Key.
+
+2. Navigate to the Integrations section in your Qonversion project, select [Kochava](https://dash.qonversion.io/app/integration/kochava), and provide the **API Key**, **Secret Key**, and **Kochava App GUID**, and Save.
+
+<Check>
+  ### Done
+
+  Now Qonversion will start sending in-app purchases and subscriptions data to your Kochava account.
+</Check>
+
+## Event Payload
+
+In case you need details about data sent to Kochava, follow the example below:
+
+<CodeGroup>
+  ```bash bash
+  {
+     "action":"event",
+     "kochava_app_id":"",
+     "kochava_device_id":"",
+     "data":{
+        "event_name":"subscription_renewed",
+        "device_ver":"iPhone 8",
+        "usertime":1686178982,
+        "origination_ip":"000.000.00.0",
+        "device_ua":"",
+        "device_ids":{
+           "idfa":""
+        },
+        "event_data":{
+           "id":000000000,
+           "name":"product_id",
+           "price":21.2415,
+           "currency":"USD"
+        },
+        "app_version":"2.0"
+     }
+  }
+  ```
+</CodeGroup>
+
+***
+
+[Google Cloud Storage](/docs/google-cloud-storage)
+
+[Mailchimp](/docs/mailchimp)

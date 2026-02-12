@@ -1,0 +1,95 @@
+---
+title: "Custom Proxy Server"
+description: "Qonversion SDKs support Proxy URL settings. For example, you can use this feature for the following tasks"
+---
+
+1. Log SDK requests on your server
+2. Proxy SDK requests in case there are some network restrictions
+
+To leverage this feature, set your Proxy URL using the `setProxyURL` function. Once you implement it, all requests from our mobile SDK will be sent to your API, which should proxy that requests to our API and back.
+
+<CodeGroup>
+  ```bash bash
+  let config = Qonversion.Configuration(projectKey: "projectKey", launchMode: select_needed_launch_mode)
+  config.setProxyURL("your_server_proxy_URL")
+  Qonversion.initWithConfig(config)
+  ```
+
+  ```bash bash
+  QONConfiguration *configuration = [[QONConfiguration alloc] initWithProjectKey:@"projectKey" launchMode:select_needed_launch_mode];
+  [config setProxyURL:@"your_server_proxy_URL"];
+  [Qonversion initWithConfig:configuration];
+  ```
+
+  ```bash bash
+  final QonversionConfig qonversionConfig = new QonversionConfig.Builder(
+          this,
+          "projectKey",
+          select_needed_launch_mode
+  )
+          .setProxyURL("your_server_proxy_URL")
+          .build();
+  Qonversion.initialize(qonversionConfig);
+  ```
+
+  ```bash bash
+  val qonversionConfig = QonversionConfig.Builder(
+      this,
+      "projectKey",
+      select_needed_launch_mode
+  )
+      .setProxyURL("your_server_proxy_URL")
+      .build()
+  ```
+
+  ```bash bash
+  final config = new QonversionConfigBuilder(
+    'projectKey',
+    select_needed_launch_mode
+  ).setProxyURL('your_server_proxy_URL'
+   .build();
+  Qonversion.initialize(config);
+  ```
+
+  ```bash bash
+  const config = new QonversionConfigBuilder(
+    'projectKey',
+    select_needed_launch_mode
+  ).setProxyURL('your_server_proxy_URL')
+   .build();
+  Qonversion.initialize(config);
+  ```
+
+  ```bash bash
+  QonversionConfig config = new QonversionConfigBuilder(
+      "projectKey",
+      select_needed_launch_mode
+  ).SetProxyURL("your_server_proxy_URL")
+   .Build();
+  Qonversion.Initialize(config);
+  ```
+
+  ```bash bash
+  const config = new Qonversion.ConfigBuilder(
+    'projectKey',
+    select_needed_launch_mode
+  ).setProxyURL('your_server_proxy_URL')
+   .build();
+  Qonversion.initialize(config);
+  ```
+
+  ```bash bash
+  const config = new QonversionConfigBuilder(
+    'projectKey',
+    select_needed_launch_mode
+  ).setProxyURL('your_server_proxy_URL')
+   .build();
+  Qonversion.initialize(config);
+  ```
+</CodeGroup>
+
+***
+
+[Scheduled Reports](/docs/scheduled-reports)
+
+[Qonversion No-Code Builder](/docs/no-codes)

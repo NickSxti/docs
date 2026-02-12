@@ -1,0 +1,71 @@
+---
+title: "Refund Keeper"
+description: "Stop losing money on refunds with Qonversion Refund Keeper. Automate data sharing with Apple to reduce unjustified refunds and protect your earnings."
+---
+
+**Refund Keeper** helps Qonversion users reduce revenue loss from Apple’s App Store refunds by automating the refund process. It ensures Apple receives the necessary app usage data to make fair refund decisions — helping developers retain more revenue while staying compliant with Apple’s policies.
+
+[YouTube embed](//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fwww.youtube.com%2Fembed%2FakfsgcMj46s%3Ffeature%3Doembed\&display_name=YouTube\&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DakfsgcMj46s\&image=https%3A%2F%2Fi.ytimg.com%2Fvi%2FakfsgcMj46s%2Fhqdefault.jpg\&type=text%2Fhtml\&schema=youtube)
+
+## What is Refund Keeper?
+
+When a user requests a refund for an in-app purchase, Apple reviews their app usage data to determine whether to approve or deny it. If the subscription was actively used, Apple may still approve the refund unless the developer provides additional data to justify rejecting it.
+
+**Refund Keeper** automates this process, giving Apple a complete picture of how the subscription was used—reducing unjustified refunds and protecting your earnings.
+
+## How it works
+
+1. A user requests a refund through the App Store.
+2. Apple sends a notification asking for transaction and usage details.
+3. If no response is provided, Apple will likely approve the refund by default.
+4. **Refund Keeper** automatically processes these requests and submits the necessary app usage data to Apple.
+5. With better insights, **Apple is less likely to approve unjustified refunds**, keeping more revenue in your hands.
+
+![](/images/docs/5977482e261f93aa0931aca2e45f1a51346bd2ea05248bead44f9e468abe1c89--.png)
+
+***
+
+## Requirements to Use Refund Keeper
+
+Before enabling Refund Keeper, make sure you’ve completed these steps:
+
+1. **You implemented Qonversion in [Analytics](https://documentation.qonversion.io/docs/analytics-mode#/) or [Subscription Management](https://documentation.qonversion.io/docs/subscription-management-mode#/) Mode** We can only send required app usage data linked to transactions to Apple if we are aware of these transactions.
+
+2. **Qonversion Growth Plan** Refund Keeper is available exclusively on the **Qonversion Growth Plan**. [Upgrade](https://dash.qonversion.io/app/billing) If you haven’t already accessed this feature
+
+3. **Enable Apple Server Notifications V2** Apple send relatable to Refund Keeper events only with second version of notifications. You can switch to v2 in App Store Connect. Read more: [Apple Server-to-Server Notifications (S2S)](https://documentation.qonversion.io/docs/server-to-server-notifications#/)
+
+4. **Update Your Privacy Policy in App Store Connect** Your Privacy Policy must disclose the collection and sharing of app usage data to comply with Apple's guidelines and ensure transparency for users.
+
+5. **Update Your EULA** To comply with Apple's policies, your app's End User License Agreement (EULA) must include explicit consent for sharing end users' personal data with third parties, including Apple. If you've already integrated the Qonversion SDK, this clause may already be included. Learn more: Learn more:
+
+   * [Apple Developer Guide: Send Consumption Information](https://developer.apple.com/documentation/AppStoreServerAPI/Send-Consumption-Information)
+   * [Qonversion Privacy Policy](https://qonversion.io/privacy-policy)
+
+## Refund Preferences
+
+*Apple allows developers to set a refund preference for each request, influencing the decision while Apple retains the final authority.*
+
+| Option             | Description                                                            |
+| ------------------ | ---------------------------------------------------------------------- |
+| **Always Decline** | Maximizes revenue protection by contesting most refunds.               |
+| **Always Refund**  | Automatically approves all refund requests.                            |
+| **No Preference**  | A balanced approach that lets Apple decide based on the provided data. |
+
+To adjust this setting, navigate to **Refund Preferences** in the Qonversion Dashboard and select your preferred option.
+
+## Limitations
+
+🚫 **Apple’s App Store Only** – Refund Keeper applies only to **Apple refunds**. Google Play does not support developer-provided usage data for refund evaluations.
+
+⛔ **Not for Consumable Purchases** – Refund Keeper only works for **subscriptions and non-consumable** in-app purchases. Consumable products (e.g., in-game currency) are not eligible.
+
+### Start Protecting Your Revenue Today!
+
+With **Refund Keeper**, you can **reduce refund-related revenue loss and automate refund management with zero extra effort**.
+
+***
+
+[Webhooks](/docs/webhooks)
+
+[Enable Refund Keeper](/docs/enable-refund-keeper)

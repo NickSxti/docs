@@ -1,0 +1,58 @@
+---
+title: "Google Developer Notifications"
+description: "Enabling Google Real-Time Developer Notifications"
+---
+
+Enabling [Google Real-Time Developer Notifications](https://developer.android.com/google/play/billing/rtdn-reference) speeds up events delivery time for integrations and webhooks and makes data in Qonversion analytics more real-time.
+
+## Google Developer Notifications Setup
+
+<Warning>
+  ### Ensure you have enabled "Google Cloud Pub/Sub Admin" role for your project!
+</Warning>
+
+1. [Enable access to API here](https://console.cloud.google.com/flows/enableapi?apiid=pubsub).
+
+   ![](/images/docs/d4fdc5f-PubSub_API.png)
+
+2. Navigate to your "Settings" tab at your project, then click the "Stores" button.
+
+3. Scroll down to the **Google Play Console** configuration section and click **Connect to Google** button under the Google Developer Notification settings.
+
+![](/images/docs/6198781-google-server-notifications.png "google-server-notifications.png")
+
+4. You need to copy generated **Google Developer Notifications Topic ID**, as shown on the screenshot below.
+
+![](/images/docs/6c19162-google-rtdn-qonversoin.jpg "google-rtdn-qonversoin.jpg")
+
+5. Open the **Google Play Console** for your application, then navigate to **Monetization setup**.
+6. In the **Real-time developer notifications** section:
+
+* check the **Enable real-time notifications** toggle,
+* insert your topic ID,
+* choose the correct **Notification content** for your app (with in-app products if you use them),
+* click on **Save changes**,
+* click on the **Send Test Notification** button.
+
+![](/images/docs/3738f37-google-real-time-developer-play-console.jpg "google-real-time-developer-play-console.jpg")
+
+<Warning>
+  ### Wait 24 hours before updating your existing key in Qonversion
+
+  It takes up to 24 hours for your [Google service credentials](https://documentation.qonversion.io/docs/service-account-key-android) to work correctly. Make sure to wait for at least 24 hours after you have created the credentials before connecting to Google Real-Time Developer Notifications.
+</Warning>
+
+## Troubleshooting
+
+### Could not connect Qonversion to Google
+
+1. Ensure the provided service access key has Pub/Sub Admin role. Create a new service account key with Pub/Sub Admin role as described [here](https://documentation.qonversion.io/docs/service-account-key-android#5-configure-your-service-account)
+2. Wait 24 hours
+3. Back up your existing key from Qonversion, then update the service key
+4. Try again connecting Google to Qonversion
+
+***
+
+[Apple Server-to-Server Notifications (S2S)](/docs/server-to-server-notifications)
+
+[Migrating In-App Subscriptions](/docs/migrating-subscriptions)

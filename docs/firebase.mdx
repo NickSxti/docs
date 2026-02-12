@@ -1,0 +1,137 @@
+---
+title: "Firebase"
+description: "Send in-app subscription data to Firebase"
+---
+
+Qonversion can send [revenue events](https://documentation.qonversion.io/docs/integrations-overview#tracked-events), including purchases, trial conversions, subscription renewals, and even refunds, to your Firebase account. This allows you to match your users' behaviour with their payment history in Firebase and empower your product decisions.
+
+## 1. Setup the SDKs
+
+1. Make sure you have Firebase SDK installed. Check the official Firebase SDK documentation [here](https://firebase.google.com/docs/analytics/get-started)
+2. Set Qonversion SDK following [Installing the SDKs](doc:install-sdk) guides.
+3. Send *firebaseAppInstanceId* to Qonversion via [User Properties](doc:user-properties)
+
+<CodeGroup>
+  ```bash bash
+  if let appInstanceID = Analytics.appInstanceID() {
+      Qonversion.shared().setUserProperty(.firebaseAppInstanceId, value: appInstanceID)
+  }
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] setUserProperty:QONUserPropertyKeyFirebaseAppInstanceId value:[FIRAnalytics appInstanceID]];
+  ```
+
+  ```bash bash
+  FirebaseAnalytics.getInstance(context).getAppInstanceId().addOnCompleteListener(task -> {
+      final String appInstanceId = task.getResult();
+      if (appInstanceId != null) {
+        Qonversion.getSharedInstance().setUserProperty(QUserPropertyKey.FirebaseAppInstanceId, appInstanceId);
+      }
+  });
+  ```
+
+  ```bash bash
+  FirebaseAnalytics.getInstance(requireContext()).appInstanceId.addOnCompleteListener { task ->
+      task.result?.let { appInstanceId ->
+          Qonversion.shared.setUserProperty(QUserPropertyKey.FirebaseAppInstanceId, appInstanceId)
+      }
+  }
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(QUserPropertyKey.firebaseAppInstanceId, appInstanceId);
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(UserPropertyKey.FIREBASE_APP_INSTANCE_ID, appInstanceId);
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().SetUserProperty(UserPropertyKey.FirebaseAppInstanceId, appInstanceId);
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(Qonversion.UserPropertyKey.FIREBASE_APP_INSTANCE_ID, appInstanceId);
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(UserPropertyKey.FIREBASE_APP_INSTANCE_ID, appInstanceId);
+  ```
+</CodeGroup>
+
+<Warning>
+  Measurement `app_instance_id` is expected to be a 32-digit hexadecimal number.
+
+  Example of `app_instance_id `B18FE2FF75795C219BCD30B58377C5ED
+</Warning>
+
+## 2. Configure the Firebase Integration
+
+1. Copy your Firebase App ID and Measurement Protocol API secret from the [Google Analytics Console](https://analytics.google.com/analytics): *Admin → Data Streams → Select existing or create a new stream for your App*
+
+<Frame caption="App data stream details page">
+  <img src="/images/docs/5b369fb-Screenshot_2022-09-02_at_11.52.20.png" />
+</Frame>
+
+2. Navigate to the *Tools → Integrations* section in your [Qonversion account](https://dash.qonversion.io/)
+3. Choose your platform (IOS or Android) and click the *Add new +* button and select Firebase
+4. Provide the API Secret and App ID copied in the first step to the corresponding fields
+
+<Frame caption="Qonversion Firebase integration setting screen">
+  <img src="/images/docs/588245c-Firebase_integration.png" />
+</Frame>
+
+## 3. Pay attention to event names
+
+Event names:
+
+* Must be 40 characters or fewer
+* May only contain alpha-numeric characters and underscores
+* Must start with an alphabetic character.
+
+Names
+
+* Use [Google default event names](https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events#purchase) for revenue metrics to be computed accurately. Examples: *purchase* and *refund*.
+* Avoid using [Google reserved event names](https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference?client_type=firebase#reserved_names): *in\_app\_purchase*, *notification\_receive*, *user\_engagement*, etc.
+* Other event names can be customised.
+
+<Check>
+  ### Done
+
+  Qonversion will send In-App purchases and subscription events to your Firebase account. You can make changes to event names and other setting on the Firebase integration settings page in Qonversion.
+</Check>
+
+## Event Payload
+
+In case you need details about data sent to Firebase, follow the example below:
+
+<CodeGroup>
+  ```bash bash
+  {
+     "app_instance_id":"",
+     "user_id":"QON_...",
+     "events":[
+        {
+           "name":"event_name",
+           "params":{
+              "transaction_id":"",
+              "items":[
+                 {
+                    "item_id":"product_id"
+                 }
+              ],
+              "value":7.7,
+              "currency":"CHF"
+           }
+        }
+     ]
+  }
+  ```
+</CodeGroup>
+
+***
+
+[Facebook Ads](/docs/facebook)
+
+[Google Ads](/docs/google-ads)

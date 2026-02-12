@@ -1,0 +1,60 @@
+---
+title: "Slack"
+description: "Send subscription events to your Slack workspace"
+---
+
+You can send all valuable subscription and in-app purchase events to your Slack workspace. To enable this integration you need to create an app in Slack.
+
+## 1. Create and Set Up Your Slack App
+
+Please refer to the detailed documentation on creating a Slack App [here](https://slack.com/intl/en-ru/help/articles/115005265063-Incoming-webhooks-for-Slack).
+
+1. Create a new Slack app in the workspace where you want to post messages.
+2. From the Features page in Slack, toggle Activate Incoming Webhooks on.
+3. Click Add New Webhook to Workspace.
+4. Pick a channel that the app will post to, then click Authorize.
+5. Copy the created webhook URL
+
+## 2. Configure the Slack Integration
+
+1. Navigate to the Integrations section in your Qonversion project and select Slack.
+2. Pass the URL to the Webhook URL field.
+3. Choose the events to send and edit the event names if needed.
+
+## Event Payload
+
+In case you need details about data sent to Slack, follow the example below:
+
+<CodeGroup>
+  ```bash bash
+  {
+     "channel":"", 
+     "username":"",
+     "attachments":[
+        {
+           "fallback":"Subscription Renewed",
+           "author_name":"Subscription Renewed",
+           "color":"",
+           "title":"",
+           "title_link":"",
+           "footer":"",
+           "footer_icon":"",
+           "ts":1686432178,
+           "fields":[
+              {
+                 "title":"",
+                 "value":"",
+                 "short":false
+              }
+           ]
+        }
+     ]
+  }
+  ```
+</CodeGroup>
+
+***
+
+[Singular](/docs/singular)
+
+[Tenjin](/docs/tenjin)

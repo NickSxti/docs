@@ -1,0 +1,71 @@
+---
+title: "Customer Details"
+description: "This tab contains a wealth of information about your customers and their interactions with your app or subscription business, such as the total amount spent, subscription events, status, and other attributes."
+---
+
+<Frame caption="Customer Details">
+  <img src="/images/docs/42cf3c9-screencapture-dash-qonversion-io-customers-details-QON-12f1a4671cc5488fb3b93f4fd3322e6a-2024-05-02-15_10_06.png" />
+</Frame>
+
+### Subscription widget
+
+The Subscription widget presents information about the user's last tracked subscription.
+
+| Field Name          | Description                                                                                                                                         |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Status              | The subscription status (Trial, Trial Cancelled, Trial Billing Retry, Active, Subscription Cancelled, Subscription Billing Retry, No Subscription). |
+| Started             | The date the subscription was started.                                                                                                              |
+| Last Payment        | The date the last payment for this subscription was tracked.                                                                                        |
+| Subscription period | The subscription period (Weekly, Monthly, Yearly, etc.).                                                                                            |
+| Price               | Subscription price in USD and original currency.                                                                                                    |
+| Renewal date        | The date when the subscription is expected to be renewed.                                                                                           |
+| Total               | The total sum of payments made for the subscription and the number of payments.                                                                     |
+| Store               | The name of the store using which the subscription was made. AppStore, Google Play, or Stripe.                                                      |
+
+### Overview
+
+The Overview widget helps you quickly look at your customers' main attributes.
+
+| Field Name        | Description                                                                                                         |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Created At        | The date the user was recognized by Qonversion and created. In other words, the first app launch date.              |
+| Sales             | The total sum of payments made by the user after deducting refunds. Consists of subscription and one-time payments. |
+| Payment Count     | The total number of payments made by the user. Consists of subscription and one-time payments.                      |
+| Last Payment Date | The date the last payment from the user was tracked.                                                                |
+
+### Entitlements
+
+The Entitlements widget displays entitlements granted to the user, both active and expired.
+
+| Field Name         | Description                                                                                                                                                                                                                                                      |
+| ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Entitlement name   | The name of granted entitlement that previously was configured through [our dashboard](https://documentation.qonversion.io/docs/entitlements) for the [Subscription Management SDK mode](https://documentation.qonversion.io/docs/subscription-management-mode). |
+| Source             | The source through which the entitlement was granted (App Store, Google Play, Stripe, Manual).                                                                                                                                                                   |
+| Entitlement period | The period during which the entitlement was active.                                                                                                                                                                                                              |
+
+### Customer History
+
+The timeline with the customer's transaction events. Here you can find event names that [Qonversion tracks](https://documentation.qonversion.io/docs/integrations-overview#tracked-events)
+
+### User Details
+
+| Field Name             | Description                                                                                                                                                                                                                                                            |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Qonversion ID          | Unique user ID assigned by Qonversion.                                                                                                                                                                                                                                 |
+| Device ID              | The [identifierForVendor](https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor) or [Settings Secure Android ID](https://developer.android.com/reference/android/provider/Settings.Secure#ANDROID_ID), depending on the user's platform |
+| Identity ID            | Cross-device & cross-platform user identification you can set up by following [this guide](https://documentation.qonversion.io/docs/user-identifiers#3-user-identity).                                                                                                 |
+| Country                | User country collected by Qonversion SDKs.                                                                                                                                                                                                                             |
+| OS                     | The last OS name & version tracked by Qonversion SDKs.                                                                                                                                                                                                                 |
+| Model                  | Device model collected by Qonversion SDKs.                                                                                                                                                                                                                             |
+| App version            | The last app version tracked.                                                                                                                                                                                                                                          |
+| SDK version            | The last Qonversion SDK version tracked.                                                                                                                                                                                                                               |
+| Created At             | The date the user was recognized by Qonversion and created. In other words, the first app launch date.                                                                                                                                                                 |
+| First Transaction Date | The date the first user event was tracked.                                                                                                                                                                                                                             |
+| First Payment Date     | The date the first event with revenue was tracked.                                                                                                                                                                                                                     |
+| Last Payment Date      | The date the last event with revenue was tracked.                                                                                                                                                                                                                      |
+
+***
+
+[Edit Entitlements](/docs/edit-entitlements)
+
+[Apple Ads](/docs/apple-search-ads-analytics)

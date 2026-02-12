@@ -1,0 +1,172 @@
+---
+title: "Subscription Management Mode"
+description: "This guide is for implementing subscription-based access management with Qonversion (Subscription Management mode)."
+---
+
+The Subscription Management mode allows you to implement a complete cycle of in-app purchases management: getting offers, making (or restoring) purchases, and handling entitlements.
+
+If you want only to get a single source of truth for revenue analytics and leverage [real-time purchase events](https://documentation.qonversion.io/docs/integrations-overview#tracked-events) in integrations, please refer to the [Analytics Mode guide](https://documentation.qonversion.io/docs/analytics-mode).
+
+## 1. Configure Products & Entitlements
+
+To successfully run subscription-based entitlement management, you need to connect stores' products to Qonversion:
+
+1. Create and configure in-app products on the [App Store Connect](https://qonversion.io/blog/configure-iap-app-store-connect/) and/or [Google Play Console](https://documentation.qonversion.io/docs/android-in-app-products) sides
+
+   * Please note that your *App Store Connect* products must be in either *Ready to submit* or *Ready for sale* statuses. Otherwise, the [*Product not found error*](https://documentation.qonversion.io/docs/troubleshooting#product-not-found-error) may occur during Qonversion SDK integration.
+   * Do not forget to activate your products for the Google Play console. Otherwise, the [*SkuDetails error*](https://documentation.qonversion.io/docs/troubleshooting#skudetails-error) may occur during Qonversion SDK integration.
+
+2. [Create entitlement](https://dash.qonversion.io/entitlements) which should be granted once in-app product is purchased. Learn more about Qonversion entitlements [here](https://documentation.qonversion.io/docs/entitlements).
+
+3. [Create product-linker](https://dash.qonversion.io/entitlements/products) in Qonversion and link it to the previously created entitlement. Learn more about Qonversion products [here](https://documentation.qonversion.io/docs/create-products).
+
+## 2. Configure Offerings
+
+Based on your business logic, an offering is a group of products you can offer to a user on a given paywall. For example, you can offer one set of products on a paywall immediately after onboarding and another with discounts later if a user has not converted.
+
+Qonversion offerings are not required to use Qonversion's Subscription Management Mode, but they allow you to change products offered to your users without app release.
+
+Learn more about [Qonversion offerings here](https://dash.readme.com/project/qonversion/v3.1/docs/offering).
+
+## 3. Launch SDK
+
+Initialize the SDK:
+
+<CodeGroup>
+  ```bash bash
+  import Qonversion
+
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+      let config = Qonversion.Configuration(projectKey: "projectKey", launchMode: .subscriptionManagement)
+      Qonversion.initWithConfig(config)
+    	return true
+  }
+  ```
+
+  ```bash bash
+  #import "Qonversion.h"
+    
+  - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+      QONConfiguration *configuration = [[QONConfiguration alloc] initWithProjectKey:@"projectKey" launchMode:QONLaunchModeSubscriptionManagement];
+      [Qonversion initWithConfig:configuration];
+      
+      return YES;
+  }
+  ```
+
+  ```bash bash
+  import com.qonversion.android.sdk.Qonversion;
+  import com.qonversion.android.sdk.QonversionConfig;
+  import com.qonversion.android.sdk.dto.QLaunchMode;
+
+  public class App extends Application {
+      @Override
+      public void onCreate() {
+          super.onCreate();
+          final QonversionConfig qonversionConfig = new QonversionConfig.Builder(
+                  this,
+                  "projectKey",
+                  QLaunchMode.SubscriptionManagement
+          ).build();
+          Qonversion.initialize(qonversionConfig);
+      }
+  }
+  ```
+
+  ```bash bash
+  import com.qonversion.android.sdk.Qonversion
+  import com.qonversion.android.sdk.QonversionConfig
+  import com.qonversion.android.sdk.dto.QLaunchMode
+
+  public class App : Application {
+      override fun onCreate() {
+          super.onCreate()
+          val qonversionConfig = QonversionConfig.Builder(
+              this,
+              "projectKey",
+              QLaunchMode.SubscriptionManagement
+          ).build()
+          Qonversion.initialize(qonversionConfig)
+      }
+  }
+  ```
+
+  ```bash bash
+  import 'package:qonversion_flutter/qonversion_flutter.dart';
+
+  final config = new QonversionConfigBuilder(
+    'projectKey',
+    QLaunchMode.subscriptionManagement
+  ).build();
+  Qonversion.initialize(config);
+  ```
+
+  ```bash bash
+  import Qonversion, {
+    QonversionConfigBuilder,
+    LaunchMode,
+  } from 'react-native-qonversion';
+
+  const config = new QonversionConfigBuilder(
+    'projectKey',
+    LaunchMode.SUBSCRIPTION_MANAGEMENT
+  ).build();
+  Qonversion.initialize(config);
+  ```
+
+  ```bash bash
+  using QonversionUnity;
+
+  private void Start()
+  {
+      QonversionConfig config = new QonversionConfigBuilder(
+              "projectKey",
+              LaunchMode.SubscriptionManagement
+          ).Build();
+      Qonversion.Initialize(config);
+  }
+  ```
+
+  ```bash bash
+  const config = new Qonversion.ConfigBuilder(
+    'projectKey',
+    Qonversion.LaunchMode.SUBSCRIPTION_MANAGEMENT,
+  ).build();
+  Qonversion.initialize(config);
+  ```
+
+  ```bash bash
+  import Qonversion, {
+    QonversionConfigBuilder,
+    LaunchMode,
+  } from '@qonversion/capacitor-plugin';
+
+  const config = new QonversionConfigBuilder(
+    'projectKey',
+    LaunchMode.SUBSCRIPTION_MANAGEMENT
+  ).build();
+  Qonversion.initialize(config);
+  ```
+</CodeGroup>
+
+**→[Get your Qonversion Project Key](https://documentation.qonversion.io/docs/quickstart#2-create-a-project-and-register-your-app)**
+
+## 4. Set additional user attributes
+
+Optionally, to improve attribution in Adjust, AppsFlyer, Singular, or to match Qonversion revenue events to users in [third-party tools](https://documentation.qonversion.io/docs/integrations-overview), you can share with us such attributes as User Identifier, IDFA (Identifier for Advertisers, iOS 14.5+ only) or ASID (App set ID, Android 12+ only). Please follow [this guide](https://documentation.qonversion.io/docs/user-properties#custom-user-properties) to learn more.
+
+## 5. Get offerings, make purchases, and check the premium status
+
+Once you have added Products, Entitlements, and Offerings to Qonversion', initialized the SDK, and added user attributes, it's time to proceed to the main part of the Subscription Management implementation!
+
+1. [Here](https://documentation.qonversion.io/docs/displaying-products#displaying-products) you'll learn how to correctly display products to your customer using Qonversion SDK's *offering* method.
+2. By following [this guide](https://documentation.qonversion.io/docs/making-purchases), you will know how to launch a purchase, after which your user gets premium access with the entitlement you have created above.
+3. Finally, [this article](https://documentation.qonversion.io/docs/check-permissions) will help you check whether your user has already been granted access to your premium features.
+
+***
+
+What’s Next
+
+* [Displaying Products](/docs/displaying-products)
+* [Making Purchases](/docs/making-purchases)
+* [Subscription Status](/docs/check-permissions)

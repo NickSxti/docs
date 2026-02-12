@@ -1,0 +1,78 @@
+---
+title: "Mailchimp"
+description: "Send iOS and Android subscription events to Mailchimp to trigger personalized emails"
+---
+
+Qonversion sends mobile subscription events to Mailchimp to automate emails with special offers to users who cancel a trial or a subscription. A personalized email with a special offer to a user who just canceled his trial can significantly uplift your app's revenue. You need to provide a user email address using Qonversion's user properties to be able to use Mailchimp integration.
+
+## 1. Configure the SDK
+
+1. Set Qonversion SDKs following [installing the SDKs](doc:install-sdk) guides.
+
+2. Provide user email using [User Properties](doc:user-properties):
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().setUserProperty(.email, value: "[email protected]")
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] setUserProperty: QONUserPropertyKeyEmail, value: @"[email protected]"];
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(QUserPropertyKey.Email, "[email protected]");
+  ```
+
+  ```bash bash
+  Qonversion.shared.setUserProperty(QUserPropertyKey.Email, "[email protected]")
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(QUserPropertyKey.email, '[email protected]');
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(UserPropertyKey.EMAIL, '[email protected]');
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().SetUserProperty(UserPropertyKey.Email, "[email protected]");
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(Qonversion.UserPropertyKey.EMAIL, '[email protected]');
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(UserPropertyKey.EMAIL, '[email protected]');
+  ```
+</CodeGroup>
+
+**→[Read more about User Properties here](doc:user-properties)**
+
+<Warning>
+  ### Attention
+
+  You need to provide user email using user properties to Qonversion. Qonversion will be able to send events to Mailchimp only for the users with the correct user email provided. Please check how to add user email to Qonversion [here](https://documentation.qonversion.io/docs/user-properties#defined-user-properties)
+
+  Qonversion is sending the code of the registered event \{"name": "trial\_started"} to [https://mailchimp.com/developer/marketing/api/list-member-events/add-event/](https://mailchimp.com/developer/marketing/api/list-member-events/add-event/) endpoint. User ID of the MailChimp user (subscriber\_hash) is generated based on the user's email.
+</Warning>
+
+## 2. Configure the Mailchimp Integration
+
+1. Get your Mailchimp [API KEY](https://mailchimp.com/help/about-api-keys/) and [Audience ID](https://mailchimp.com/help/find-audience-id/)
+
+2. Navigate to the Integrations section in your Qonversion project, select [Mailchimp ](https://dash.qonversion.io/app/integration/mailchimp), and provide the **API Key** and **Audience ID** (AKA List ID) , and Save.
+
+<Check>
+  ### Done
+
+  Now Qonversion will start sending in-app purchases and subscriptions data to your Mailchimp account.
+</Check>
+
+***
+
+[Kochava](/docs/kochava)
+
+[Mixpanel](/docs/mixpanel)

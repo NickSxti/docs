@@ -1,0 +1,52 @@
+---
+title: "[Nov 2025] Migration guide. React Native 10."
+description: "In this major release of the Qonversion React Native SDK, we've made crucial changes to support No-Codes and The New Architecture along with the React 19+ versions."
+---
+
+## No-Codes support
+
+Qonversion No-Codes are now officially released! For integration steps, please follow our [documentation](/docs/no-codes).
+
+## Upgrading library
+
+We've migrated the library to the Qonversion organization in NPM, so along with the version update, you should also change the name of the library and all the imports.
+
+In your *package.json* file, upgrade the name and the version of the Qonversion SDK:
+
+<CodeGroup>
+  ```bash bash
+  // Before
+  // "react-native-qonversion": "^9.0.0"
+
+  // Now
+  "@qonversion/react-native-sdk": "^10.0.0"
+  ```
+</CodeGroup>
+
+After upgrading the dependency call `yarn install` to download the library and then upgrade all your imports from the previous version:
+
+<CodeGroup>
+  ```bash bash
+  // Before
+  // import Qonversion from 'react-native-qonversion'
+
+  // Now
+  import Qonversion from '@qonversion/react-native-sdk'
+  ```
+</CodeGroup>
+
+## Properties renamings
+
+We've made a couple of renamings of our DTO properties to sync them with the rest codestyle. If you were using these fields, simply upgrade their names as described in the table below
+
+| Old name               | New name               |
+| ---------------------- | ---------------------- |
+| `Product.qonversionID` | `Product.qonversionId` |
+| `Product.storeID`      | `Product.storeId`      |
+| `Product.basePlanID`   | `Product.basePlanId`   |
+
+***
+
+[\[Nov 2025\] Migration guide. iOS 6.0.0](/docs/nov-2025-migration-guide-ios-600)
+
+[\[July 2025\] Migration guide. Google Play Billing Library 8.](/docs/july-2025-migration-guide-google-play-billing-library-8)

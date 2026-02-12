@@ -1,0 +1,64 @@
+---
+title: "Cordova 4.+ migration guide"
+---
+
+## Upgrading version
+
+Increase the dependency version in your package.json file to upgrade your Qonversion SDK to the latest
+
+<CodeGroup>
+  ```bash bash
+  "cordova-plugin-qonversion": "^4.0.0"
+  ```
+</CodeGroup>
+
+## Renamings
+
+In this major version, we have renamed several entities and public methods to make our namings more clear. To make everything work just change all the occurrences from the left column of the table below to the new ones.
+
+| Before upgrade    | After upgrade           |
+| ----------------- | ----------------------- |
+| `UserProperty`    | `UserPropertyKey`       |
+| `setUserProperty` | `setCustomUserProperty` |
+| `setProperty`     | `setUserProperty`       |
+
+## User properties changes
+
+As mentioned above, we have renamed the`UserProperty` enum to `UserPropertyKey`. It was made to release the name `UserProperty` for a class, containing both the property key and its value. This class will be used in the new Qonversion method `userProperties`, which will return all the properties set for the current user.
+
+<CodeGroup>
+  ```bash bash
+  try {
+    const userProperties = await Qonversion.getSharedInstance().userProperties();
+    userProperties.properties.forEach(userProperty => {
+      console.log('User property - key:' + userProperty.key + ', value: ' + userProperty.value);
+    });
+  } catch (e) {
+    // handle error here
+  }
+  ```
+</CodeGroup>
+
+`UserProperties` class returned as the successful result of `userProperties` contains several useful fields and methods to get all the types of properties you may want:
+
+| Field                      | Description                                                                 |
+| -------------------------- | --------------------------------------------------------------------------- |
+| `properties`               | List of all user properties                                                 |
+| `definedProperties`        | Subset of all user properties, which were set using Qonversion-defined keys |
+| `customProperties`         | Subset of all user properties, which were set using custom keys             |
+| `flatPropertiesMap`        | A flattened version of all user properties as a key-value map               |
+| `flatDefinedPropertiesMap` | A flattened version of defined user properties as a key-value map           |
+| `flatCustomPropertiesMap`  | A flattened version of custom user properties as a key-value map            |
+
+| Method               | Arguments                 | Description                                                                                              |
+| -------------------- | ------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `getProperty`        | `key` - string            | Searches for a property with the given property `key` in all properties list                             |
+| `getDefinedProperty` | `key` - `UserPropertyKey` | Searches for a property with the given Qonversion-defined property `key` in the defined properties list. |
+
+The last change here is that we've enriched `UserPropertyKey` enum with a `CUSTOM` key to represent all the custom properties.
+
+***
+
+[Unity 6.+ migration guide](/docs/unity-6-migration-guide)
+
+[Web 1.+ migration guide](/docs/web-1-migration-guide)

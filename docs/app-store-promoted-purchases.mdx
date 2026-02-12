@@ -1,0 +1,192 @@
+---
+title: "App Store Promoted Purchases"
+description: "Promoting Your In-App Purchases on the App Store Page and Search Results"
+---
+
+Promoted in-app purchases appear on your app page and can be displayed in search results. App Store promoted purchases are enabled by default. If a user starts an in-app purchase from the App Store, the purchase flow begins when a user opens your app.
+
+<Info>
+  Kindly note that the scenario described below is related only to the iOS platform.
+</Info>
+
+## iOS
+
+### Set delegate
+
+If you need additional logic, set `QNPromoPurchasesDelegate`.
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().setPromoPurchasesDelegate(self)
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] setPromoPurchasesDelegate:self];
+  ```
+</CodeGroup>
+
+### Add the following function to handle promoted purchases
+
+<CodeGroup>
+  ```bash bash
+  func shouldPurchasePromoProduct(withIdentifier productID: String, executionBlock: @escaping Qonversion.PromoPurchaseCompletionHandler) {
+      // check AppStore productID value in case you want to enable promoted purchase only for specific products
+      
+      let completion: Qonversion.PurchaseCompletionHandler = {result, error, flag in
+        // handle the purchased product or error
+      }
+      
+      // call this block if you want to allow promoted purchase or just store block and call when needed
+      // do nothing and do not call block if you don't want to allow purchase
+      executionBlock(completion)
+    }
+  ```
+
+  ```bash bash
+  - (void)shouldPurchasePromoProductWithIdentifier:(NSString *)productID executionBlock:(QNPromoPurchaseCompletionHandler)executionBlock {
+    // check AppStore productID value in case you want to enable promoted purchase only for specific products
+    
+    QNPurchaseCompletionHandler completion = ^(NSDictionary<NSString *, QNPermission*> *result, NSError  *_Nullable error, BOOL cancelled) {
+      // handle purchased product or error
+    };
+    
+    // call this block if you want to allow promo purchase or just store block and call when needed
+    // do nothing and do not call block if you don't want to allow purchase
+    executionBlock(completion);
+  }
+  ```
+</CodeGroup>
+
+## Flutter
+
+### Listen to the promo purchase stream
+
+`Qonversion.promoPurchasesStream` emits AppStore `productID` whenever a promoted purchase flow is triggered. Listen to the stream to handle promoted purchases.
+
+<CodeGroup>
+  ```bash bash
+  StreamSubscription<String> _promoPurchasesStream;
+  _promoPurchasesStream = Qonversion.getSharedInstance().promoPurchasesStream.listen((productID) async {
+  	// check AppStore productID value in case you want to enable promoted purchase only for specific products
+  	// call `Qonversion.promoPurchase` if you want to allow promoted purchase or just store productID and call when needed
+  	// don't call `Qonversion.promoPurchase` if you don't want to allow purchase
+  });
+  ```
+</CodeGroup>
+
+### Complete the purchase
+
+Call `Qonversion.promoPurchase` when you want to initialize the purchase (for example, immediately after the onboarding screens) and pass the AppStore `productID` as the parameter. Alternatively, call this method immediately on the app start.
+
+<CodeGroup>
+  ```bash bash
+  try {
+    final entitlements = await Qonversion.getSharedInstance().promoPurchase(productID);
+    // handle entitlements here
+  } catch (e) {
+    // handle error here
+    print(e);
+  }
+  ```
+</CodeGroup>
+
+## React Native and Cordova
+
+### Listen to promo purchases events
+
+Provide `PromoPurchasesDelegate` to get notified whenever a promoted purchase flow is triggered.
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.getSharedInstance().setPromoPurchasesDelegate({
+      onPromoPurchaseReceived: async (productId, promoPurchaseExecutor) => {
+          // check AppStore productId value in case you want to enable promoted purchase only for specific products
+          // call `promoPurchaseExecutor` if you want to allow promoted purchase or just store productId and executor and call it when needed
+          // don't call `promoPurchaseExecutor` if you don't want to allow purchase
+      },
+  });
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setPromoPurchasesDelegate({
+      onPromoPurchaseReceived: async (productId, promoPurchaseExecutor) => {
+          // check AppStore productId value in case you want to enable promoted purchase only for specific products
+          // call `promoPurchaseExecutor` if you want to allow promoted purchase or just store productId and executor and call it when needed
+          // don't call `promoPurchaseExecutor` if you don't want to allow purchase
+      },
+  });
+  ```
+</CodeGroup>
+
+### Complete the purchase
+
+Call the `promoPurchaseExecutor` provided to the delegate right in the delegate method or later when you want to initialize the purchase (for example, immediately after the onboarding screens) and pass the AppStore `productId` as the parameter.
+
+<CodeGroup>
+  ```bash bash
+  try {
+      const entitlements = await promoPurchaseExecutor(productId);
+      // handle entitlements here
+  } catch (e) {
+      // handle error here
+  }
+  ```
+
+  ```bash bash
+  try {
+      const entitlements = await promoPurchaseExecutor(productId);
+      // handle entitlements here
+  } catch (e) {
+      // handle error here
+  }
+  ```
+</CodeGroup>
+
+## Unity
+
+### Handle events
+
+`Qonversion.PromoPurchasesReceived` sends the event when a user initiates a promotional in-app purchase from the App Store. Declare a delegate to handle promo purchases. Promo purchases will proceed automatically if you are not using the`PromoPurchasesReceived` event.
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.GetSharedInstance().PromoPurchasesReceived += HandlePromoPurchases;
+
+  private void HandlePromoPurchases(string appStoreProductId, StartPromoPurchase startPromoPurchase)
+  {
+      // check AppStore productID value in case you want to enable promoted purchase only for specific products
+      // call `startPromoPurchase` if you want to allow promoted purchase or just store productID and call when needed
+      // don't call `startPromoPurchase` if you don't want to allow purchase
+  }
+  ```
+</CodeGroup>
+
+### Complete the purchase
+
+Call `startPromoPurchase` when you want to initialize the purchase (for example, immediately after the onboarding screens).
+
+<CodeGroup>
+  ```bash bash
+  startPromoPurchase((entitlements, error) =>
+  {
+      if (error == null)
+      {
+          if (entitlements.TryGetValue("premium", out Entitlement premium) && premium.IsActive)
+          {
+              // Handle the active entitlement here
+          }
+      }
+      else
+      {
+          // Handle the error  
+          Debug.Log("Error" + error.ToString());
+      }
+  });
+  ```
+</CodeGroup>
+
+***
+
+[App Store Privacy](/docs/app-store-privacy)
+
+[App Store Small Business Program](/docs/app-store-small-business-program)

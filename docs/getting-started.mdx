@@ -1,0 +1,243 @@
+---
+title: "Creating Screens"
+description: "Once your store connection and SDK setup are complete, you can start designing your first screen inside the Builder. Each screen is made of modular components that you can arrange, style, and connect to your products — visually, with no code."
+---
+
+Once your SDK is [installed](https://documentation.qonversion.io/docs/installation#/) and initialized, you can start building your first in-app screen directly from the Qonversion dashboard.
+
+No builds. No releases. Everything happens visually — right inside your browser.
+
+***
+
+# Accessing the Builder in Dashboard
+
+1. Open your project in the Qonversion **Dashboard**.
+2. Navigate to the **No-Code Builder** section in the left sidebar.
+3. Click **Create New Screen** to begin.
+
+You’ll first choose what type of screen you want to create:
+
+* **Mobile Paywall** – single-page layout for offers or subscriptions.
+* **Mobile Onboarding** – multi-page layout for tutorials or funnels.
+
+Once selected, you can start from a **template** or design from **scratch**.
+
+![](/images/docs/4753a4aaf5bbf3d0c0c125348dc7cb5d90193051c3cfdd47aeed6bebbd139dab-Create_Screen.png)
+
+***
+
+# Overview of the Interface
+
+The Builder interface is designed to feel familiar to both designers and developers — a simple layout with real-time preview and drag-and-drop control.
+
+## Canvas & Settings
+
+The main working area where your screen layout lives. You can add, move, and resize components directly on the canvas and see updates instantly.
+
+![](/images/docs/5be68efa4d666fc52a0f8d2df1a61e2c44a73c00859bfce99a18a97406e11039-Canvas.png)
+
+The Canvas is your adaptive artboard — where your entire screen layout lives.
+
+<Warning>
+  Before adding components, it’s important to configure your **Canvas Settings,** as these define how your design behaves and looks across devices.
+
+  * Set your Default Product (if applicable).
+  * Choose your Font Family and Layout Direction.
+  * Enable Safe Area to automatically apply 20 px horizontal and 59 / 34 px vertical padding.
+</Warning>
+
+You can access **Canvas Settings** from the **Right Panel** when **Canvas Layer** is Selected.
+
+**Canvas settings** act as the foundation of your design. They define global appearance and structure before you start adding components.
+
+***
+
+### Screen & Safe Area
+
+<Info>
+  Tip: Keep “**Apply Safe Area**” enabled to prevent overlapping with system UI elements
+</Info>
+
+| Setting             | Description                                                                                                                                                                                                                             |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Show Safe Area**  | Toggles visible device margins on or off to help align elements.                                                                                                                                                                        |
+| **Apply Safe Area** | Automatically applies platform-specific insets to keep your content within safe boundaries (e.g., notch, home indicator). When enabled, it adds: • 20 px horizontal padding (left and right) • 59 px top padding • 34 px bottom padding |
+
+![](/images/docs/421569acdeefa7e9f2c6438dbe2cc2d556a115fb0d5ef23a7790f61f3718c20c-Area.gif)
+
+***
+
+### Default Product
+
+If your screen includes purchase options, set a **Default Product** here. This determines which product is **pre-selected when the screen loads** — for example, your most popular subscription plan.
+
+| Setting             | Description                                                                                            |
+| ------------------- | ------------------------------------------------------------------------------------------------------ |
+| **Default Product** | Select one of your existing products to pre-select on screen load                                      |
+| **Add Products**    | Opens the product linking modal where you can connect or create new products directly from the Builder |
+
+![](/images/docs/72a177e1c1710749aad292dde3e90b08abecbbdf1d59d372095d93466ed92249-Sample_App_Preview.png)
+
+***
+
+### Typography
+
+Choose a global Font Family to apply across all text components on the screen. Individual components can override this setting later.
+
+| Setting         | Description                                                                                   |
+| --------------- | --------------------------------------------------------------------------------------------- |
+| **Font Family** | Defines the base typeface used by all text elements. Supports 20 + system and web-safe fonts. |
+
+***
+
+### Layout
+
+Controls how elements are positioned and spaced within the screen. This setting determines stacking direction, alignment, and gaps between child components.
+
+| Setting          | Description                                                                                                       |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **Direction**    | Defines the layout flow — **Vertical (↓)** for stacked components or **Horizontal (→)** for side-by-side layouts. |
+| **Distribution** | Sets how elements align within the available space (Start, Center, End, or Space Between).                        |
+| **Gap**          | Controls equal spacing between immediate child components.                                                        |
+
+<Info>
+  For most paywalls, use **Vertical** Direction → **Space Between** Distribution. **Space Between** Setting disables **Gap** Setting
+</Info>
+
+***
+
+### Spacing
+
+Fine-tune how your Canvas interacts with the overall screen space.
+
+| Setting     | Description                                                                                                                                               |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Margin**  | Adds space outside your Canvas (rarely used).                                                                                                             |
+| **Padding** | Adds internal space within your Canvas. When **Safe Area** is applied, padding values default to **Top 59 px**, **Bottom 34 px**, **Left / Right 20 px**. |
+
+These values ensure that essential content is always visible on all modern device screens.
+
+***
+
+### Background
+
+Apply a base background to your screen — solid color, gradient, or image.
+
+| Setting            | Description                                                       |
+| ------------------ | ----------------------------------------------------------------- |
+| **Add Background** | Opens the background picker for color, gradient, or image upload. |
+
+<Info>
+  Use solid backgrounds for paywalls, or gradients/images for onboarding and promotional flows.
+</Info>
+
+## Left Sidebar
+
+The **Left Sidebar** is your main navigation panel inside the Builder. It helps you manage your project’s structure, screens, and all components.
+
+It includes three tabs: **Pages**, **Layers**, and **Assets**.
+
+<Frame caption="Left Sidebar: Pages, Layers, Assets">
+  <img src="/images/docs/74db1d8fbcaf4474da4590cf1801c3bd8fcdb2957dfc0ea2a4cc8881075bc63c-Left_Sidebar.gif" />
+</Frame>
+
+***
+
+### Pages
+
+Manage and organize your app screens within a project.
+
+* Create and manage multiple pages within the same screen set (e.g., paywall + thank-you page).
+* Click + \*\*Add Page \*\*to create a new one.
+* Reorder or rename pages at any time.
+* The currently active page is highlighted (e.g., **Start Page**).
+
+This is where you’ll switch between **single-page** and **multi-page** screens when building onboarding flows.
+
+***
+
+### Layers
+
+View and organize all elements currently on your selected page.
+
+* Manage the **hierarchy and nesting** of containers and components.
+* Lock or hide specific layers for easier editing.
+* Reorder components with drag-and-drop.
+
+Layers reflect your current **Canvas** structure in real time.
+
+***
+
+### Assets
+
+Access and add ready-to-use components and elements.
+
+**Elements**:
+
+* **Basic** – headings, text, buttons, containers
+* **Interactive** – toggles, sliders, tabs
+* **Media** – images, GIFs, Lottie files, (video coming soon)
+* **Structure** and **Sections** – pre-built headers, footers, and layout blocks
+
+**Components:**
+
+* **Product Blocks** – pre-filled elements linked to your Qonversion products
+
+You can also use the **search bar** to quickly find a component or element type.
+
+Would you like me to now rewrite the full “Overview of the Interface” section (Canvas + Left Sidebar + Right Panel + Preview + Flow Bar) using this updated block — so it’s consistent and publication-ready for the docs?
+
+***
+
+### Right Sidebar (Properties)
+
+Shows detailed settings for the selected component.
+
+Here you can customize:
+
+* Layout and positioning
+* Icons, Actions, Content and Variables
+* Typography and colors
+* Borders, shadows, and backgrounds
+* Visibility and behavior
+
+and more.
+
+<Frame caption="Right Sidebar">
+  <img src="/images/docs/0c04635c35bf315e190736753af0fe1624bf5fe893e4ad9babb3f86e42130c79-Right_Sidebar.gif" />
+</Frame>
+
+***
+
+### Flow Bar
+
+The Flow Bar gives you quick access to the most commonly used tools and preview controls. It includes:
+
+* A set of frequently used components for faster editing
+* Zoom controls to adjust your view of the Canvas
+* A device selector to preview your layout on iOS, Android, and tablet screens
+
+Use it to fine-tune your design across devices and ensure responsive layout behavior.
+
+<Frame caption="Flowbar">
+  <img src="/images/docs/c392939e8db6c7f580c09f52d64e67df527aaae45f2b4edbf92f76802bbb35a3-Flowbar.gif" />
+</Frame>
+
+***
+
+# Publishing & Versioning
+
+Before publishing your screen, you’ll need to assign a **Context Key** — a unique identifier that links the screen you build in Qonversion to your app through the SDK.
+
+* Click **Settings** in the top bar and enter a descriptive name (for example, *main\_paywall* or *onboarding\_flow*).
+* Once the key is set, click **Publish** in the top-right corner.
+
+Publishing makes your screen available to be called via SDK — no app update or store release required. However, the screen will only appear in your app after you call its **Context Key** from your code.
+
+![](/images/docs/b49485aa161267259929cdece8761effb28202b48819d11ee96fc45370b3d9f5-Publish.gif)
+
+***
+
+[Product Setup & Store Connection](/docs/product-setup-store-connection-1)
+
+[Components](/docs/components)

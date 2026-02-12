@@ -1,0 +1,41 @@
+---
+title: "Non-Subscription Purchases"
+description: "Use Qonversion to handle non-consumable and consumable in-app purchases"
+---
+
+Qonversion allows handling all types of in-app purchases, including non-subscription products.
+
+## Non-subscription In-app Purchase Types
+
+**Consumable in-app purchases** These in-app purchases can be used just once. They are depleted and can be purchased again. They are usually linked to coins or gems that users purchase to spend on virtual resources in an app.
+
+**Non-consumable in-app purchases** Non-consumable purchases are not depleted, as the name implies. You can unlock premium features in your app, like photo filters, fonts, or lifetime premium access.
+
+## Entitlements, Products and Offerings
+
+An **Entitlement** unlocks access to the premium features of your application when a user makes a purchase. You can read more about Qonversion entitlements [here](doc:permissions). A **Product** in Qonversion is linked to a specific Apple and Google store product. You can read more about Qonversion products [here](https://documentation.qonversion.io/reference/product). An **Offering** is a set of products you can offer a user and change remotely without releasing app updates. You can read more about Qonversion offerings [here](offerings).
+
+## Providing lifetime access with in-app purchase
+
+Use non-consumable in-app purchase to provide lifetime access and follow these steps:
+
+1. Create an app store product:
+
+* iOS: Create non-consumable in-app purchase on the [App Store Connect](https://appstoreconnect.apple.com/login).
+* Android: Create an in-app product on [Google Play Developer Console](https://play.google.com/apps/publish/).
+
+Let's assume the product has the following app store id `com.testgame.lifetime.99`.
+
+2. Create Qonversion Product with qonversion ID `lifetime` and link it to the app store product from the previous step.
+
+3. Create an Entitlement `premium` and link it to the Qonversion Product. This Entitlement will be active after a user purchases the product linked to it.
+
+4. Optional: Create an Offering `main` and attach the Qonversion Product `lifetime` to it. Then you can easily change the list of products linked to the offering.
+
+Use our guides on [making purchases](https://documentation.qonversion.io/docs/making-purchases#1-make-a-purchase) and [checking user entitlements](https://documentation.qonversion.io/docs/making-purchases#4-check-user-permissions).
+
+***
+
+[Deferred Purchases](/docs/deferred-purchases)
+
+[Store Product Price Changes](/docs/store-product-price-changes)

@@ -1,0 +1,31 @@
+---
+title: "Overview"
+description: "Offerings are designed as a remote configuration to present particular products on specific paywalls. Moreover, you can change the products without additional app releases."
+---
+
+For example, you can offer one set of products on a paywall immediately after an onboarding flow is completed and another with discounts if a user has not converted later.
+
+Qonversion Offerings do not require [Subscription Management Mode](doc:subscription-management-mode). However, they enable the following features:
+
+* Run pricing A/B tests
+* Change products offered to your users without extra app releases
+
+## Сreate an Offering
+
+1. Navigate to the [Offerings](https://dash.qonversion.io/remote-configs/offerings) in your Qonversion account. Tap the Create offering button.
+
+2. Fill in the offering details:
+
+   1. Name: short custom description field.
+   2. Offering ID: unique offering ID used by the Qonversion SDK to get associated products
+   3. Products: list of products that are linked to the offering. The chosen order of the products transfers to the response of Qonversion SDK's [offerings](https://documentation.qonversion.io/docs/displaying-products#displaying-products) method.
+
+### Attach products
+
+Offerings are based on the Products you could create previously to manage your entitlements by using [Qonversion Subscription Management Mode](https://documentation.qonversion.io/docs/subscription-management-mode). Please, follow [Create Products guide](https://documentation.qonversion.io/docs/products) to learn about creating a new product entity.
+
+***
+
+[Using No-Codes with custom purchases handling](/docs/using-no-codes-with-custom-purchases-handling)
+
+[Create Remote Config](/docs/remote-config)

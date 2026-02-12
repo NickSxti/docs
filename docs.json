@@ -1,122 +1,401 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mint Starter Kit",
+  "theme": "aspen",
+  "name": "Qonversion",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#a07fff",
+    "light": "#a07fff",
+    "dark": "#a07fff"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/59c36df-small-Avatars_500x500_Black.png",
   "navigation": {
     "tabs": [
       {
         "tab": "Guides",
         "groups": [
           {
-            "group": "Getting started",
+            "group": "Overview",
             "pages": [
-              "index",
-              "quickstart",
-              "development"
+              "docs/qonversion-platform",
+              "docs/how-qonversion-works",
+              "docs/system-reliability"
             ]
           },
           {
-            "group": "Customization",
+            "group": "Get Started",
             "pages": [
-              "essentials/settings",
-              "essentials/navigation"
+              "docs/quickstart",
+              {
+                "group": "Installing the SDKs",
+                "pages": [
+                  "docs/install-sdk",
+                  "docs/ios-sdk-setup",
+                  "docs/android-sdk",
+                  "docs/react-native-sdk",
+                  "docs/flutter-sdk",
+                  "docs/unity-sdk",
+                  "docs/cordova",
+                  "docs/capacitor",
+                  "docs/macos-catalyst",
+                  "docs/ios-app-extensions",
+                  "docs/kids-mode-sdk",
+                  "docs/watchosvisionos"
+                ]
+              },
+              "docs/analytics-mode",
+              {
+                "group": "Subscription Management Mode",
+                "pages": [
+                  "docs/subscription-management-mode",
+                  "docs/entitlements",
+                  "docs/create-products",
+                  "docs/displaying-products",
+                  "docs/making-purchases",
+                  "docs/check-permissions",
+                  "docs/offline-sdk-mode",
+                  "docs/user-identifiers",
+                  "docs/transferring",
+                  "docs/google-play-product-details"
+                ]
+              },
+              {
+                "group": "Stripe Integration",
+                "pages": [
+                  "docs/stripe-integration",
+                  "docs/web-sdk"
+                ]
+              },
+              "docs/user-properties",
+              {
+                "group": "Server Notifications",
+                "pages": [
+                  "docs/server-notifications",
+                  "docs/server-to-server-notifications",
+                  "docs/google-developer-notifications"
+                ]
+              },
+              {
+                "group": "Migrating In-App Subscriptions",
+                "pages": [
+                  "docs/migrating-subscriptions",
+                  "docs/migrating-from-revenuecat-to-qonversion",
+                  "docs/adapty-migration-guide"
+                ]
+              },
+              "docs/users-and-access"
             ]
           },
           {
-            "group": "Writing content",
+            "group": "Testing",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
+              "docs/testing",
+              "docs/troubleshooting",
+              "docs/handling-errors",
+              "docs/rate-limits"
             ]
           },
           {
-            "group": "AI tools",
+            "group": "Features",
             "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              {
+                "group": "Customers",
+                "pages": [
+                  "docs/customers",
+                  "docs/edit-entitlements",
+                  "docs/customer-details"
+                ]
+              },
+              {
+                "group": "Apple Ads",
+                "pages": [
+                  "docs/apple-search-ads-analytics",
+                  "docs/apple-search-ads"
+                ]
+              },
+              {
+                "group": "Analytics",
+                "pages": [
+                  "docs/analytics",
+                  "docs/monitoring",
+                  "docs/revenue",
+                  "docs/users",
+                  "docs/trials",
+                  "docs/subscriptions",
+                  "docs/events-analytics",
+                  "docs/cohorts"
+                ]
+              },
+              {
+                "group": "Integrations",
+                "pages": [
+                  "docs/integrations-overview",
+                  "docs/adjust",
+                  "docs/amazon-s3",
+                  "docs/amplitude",
+                  "docs/appmetrica",
+                  "docs/appsflyer",
+                  "docs/asapty",
+                  "docs/branch",
+                  "docs/braze",
+                  "docs/clevertap",
+                  "docs/facebook",
+                  "docs/firebase",
+                  "docs/google-ads",
+                  "docs/google-cloud-storage",
+                  "docs/kochava",
+                  "docs/mailchimp",
+                  "docs/mixpanel",
+                  "docs/onesignal",
+                  "docs/pushwoosh",
+                  "docs/splitmetrics",
+                  "docs/segment",
+                  "docs/singular",
+                  "docs/slack",
+                  "docs/tenjin",
+                  "docs/webhooks"
+                ]
+              },
+              {
+                "group": "Refund Keeper",
+                "pages": [
+                  "docs/refund-keeper",
+                  "docs/enable-refund-keeper",
+                  "docs/analytics-overview"
+                ]
+              },
+              {
+                "group": "Raw Data Export",
+                "pages": [
+                  "docs/raw-data-reports",
+                  "docs/scheduled-reports"
+                ]
+              },
+              "docs/custom-proxy-server-for-sdks"
+            ]
+          },
+          {
+            "group": "No-Code Builder",
+            "pages": [
+              "docs/no-codes",
+              {
+                "group": "Installation",
+                "pages": [
+                  "docs/installation",
+                  "docs/product-setup-store-connection-1"
+                ]
+              },
+              {
+                "group": "Creating Screens",
+                "pages": [
+                  "docs/getting-started",
+                  {
+                    "group": "Components",
+                    "pages": [
+                      "docs/components",
+                      "docs/product-blocks",
+                      "docs/social-proof",
+                      "docs/carousels",
+                      "docs/cta-buttons",
+                      "docs/feature-list",
+                      "docs/awards"
+                    ]
+                  },
+                  "docs/ai-image-generation",
+                  "docs/properties-reference",
+                  "docs/variables-1",
+                  "docs/ai-localization"
+                ]
+              },
+              "docs/fallbacks",
+              "docs/screens-preloading",
+              "docs/displaying-no-codes",
+              "docs/success-failure-actions",
+              "docs/using-no-codes-with-custom-purchases-handling"
+            ]
+          },
+          {
+            "group": "Remote Config",
+            "pages": [
+              "docs/offerings",
+              {
+                "group": "Create Remote Config",
+                "pages": [
+                  "docs/remote-config",
+                  "docs/launch-test-from-remote-config"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Experiments",
+            "pages": [
+              "docs/paywall-experiments",
+              "docs/launch-experiments",
+              "docs/analyse-experiment",
+              "docs/pause-experiments",
+              "docs/finish-experiment",
+              "docs/splitting-rules"
+            ]
+          },
+          {
+            "group": "Platform Resources",
+            "pages": [
+              {
+                "group": "Apple App Store",
+                "pages": [
+                  "docs/apple-app-store",
+                  "docs/appstore-offer-codes",
+                  "docs/app-store-privacy",
+                  "docs/app-store-promoted-purchases",
+                  "docs/app-store-small-business-program",
+                  "docs/apple-family-sharing",
+                  "docs/swiftystorekit-alternative",
+                  "docs/apple-promotional-offers"
+                ]
+              },
+              {
+                "group": "Google Play Store",
+                "pages": [
+                  "docs/google-play",
+                  "docs/android-in-app-products",
+                  "docs/android-test-devices",
+                  "docs/app-creation-in-google-play-console",
+                  "docs/google-play-data-safety",
+                  "docs/license-testing",
+                  "docs/app-publication-in-google-play-console",
+                  "docs/google-upgrade-downgrade-or-change-subscription"
+                ]
+              },
+              "docs/sample-apps",
+              "docs/tutorials",
+              "docs/deferred-purchases",
+              "docs/non-subscription-purchases",
+              "docs/store-product-price-changes",
+              "docs/upgrade-and-downgrade-a-subscription"
+            ]
+          },
+          {
+            "group": "Store Credentials",
+            "pages": [
+              "docs/app-specific-shared-secret",
+              "docs/service-account-key-android"
+            ]
+          },
+          {
+            "group": "SDK Migration Guides",
+            "pages": [
+              "docs/jan-2026-migration-guide-cordova-7",
+              "docs/jan-2026-migration-guide-capacitor-1",
+              "docs/nov-2025-migration-guide-ios-600",
+              "docs/sep-2025-migration-guide-react-native-10",
+              "docs/july-2025-migration-guide-google-play-billing-library-8",
+              {
+                "group": "[Jul 2024] Google Play Billing Library 7",
+                "pages": [
+                  "docs/jan-2024-migration-guide-google-play-billing-library-6-copy",
+                  "docs/android-8-migration-guide",
+                  "docs/flutter-9-migration-guide",
+                  "docs/react-native-8-migration-guide",
+                  "docs/unity-8-migration-guide",
+                  "docs/cordova-6-migration-guide"
+                ]
+              },
+              {
+                "group": "[Jan 2024] Google Play Billing Library 6",
+                "pages": [
+                  "docs/qonversion-sdk-major-version-copy",
+                  "docs/android-7-migration-guide",
+                  "docs/flutter-8-migration-guide",
+                  "docs/react-native-7-migration-guide",
+                  "docs/unity-7-migration-guide",
+                  "docs/cordova-5-migration-guide"
+                ]
+              },
+              {
+                "group": "[Aug 2023] Migration Guide",
+                "pages": [
+                  "docs/qonversion-sdk-major-version",
+                  "docs/ios-5-migration-guide",
+                  "docs/android-6-migration-guide",
+                  "docs/flutter-7-migration-guide",
+                  "docs/react-native-6-migration-guide",
+                  "docs/unity-6-migration-guide",
+                  "docs/cordova-4-migration-guide",
+                  "docs/web-1-migration-guide"
+                ]
+              },
+              {
+                "group": "[Dec 2022] Migration Guide",
+                "pages": [
+                  "docs/migrate-to-the-actual-qonversion-sdk-version-december-2022",
+                  "docs/ios-3-migration-guide",
+                  "docs/android-4-migration-guide",
+                  "docs/flutter-5-migration-guide",
+                  "docs/react-native-4-migration-guide",
+                  "docs/unity-4-migration-guide"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "AI-Ready",
+            "pages": [
+              "docs/llmtxt"
             ]
           }
         ]
       },
       {
-        "tab": "API reference",
+        "tab": "API Reference",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "REST API",
             "pages": [
-              "api-reference/introduction"
+              "reference/overview",
+              "reference/authentication",
+              "reference/handling-api-errors"
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Users",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "reference/get-users"
+            ]
+          },
+          {
+            "group": "User Properties",
+            "pages": [
+              "reference/user-properties-overview"
+            ]
+          },
+          {
+            "group": "Identity",
+            "pages": [
+              "reference/identities"
+            ]
+          },
+          {
+            "group": "Entitlements",
+            "pages": [
+              "reference/user-entitlements"
+            ]
+          },
+          {
+            "group": "Purchases",
+            "pages": [
+              "reference/purchases"
+            ]
+          },
+          {
+            "group": "Analytics",
+            "pages": [
+              "reference/analytics-overview",
+              "reference/analytics-charts",
+              "reference/customers"
             ]
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
-  },
-  "contextual": {
-    "options": [
-     "copy",
-     "view",
-     "chatgpt",
-     "claude",
-     "perplexity",
-     "mcp",
-     "cursor",
-     "vscode"
-   ]
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
+    ]
   }
 }

@@ -1,0 +1,53 @@
+---
+title: "App Store Offer Codes"
+---
+
+## Redeeming Apple Offer Codes
+
+Users on iOS 14 and iPadOS 14 and later can redeem offer codes on the App Store through a one-time code redemption URL or within your app if you’ve implemented the `presentCodeRedemptionSheet` API.
+
+Apple recommends using offer codes directly in your app via a redemption sheet.
+
+Present the Offer Code redemption sheet to allow your users to redeem Offer Codes.
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().presentCodeRedemptionSheet()
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] presentCodeRedemptionSheet]
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().presentCodeRedemptionSheet();
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().presentCodeRedemptionSheet();
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().PresentCodeRedemptionSheet();
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().presentCodeRedemptionSheet();
+  ```
+</CodeGroup>
+
+<Warning>
+  ### Set up offer codes
+
+  Set up the offer codes before testing. See the details on setting up offer codes [here](https://help.apple.com/app-store-connect/#/dev6a098e4b1).
+</Warning>
+
+## Handling Results
+
+If you need to get the results immediately after a user enters a promo code, please check the [deferred purchases](https://documentation.qonversion.io/docs/deferred-purchases) documentation. If a promo code was successfully applied, `checkEntitlements()` returns the updated entitlements.
+
+***
+
+[Apple App Store](/docs/apple-app-store)
+
+[App Store Privacy](/docs/app-store-privacy)

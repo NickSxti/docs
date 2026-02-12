@@ -1,0 +1,62 @@
+---
+title: "Apple Ads"
+description: "Attribution and analytics dashboard for Apple Ads tracking"
+---
+
+## Apple Ads Analytics Overview
+
+Qonversion collects Apple Ads advertising attribution data so you can accurately measure the effectiveness of your campaigns and see exactly how much revenue each Apple Ads campaign and keyword generates. Qonversion Apple Ads tool tracks all critical metrics required for effective user acquisition on Apple's platform.
+
+Qonversion accurately tracks in-app events, including trial conversions, subscription renewals, and in-app purchases, to define top-performing campaigns and keywords. Qonversion also shows you the data on ad spend, CPA, total revenue, and ROAS. The attribution dashboard leverages Apple Ads API and Ad Services framework, SDK data, and server-side receipt validation. Qonversion ASA attribution works independently of the SKAdNetwork.
+
+[YouTube embed](//cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fwww.youtube.com%2Fembed%2FLRT0cdxRAFQ%3Ffeature%3Doembed\&display_name=YouTube\&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DLRT0cdxRAFQ\&image=https%3A%2F%2Fi.ytimg.com%2Fvi%2FLRT0cdxRAFQ%2Fhqdefault.jpg\&type=text%2Fhtml\&schema=youtube)
+
+You can select the metrics in the dashboard and rearrange the columns by clicking the button at the top right corner of the Apple Ads table.
+
+<Warning>
+  Make sure you have configured [Apple Ads integration](https://documentation.qonversion.io/docs/apple-search-ads) correctly.
+</Warning>
+
+<Frame caption="Apple Search Ads Dashboard">
+  <img src="/images/docs/affc621-Apple_Search_Ads_Dashboard.png" />
+</Frame>
+
+## Available Metrics
+
+<Warning>
+  Note that metrics from Search Ads source are available only for Apple Search Ads Advanced campaigns.
+</Warning>
+
+Qonversion ASA dashboard tracks the following metrics:
+
+| Available Columns         | Description                                                                                                                                                                                | Source: Qonversion | Source: Search Ads |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------ | ------------------ |
+| Ad Group Name             | Apple Ads Advanced campaigns contain ad groups with defined bids and audience settings. Each campaign can be made up of one or more ad groups.                                             |                    | ✅                  |
+| ARPU                      | Average Revenue Per User. ARPU shows how much revenue a user brings to the company on average over a certain period.                                                                       | ✅                  |                    |
+| ARPPU                     | Average Revenue Per (Paying) User - the metric that considers only paying customers, as opposed to ARPU.                                                                                   | ✅                  |                    |
+| Average CPA               | Total Apple Ads Advanced campaign spend divided by the number of installs (downloads) received within a period.                                                                            |                    | ✅                  |
+| Average CPM               | The average amount an Apple Ads Advanced advertiser pays per one thousand ad impressions on the App Store.                                                                                 |                    | ✅                  |
+| Average CPT               | The average amount an Apple Ads Advanced advertiser has paid for a tap on their ad.                                                                                                        |                    | ✅                  |
+| Impressions               | The number of times your Apple Ads Advanced ad appeared on the App Store within a particular period.                                                                                       |                    | ✅                  |
+| Installs                  | The total number of conversions from new downloads and redownloads resulting from an ad within the reporting period. Apple Ads installs are attributed within a 30-day attribution window. |                    | ✅                  |
+| Keyword                   | Someone may use a relevant word or term when searching for an app like yours. In your Apple Ads Advanced ad groups, you can add keywords your customers would search for on the App Store. |                    | ✅                  |
+| New Downloads             | App downloads from new users who have never before downloaded your app.                                                                                                                    |                    | ✅                  |
+| Purchases                 | The number of purchases within a particular period.                                                                                                                                        | ✅                  |                    |
+| Redownloads               | Downloads from users who previously downloaded and deleted your app then redownloaded it again or downloaded the same app on an additional device after tapping your ad on the App Store.  |                    | ✅                  |
+| Regular Subscriptions     | The number of subscriptions started within a particular period. This field does not include subscriptions with promotional periods (Trial or Introductory).                                | ✅                  |                    |
+| Revenue                   | The total revenue from users acquired during the period selected, including subscription renewals.                                                                                         | ✅                  |                    |
+| Spend                     | In Apple Ads Advanced, the sum of the cost of each customer taps on your ad over a particular period.                                                                                      |                    | ✅                  |
+| Taps                      | The number of times users tapped your Apple Ads Advanced ad within a particular period.                                                                                                    |                    | ✅                  |
+| Trials                    | The number of trials within a particular period.                                                                                                                                           | ✅                  |                    |
+| Trials converted          | The number of started trial subscriptions that converted to paid subscribers.                                                                                                              | ✅                  |                    |
+| Trial to paid conversion  | The percentage of started trial subscriptions that converted to paid subscribers.                                                                                                          | ✅                  |                    |
+| Users                     | The number of detected by Qonversion new users within a particular period.                                                                                                                 | ✅                  |                    |
+| User to trial             | The number of trial start events divided by the number of new users within a particular period.                                                                                            | ✅                  |                    |
+| User to subscription      | The percentage of new users that converted to a subscriber.                                                                                                                                | ✅                  |                    |
+| Return on ad spend (ROAS) | The revenue ratio generated by an advertiser's investment in Apple Ads. Campaign (or app promotion) revenue divided by ad cost x 100.                                                      | ✅                  | ✅                  |
+
+***
+
+[Customer Details](/docs/customer-details)
+
+[Apple Ads Integration](/docs/apple-search-ads)

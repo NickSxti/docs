@@ -1,0 +1,81 @@
+---
+title: "Cordova SDK 5.x to 6.x migration guide"
+description: "We've upgraded the Google Play Billing Library dependency for Android to version 7 in this release, leading to several changes in our SDK. These are described below."
+---
+
+## Upgrading version
+
+Increase the dependency version in your *package.json* file to upgrade your Qonversion SDK to the latest
+
+<CodeGroup>
+  ```bash bash
+  "cordova-plugin-qonversion": "^6.0.0"
+  ```
+</CodeGroup>
+
+## Android deployment upgrades
+
+With the new Google Play Billing Library 7 we've increased our `minSdkVersion` to 21 and `targetSdkVersion` to 34 for Android.
+
+If you were using lower `minSdkVersion` you should upgrade it to 21 to use the latest version of our SDK and Google Play Billing Library. If you have already targeted the 21+ version, you should do nothing.
+
+## Installment plans support
+
+In the latest library version, Google introduces installment plans, when a customer commits to pay for several subsequent subscription periods. In our release, we've added a new field `installmentPlanDetails` to `ProductOfferDetails` with the details of the installment plan if they exist. It contains the following information:
+
+| Field                               | Type | Description                                                               |
+| ----------------------------------- | ---- | ------------------------------------------------------------------------- |
+| `commitmentPaymentsCount`           | Int  | Committed payments count after a user signs up for this subscription plan |
+| `subsequentCommitmentPaymentsCount` | Int  | Subsequent committed payments count after this subscription plan renews   |
+
+We've also added an `isInstallment` flag to `ProductStoreDetails` to check if the current product has an installment plan or not.
+
+Below is an example of those fields usage:
+
+<CodeGroup>
+  ```bash bash
+  const products = await Qonversion.getSharedInstance().products();
+  const installmentProduct = products['installmentProductId'];
+  const storeDetails = installmentProduct?.storeDetails;
+  if (storeDetails?.isInstallment) {
+    const installmentDetails = storeDetails?.basePlanSubscriptionOfferDetails?.installmentPlanDetails;
+    // Use the installment plan information
+  }
+  ```
+</CodeGroup>
+
+## Fallback files
+
+We're happy to introduce the fallback files support in this release to make our system reliability even higher. Fallback files allow your app to work as expected in rare cases of network connection or Qonversion API issues for new users without a cache available. This allows purchases and entitlements to be processed for new users even if the Qonversion API faces issues. This also makes it possible to receive remote configs for cases when the network connection is unavailable.
+
+Fallback files are available both on iOS and Android.
+
+Read more about the fallback files in [the documentation](https://documentation.qonversion.io/docs/system-reliability#fallback-files).
+
+## Error codes
+
+In this release, we have added the `QonversionErrorCode` enum with the list of defined Qonversion error codes. Now you can compare any error code with the defined one to check any specific case as follows:
+
+<CodeGroup>
+  ```bash bash
+  try {
+    await Qonversion.getSharedInstance().purchase(...);
+  } catch (e) {
+    if (e.code === QonversionErrorCode.STORE_PRODUCT_NOT_AVAILABLE) {
+      // The requested product is unavailable for purchase. 
+    }
+  }
+  ```
+</CodeGroup>
+
+We've also changed the type of `QonversionError.code` field from `string` to `QonversionErrorCode`.
+
+## The other changes
+
+* Pending purchases support was added for prepaid subscriptions on Android.
+
+***
+
+[Unity SDK 7.x to 8.x migration guide](/docs/unity-8-migration-guide)
+
+[\[Jan 2024\] Migration guide. Google Play Billing Library 6.](/docs/qonversion-sdk-major-version-copy)

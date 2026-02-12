@@ -1,0 +1,86 @@
+---
+title: "Amazon S3"
+description: "Send raw data reports directly to your Amazon S3 bucket"
+---
+
+Qonversion allows you to upload all the raw revenue data we track to your Amazon S3 bucket. You can find more details about raw data reports [here](https://documentation.qonversion.io/docs/scheduled-reports).
+
+## Prepare Amazon S3 credentials
+
+To upload raw data reports to your bucket, Qonversion needs Access Key ID and Secret access key for the user with write access to the corresponding bucket.
+
+1. Navigate to the [IAM Console](https://console.aws.amazon.com/iam/), select the *Users* section and click the *Add users* button
+
+![2776](/images/docs/95129c5-Screenshot_2022-12-26_at_18.04.25.png "Screenshot 2022-12-26 at 18.04.25.png")
+
+2. Select *Access key - Programmatic access* on the first step.
+
+![2818](/images/docs/debd87f-Screenshot_2022-12-26_at_16.58.04.png "Screenshot 2022-12-26 at 16.58.04.png")
+
+3. There is no need to add any permissions during the user creation; navigate to the final step.
+4. Download the .csv file with the user's credentials; you will need them later.
+
+![2758](/images/docs/5c1a3c1-Screenshot_2022-12-26_at_17.59.38.png "Screenshot 2022-12-26 at 17.59.38.png")
+
+5. Navigate to the recently created user and save the *User ARN* value; you will need it later.
+
+![2756](/images/docs/a4b91fe-Screenshot_2022-12-26_at_18.10.21.png "Screenshot 2022-12-26 at 18.10.21.png")
+
+6. [Navigate to your bucket list](https://console.aws.amazon.com/s3/), and create a new bucket or select an existing one.
+7. Copy your bucket name.
+
+![2860](/images/docs/549cbfb-Screenshot_2022-12-26_at_19.33.42.png "Screenshot 2022-12-26 at 19.33.42.png")
+
+8. Create a policy to allow the User ARN from the 5th step to get *PutObject* action access to the bucket from the 7th step.
+
+   * For example, you can use [AWS Policy Generator](https://awspolicygen.s3.amazonaws.com/policygen.html), where *Principal = User ARN* and *Amazon Resource Name (ARN) = arn:aws:s3:::\[your bucket name from the 7th step]/\**
+   * Or copy the JSON below after replacing *qonversion-test-bucket* and *arn:aws:iam::078705355735:user/QonversionFileUploader* in the *Resource* and *AWS* field, respectively, with your values.
+
+<CodeGroup>
+  ```bash bash
+  {
+    "Id": "Policy1672076420793",
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "Stmt1672070877286",
+        "Action": [
+          "s3:PutObject"
+        ],
+        "Effect": "Allow",
+        "Resource": "arn:aws:s3:::qonversion-test-bucket/*",
+        "Principal": {
+          "AWS": [
+            "arn:aws:iam::078705355735:user/QonversionFileUploader"
+          ]
+        }
+      }
+    ]
+  }
+  ```
+</CodeGroup>
+
+9. Final step to prepare Amazon S3 credentials. Navigate to the *Permissions* section in your bucket, click the *Edit* button in the *Bucket policy* field and paste the JSON from the previous step. Congratulations, after saving the changes, your configuration is ready to use!
+
+![2752](/images/docs/f1f002e-Screenshot_2022-12-26_at_19.48.04.png "Screenshot 2022-12-26 at 19.48.04.png")
+
+## Enter Amazon S3 credentials to Qonversion
+
+1. Navigate to the [Amazon S3](https://dash.qonversion.io/app/integration/create?name=amazon_s3) integration creation page.
+
+![2176](/images/docs/8f6d319-Screenshot_2022-12-26_at_19.53.34.png "Screenshot 2022-12-26 at 19.53.34.png")
+
+2. Enter *AWS Access Key ID*, *AWS Secret Access Key* and *Bucket name* to the corresponding fields
+
+   * You have gotten the *AWS Access Key ID* and *AWS Secret Access Key* values with the .csv file, downloaded during the 4th step in the *Prepare Amazon S3 credentials* section above.
+   * You have gotten the bucket's name during the 7th step in the *Prepare Amazon S3 credentials* section above.
+
+3. Click *the Add new integration +* button
+
+4. Congratulation! Now you have successfully connected the Amazon S3 bucket to Qonversion. Navigate to the [Scheduled reports section](https://documentation.qonversion.io/docs/scheduled-reports#amazon-s3) to launch report uploading to the bucket.
+
+***
+
+What’s Next
+
+* [Scheduled Reports](/docs/scheduled-reports)

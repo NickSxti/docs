@@ -1,0 +1,263 @@
+---
+title: "Deferred Purchases"
+---
+
+## Deferred and pending purchases
+
+Deferred or interrupted in-app purchases may happen when [SCA](https://developer.apple.com/support/psd2) confirmation is needed, in the case of parental control and some other cases. Here is what the deferred purchase flow looks like:
+
+* a user initiates a purchase
+* purchase is received in state `deferred.`
+* you receive a purchase result with a pending purchase status (on iOS and Android) or an error with a deferred purchase description (on cross-platform SDKs)
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().purchase(product) { (result) in
+    if result.isPending {
+      // Handle pending purchase
+    }
+  }
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] purchaseWithResult:product completion:^(QONPurchaseResult * _Nonnull result) {
+    if (result.isPending) {
+      // Handle pending purchase
+    }
+  }];
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().purchase(this, product, new QonversionPurchaseCallback() {
+      @Override
+      public void onResult(@NonNull QPurchaseResult result) {
+          if (result.isPending()) {
+              // Handle pending purchase
+          }
+      }
+  });
+  ```
+
+  ```bash bash
+  Qonversion.shared.purchase(this, product, object : QonversionPurchaseCallback {
+      override fun onResult(result: QPurchaseResult) {
+          if (result.isPending) {
+              // Handle pending purchase
+          }
+      }
+  })
+  ```
+
+  ```bash bash
+  final result = await Qonversion.getSharedInstance().purchaseWithResult(product);
+
+  if (result.isPending) {
+    // Handle pending purchase
+  }
+  ```
+
+  ```bash bash
+  const result: PurchaseResult = await Qonversion.getSharedInstance().purchaseWithResult(product);
+
+  if (result.isPending) {
+    // Handle pending purchase
+  }
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().Purchase(product, (result) =>
+  {
+      if (result.IsPending)
+      {
+          // Handle pending purchase
+      }
+  });
+  ```
+
+  ```bash bash
+  const result = await Qonversion.getSharedInstance().purchase(product);
+
+  if (result.isPending) {
+    // Handle pending purchase
+  }
+  ```
+
+  ```bash bash
+  const result = await Qonversion.getSharedInstance().purchase(product);
+
+  if (result.isPending) {
+    // Handle pending purchase
+  }
+  ```
+</CodeGroup>
+
+* if a transaction completes successfully later, Apple StoreKit or Google Billing Service returns a successful purchase
+* Qonversion SDK returns a successful purchase
+
+Make sure your app handles deferred or interrupted transactions by setting a delegate and a function that is triggered when such a transaction is made.
+
+<Warning>
+  ### Attention
+
+  Please note, this function is called only in case of deferred purchases. The purchase flow happens as described [here](making-purchases#1-make-a-purchase) for all other cases.
+</Warning>
+
+### Provide entitlements update listener
+
+Set the delegate to handle pending purchases and implement the corresponding function to handle new entitlements when the purchase is completed.
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().setEntitlementsUpdateListener(self)
+
+  ...
+
+  func didReceiveUpdatedEntitlements(_ entitlements: [String : Qonversion.Entitlement]) {
+      // handle updated entitlements here
+  }
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] setEntitlementsUpdateListener:self];
+
+  ...
+
+  - (void)didReceiveUpdatedEntitlements:(NSDictionary<NSString *, QONEntitlement *>  * _Nonnull)entitlements {
+      // handle updated entitlements here
+  }
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setEntitlementsUpdateListener(entitlements -> {
+      // handle updated entitlements here
+  });
+  ```
+
+  ```bash bash
+  Qonversion.shared.setEntitlementsUpdateListener(object : QEntitlementsUpdateListener {
+      override fun onEntitlementsUpdated(entitlements: Map<String, QEntitlement>) {
+          // handle updated entitlements here
+      }
+  })
+  ```
+
+  ```bash bash
+  StreamSubscription<Map<String, QEntitlement>> _updatedEntitlementsStream;
+  _updatedEntitlementsStream = Qonversion.getSharedInstance().updatedEntitlementsStream.listen((entitlements) => {
+     // handle updated entitlements here
+  });
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setEntitlementsUpdateListener({
+      onEntitlementsUpdated(entitlements) {
+          // handle updated entitlements here
+      },
+  });
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().UpdatedEntitlementsReceived += HandleUpdatedEntitlements;
+
+  private void HandleUpdatedEntitlements(Dictionary<string, Entitlement> entitlements)
+  {
+      // handle updated entitlements here
+  }
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setEntitlementsUpdateListener({
+      onEntitlementsUpdated(entitlements) {
+          // handle updated entitlements here
+      },
+  });
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setEntitlementsUpdateListener({
+      onEntitlementsUpdated(entitlements) {
+          // handle updated entitlements here
+      },
+  });
+  ```
+</CodeGroup>
+
+You can also provide a listener during the initialization for some platforms as follows:
+
+<CodeGroup>
+  ```bash bash
+  final QonversionConfig qonversionConfig = new QonversionConfig.Builder(
+          this,
+          "projectKey",
+          QLaunchMode.SubscriptionManagement
+  )
+          .setEntitlementsUpdateListener(entitlements -> {
+              // handle updated entitlements here
+          })
+          .build();
+  Qonversion.initialize(qonversionConfig);
+  ```
+
+  ```bash bash
+  val qonversionConfig = QonversionConfig.Builder(
+      this,
+      "projectKey",
+      QLaunchMode.SubscriptionManagement
+  )
+      .setEntitlementsUpdateListener(object : QEntitlementsUpdateListener {
+          override fun onEntitlementsUpdated(entitlements: Map<String, QEntitlement>) {
+              // handle updated entitlements here
+          }
+      })
+      .build()
+  Qonversion.initialize(qonversionConfig)
+  ```
+
+  ```bash bash
+  const config = new QonversionConfigBuilder(
+    'projectKey',
+    LaunchMode.SUBSCRIPTION_MANAGEMENT
+  )
+    .setEntitlementsUpdateListener({
+        onEntitlementsUpdated(entitlements) {
+            // handle updated entitlements here
+        },
+    })
+    .build();
+  Qonversion.initialize(config);
+  ```
+
+  ```bash bash
+  const config = new Qonversion.ConfigBuilder(
+    'projectKey',
+    Qonversion.LaunchMode.SUBSCRIPTION_MANAGEMENT
+  )
+    .setEntitlementsUpdateListener({
+        onEntitlementsUpdated(entitlements) {
+            // handle updated entitlements here
+        },
+    })
+    .build();
+  Qonversion.initialize(config);
+  ```
+
+  ```bash bash
+  const config = new QonversionConfigBuilder(
+    'projectKey',
+    LaunchMode.SUBSCRIPTION_MANAGEMENT
+  )
+    .setEntitlementsUpdateListener({
+        onEntitlementsUpdated(entitlements) {
+            // handle updated entitlements here
+        },
+    })
+    .build();
+  Qonversion.initialize(config);
+  ```
+</CodeGroup>
+
+***
+
+[Tutorials](/docs/tutorials)
+
+[Non-Subscription Purchases](/docs/non-subscription-purchases)
