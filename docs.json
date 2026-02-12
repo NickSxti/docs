@@ -5,9 +5,18 @@
   "colors": {
     "primary": "#a07fff",
     "light": "#a07fff",
-    "dark": "#a07fff"
+    "dark": "#7c4dff"
   },
   "favicon": "/59c36df-small-Avatars_500x500_Black.png",
+  "search": {
+    "prompt": "Search Qonversion docs..."
+  },
+  "feedback": {
+    "thumbsRating": true
+  },
+  "seo": {
+    "indexing": "all"
+  },
   "navigation": {
     "tabs": [
       {
@@ -387,13 +396,18 @@
             ]
           },
           {
-            "group": "Analytics",
-            "pages": [
-              "reference/analytics-overview",
-              "reference/analytics-charts",
-              "reference/customers"
-            ]
+            "group": "Analytics API",
+            "openapi": {
+              "source": "api-reference/analytics-api.yaml",
+              "directory": "reference/analytics"
+            }
           }
+        ]
+      },
+      {
+        "tab": "Changelog",
+        "pages": [
+          "changelog"
         ]
       }
     ]
