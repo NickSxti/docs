@@ -5,12 +5,12 @@ description: "Are you experiencing issues with Qonversion? Don't worry, we're he
 
 ![](/images/docs/c877c93-Troubleshooting.png)
 
-Check out our troubleshooting guide for quick solutions to common problems. If you went through this guide and you're still having problems, reach out to us in our [Discussions](https://documentation.qonversion.io/discuss) tab or create a [GitHub issue](https://github.com/qonversion).
+Check out our troubleshooting guide for quick solutions to common problems. If you went through this guide and you're still having problems, reach out to us in our [GitHub](https://github.com/qonversion) tab or create a [GitHub issue](https://github.com/qonversion).
 
 <Info>
   ### Update Qonversion SDK to the latest version
 
-  We recommend updating your Qonversion SDK to the latest version. It brings new features, improvements, and bug fixes for optimal performance. Refer to the updated [Installing the SDKs](doc:install-sdk) documentation for step-by-step instructions on how to seamlessly integrate the latest SDK version into your app.
+  We recommend updating your Qonversion SDK to the latest version. It brings new features, improvements, and bug fixes for optimal performance. Refer to the updated [Installing the SDKs](/docs/install-sdk) documentation for step-by-step instructions on how to seamlessly integrate the latest SDK version into your app.
 </Info>
 
 ## Active store not found
@@ -20,19 +20,19 @@ There are no active stores in the settings of your project.
 To fix the error, do the following:
 
 1. Open the project settings and select the `Stores` tab.
-2. [Activate and set up](https://documentation.qonversion.io/docs/quickstart#2-create-a-project-and-register-your-app) the required store.
+2. [Activate and set up](/docs/quickstart#2-create-a-project-and-register-your-app) the required store.
 
 ![](/images/docs/dece975-Store_Settings.png)
 
 ## Invalid access token received
 
-* Make sure that you set the correct [Project Key](https://documentation.qonversion.io/docs/quickstart#2-create-a-project-and-register-your-app) to the `Qonversion Configuration Builder`.
+* Make sure that you set the correct [Project Key](/docs/quickstart#2-create-a-project-and-register-your-app) to the `Qonversion Configuration Builder`.
 
 ## Invalid Store Credentials Error
 
 ### **`iOS`**
 
-* Please make sure to provide the correct [Shared Secret](https://documentation.qonversion.io/docs/app-specific-shared-secret) in the Qonversion Dashboard.
+* Please make sure to provide the correct [Shared Secret](/docs/app-specific-shared-secret) in the Qonversion Dashboard.
 * Please make sure to fill out the tax information and agreement for the paid apps section.
 
 ### **`Android`**
@@ -45,8 +45,8 @@ To fix the error, do the following:
 ### All stores
 
 * Here are the most frequent reasons for receiving a **product not found** error.
-* You are trying to buy a product with the wrong Qonversion Product ID or you have not set the product identifiers in the [Qonversion dashboard](https://documentation.qonversion.io/docs/create-products).
-* You are trying to buy a product with the wrong Google Play Store ID + base plan ID or AppStore Product ID configured on the [Qonversion dashboard](https://documentation.qonversion.io/docs/create-products).
+* You are trying to buy a product with the wrong Qonversion Product ID or you have not set the product identifiers in the [Qonversion dashboard](/docs/create-products).
+* You are trying to buy a product with the wrong Google Play Store ID + base plan ID or AppStore Product ID configured on the [Qonversion dashboard](/docs/create-products).
 
 ### **`App Store only`**
 
@@ -59,9 +59,9 @@ To fix the error, do the following:
 
 * In case you are receiving empty or not expected entitlement data:
 
-1. Ensure that products and entitlements are configured correctly in the [Qonversion dashboard](https://documentation.qonversion.io/docs/entitlements). Check if the purchased product is linked to the expected entitlement.
+1. Ensure that products and entitlements are configured correctly in the [Qonversion dashboard](/docs/entitlements). Check if the purchased product is linked to the expected entitlement.
 2. `iOS Only` Make sure you are not using a `.storekit` file. Products from the `.storekit` file are available only on your local phone or simulator. They are unavailable on the App Store Connect and can’t be validated.
-3. `Android Only` If [in-app products](https://documentation.qonversion.io/docs/android-in-app-products) are created **before** [granting users access](doc:service-account-key-android#7-grant-access) or [linking Google Cloud Project](doc:service-account-key-android#3-link-google-cloud-project) to the service account, it may cause problems with the receipt validation using Google Play Developer API. Google Play Developer API can return the following error *"The current user has insufficient permissions to perform the requested operation."* When encountering this issue, open the In-app products or Subscription tab respectively on the Google Play Console and make some updates. For example, edit the product description and save it.
+3. `Android Only` If [in-app products](/docs/android-in-app-products) are created **before** [granting users access](/docs/service-account-key-android#7-grant-access) or [linking Google Cloud Project](/docs/service-account-key-android#3-link-google-cloud-project) to the service account, it may cause problems with the receipt validation using Google Play Developer API. Google Play Developer API can return the following error *"The current user has insufficient permissions to perform the requested operation."* When encountering this issue, open the In-app products or Subscription tab respectively on the Google Play Console and make some updates. For example, edit the product description and save it.
 
 # iOS only
 
@@ -103,7 +103,7 @@ In most cases, it happens because of unfinished transactions. If this issue occu
 
 Here are the most frequent reasons for the **StoreDetails** (or **SkuDetails**) error.
 
-1. Your in-app products are not configured correctly in Google Play Console. Once you have created a product, it has an Inactive status. You have to **activate the product** to purchase it. For more details, see our [Android In-App Products Setup](https://documentation.qonversion.io/docs/android-in-app-products) guide.
+1. Your in-app products are not configured correctly in Google Play Console. Once you have created a product, it has an Inactive status. You have to **activate the product** to purchase it. For more details, see our [Android In-App Products Setup](/docs/android-in-app-products) guide.
 2. Your app has an **application ID different from the original APK uploaded to Google Play Console**. An **applicationIdSuffix** for the debug **buildType** in the build.gradle file may also cause an error. When you use applicationIdSuffix you actually change your applicationId. As a result, Google Play Store treats your app as a completely different app.
 3. It could be a problem on the Google side, so we recommend updating the in-app purchase information in the Google Play Console. You can update the in-app purchase description and save it.
 4. In case you don't see the changes applied, please try to clear the Google Play Store cache on your test device.
@@ -115,7 +115,7 @@ The Billing service is unavailable on the device because it is not connected to 
 1. You are testing on an emulator. Please make sure that the emulator has the Play Store installed.
 2. You are not logged into a test device with a google account.
 
-For more details see [Android test devices](https://documentation.qonversion.io/docs/android-test-devices).
+For more details see [Android test devices](/docs/android-test-devices).
 
 ## The purchase token does not match the package name
 

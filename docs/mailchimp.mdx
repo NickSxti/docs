@@ -7,9 +7,9 @@ Qonversion sends mobile subscription events to Mailchimp to automate emails with
 
 ## 1. Configure the SDK
 
-1. Set Qonversion SDKs following [installing the SDKs](doc:install-sdk) guides.
+1. Set Qonversion SDKs following [installing the SDKs](/docs/install-sdk) guides.
 
-2. Provide user email using [User Properties](doc:user-properties):
+2. Provide user email using [User Properties](/docs/user-properties):
 
 <CodeGroup>
   ```bash bash
@@ -49,12 +49,12 @@ Qonversion sends mobile subscription events to Mailchimp to automate emails with
   ```
 </CodeGroup>
 
-**→[Read more about User Properties here](doc:user-properties)**
+**→[Read more about User Properties here](/docs/user-properties)**
 
 <Warning>
   ### Attention
 
-  You need to provide user email using user properties to Qonversion. Qonversion will be able to send events to Mailchimp only for the users with the correct user email provided. Please check how to add user email to Qonversion [here](https://documentation.qonversion.io/docs/user-properties#defined-user-properties)
+  You need to provide user email using user properties to Qonversion. Qonversion will be able to send events to Mailchimp only for the users with the correct user email provided. Please check how to add user email to Qonversion [here](/docs/user-properties#defined-user-properties)
 
   Qonversion is sending the code of the registered event \{"name": "trial\_started"} to [https://mailchimp.com/developer/marketing/api/list-member-events/add-event/](https://mailchimp.com/developer/marketing/api/list-member-events/add-event/) endpoint. User ID of the MailChimp user (subscriber\_hash) is generated based on the user's email.
 </Warning>

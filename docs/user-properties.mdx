@@ -64,7 +64,7 @@ The full list of the defined properties is provided below:
 | `KochavaDeviceId`       | `\_q_kochava_device_id`          | Kochava Unique Device ID                                                                                                                               |
 | `AppsFlyerUserId`       | `\_q_appsflyer_user_id`          | Customer user ID. It can be used to cross-reference your in-house data with AppsFlyer attribution data.                                                |
 | `AdjustAdId`            | `\_q_adjust_adid`                | Adjust Advertising ID                                                                                                                                  |
-| `CustomUserId`          | `\_q_custom_user_id`             | Your Internal User ID. Use User ID for third-party [Integrations ](doc:integrations-overview)to attribute events to existing users in other platforms. |
+| `CustomUserId`          | `\_q_custom_user_id`             | Your Internal User ID. Use User ID for third-party [Integrations ](/docs/integrations-overview)to attribute events to existing users in other platforms. |
 | `FacebookAttribution`   | `\_q_fb_attribution`             | Mobile Cookie from the user's device                                                                                                                   |
 | `FirebaseAppInstanceId` | `\_q_firebase_instance_id`       | The identifier for a Firebase app                                                                                                                      |
 | `AppSetId`              | `\_q_app_set_id`                 | Unique user identifier for all the developer's applications on Android                                                                                 |
@@ -121,7 +121,7 @@ You can use letters **A-Za-z**, numbers, and the following symbols **\_.:-** as 
 <Info>
   ### Property setting order
 
-  To successfully set either Defined or Custom User Properties, launch Qonversion SDK first. [Learn more.](https://documentation.qonversion.io/docs/using-the-sdks#launching)
+  To successfully set either Defined or Custom User Properties, launch Qonversion SDK first. [Learn more.](/docs/install-sdk)
 </Info>
 
 ## Get User Properties
@@ -518,9 +518,9 @@ The object returned by `userProperties` method contains several utility fields a
 
 ## (Optional) Set User ID
 
-If you want to implement cross-platform (Android, IOS, and Web) user entitlement management, please, follow the [User Identity guide](https://documentation.qonversion.io/docs/user-identifiers#3-user-identity).
+If you want to implement cross-platform (Android, IOS, and Web) user entitlement management, please, follow the [User Identity guide](/docs/user-identifiers#3-user-identity).
 
-To match Qonversion revenue events to users in [third-party tools](https://documentation.qonversion.io/docs/integrations-overview), you need to set the identical user IDs in all of them:
+To match Qonversion revenue events to users in [third-party tools](/docs/integrations-overview), you need to set the identical user IDs in all of them:
 
 <CodeGroup>
   ```bash bash
@@ -564,7 +564,7 @@ The user ID improves the quality of events matching to the platforms where event
 
 ## (Optional) Set IDFA (Identifier for Advertisers, iOS 14.5+ only)
 
-On iOS 14.5+, after requesting the app tracking permission using ATT, you need to notify Qonversion if tracking is allowed and IDFA is available. This will help to have precise attribution in Adjust, AppsFlyer, Singular and other [Qonversion integrations](https://documentation.qonversion.io/docs/integrations-overview).
+On iOS 14.5+, after requesting the app tracking permission using ATT, you need to notify Qonversion if tracking is allowed and IDFA is available. This will help to have precise attribution in Adjust, AppsFlyer, Singular and other [Qonversion integrations](/docs/integrations-overview).
 
 <CodeGroup>
   ```bash bash
@@ -616,7 +616,7 @@ On iOS 14.5+, after requesting the app tracking permission using ATT, you need t
 
 ## (Optional) Set ASID (App set ID, Android 12+ only)
 
-On Android 12+, you can provide an App set ID to have it used in [Qonversion integrations](https://documentation.qonversion.io/docs/integrations-overview).
+On Android 12+, you can provide an App set ID to have it used in [Qonversion integrations](/docs/integrations-overview).
 
 Add `com.google.android.gms:play-services-appset` as the dependency to your project and write the following code.
 

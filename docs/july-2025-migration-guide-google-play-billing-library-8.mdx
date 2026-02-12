@@ -89,7 +89,7 @@ In Google Play Billing Library 8, the method for receiving historical purchases 
 
 Implications for Qonversion:
 
-* The `syncHistoricalData` method has been deprecated, as it can't completely fulfill its purpose anymore. If you relied on this method for migrating your userbase purchases history to Qonversion, you will no longer be able to do so following this major update. For other available options, please refer to [our documentation](https://documentation.qonversion.io/docs/migrating-subscriptions#/).
+* The `syncHistoricalData` method has been deprecated, as it can't completely fulfill its purpose anymore. If you relied on this method for migrating your userbase purchases history to Qonversion, you will no longer be able to do so following this major update. For other available options, please refer to [our documentation](/docs/migrating-subscriptions#/).
 * The `restore` and `syncPurchases` methods will now function solely with active subscriptions and non-consumed one-time purchases. This change will not impact user experience, as expired subscriptions or consumed one-time purchases did not provide any entitlements previously. However, they will also not be reflected in Qonversion analytics if they were not tracked by Qonversion earlier, as we will not receive any data on them from Google Play Billing.
 
 ## Renaming ID to Id in offerings and products

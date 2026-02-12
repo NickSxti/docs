@@ -48,7 +48,7 @@ Qonversion Remote Config provides you with flexible in-app values using which **
 <Info>
   ### Configuration source
 
-  Qonversion Remote Configs and Experiments share single methods to get configurations. You can distinguish the source of the result received by looking at the *source* field. [Learn more about fields available](https://documentation.qonversion.io/docs/remote-config#remoteconfig-fields-description).
+  Qonversion Remote Configs and Experiments share single methods to get configurations. You can distinguish the source of the result received by looking at the *source* field. [Learn more about fields available](/docs/remote-config#remoteconfig-fields-description).
 </Info>
 
 To receive the configuration **with the Context key set**, call the following Qonversion `remoteConfig` method.
@@ -384,12 +384,12 @@ If you need remote configs for a specific set of context keys, just use the foll
 Please, note:
 
 * If you're using the [Qonversion Experiments](https://dash.qonversion.io/ab-testing) feature, the `remoteConfig`object will also contain experiment-related fields.
-* Qonversion assigns eligible users to launched experiments once the `remoteConfig` is called. We also recommend paying attention to the [Segmentation rules](https://documentation.qonversion.io/docs/remote-config#2-segment-users) for the configuration.
+* Qonversion assigns eligible users to launched experiments once the `remoteConfig` is called. We also recommend paying attention to the [Segmentation rules](/docs/remote-config#2-segment-users) for the configuration.
 
 # 4. Test changes before launch
 
 <Info>
-  Please, note, the guide below allows you to test only configurations created through the [Remote Config dashboard section](https://dash.qonversion.io/remote-configs). To test configurations from the [Experiments section](https://dash.qonversion.io/ab-testing), please, follow the [test experimental changes before launch](https://documentation.qonversion.io/docs/launch-experiments#test-experimental-changes-before-launch) guide.
+  Please, note, the guide below allows you to test only configurations created through the [Remote Config dashboard section](https://dash.qonversion.io/remote-configs). To test configurations from the [Experiments section](https://dash.qonversion.io/ab-testing), please, follow the [test experimental changes before launch](/docs/launch-experiments#test-experimental-changes-before-launch) guide.
 </Info>
 
 We highly recommend testing if your app works properly with the changes you want to roll out to your users. You can do so by following the following steps:
@@ -564,7 +564,7 @@ Once you have added all the necessary properties to your in-app configuration, v
 
 # 7. Fallback files (optional)
 
-To enhance the reliability of remote configurations, consider utilizing Qonversion [fallback files](https://documentation.qonversion.io/docs/system-reliability#/fallback-files). These files will serve as a backup in case of network provider errors or system failures, ensuring that your application continues to receive essential data and avoids any downtime. For more information on fallback files and how to install them, please refer to [this page](https://documentation.qonversion.io/docs/system-reliability#/fallback-files).
+To enhance the reliability of remote configurations, consider utilizing Qonversion [fallback files](/docs/system-reliability#/fallback-files). These files will serve as a backup in case of network provider errors or system failures, ensuring that your application continues to receive essential data and avoids any downtime. For more information on fallback files and how to install them, please refer to [this page](/docs/system-reliability#/fallback-files).
 
 ***
 

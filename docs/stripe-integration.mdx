@@ -42,7 +42,7 @@ You can use the Stripe dashboard to create a subscription manually, but the most
 ## 3. Add your Stripe products to Qonversion
 
 <Info>
-  Skip this step if you are not using the [Qonversion Subscription Management mode](https://documentation.qonversion.io/docs/subscription-management-mode).
+  Skip this step if you are not using the [Qonversion Subscription Management mode](/docs/subscription-management-mode).
 </Info>
 
 Add your Stripe products to the [dashboard](https://dash.qonversion.io/entitlements/products) to manage cross-platform subscribers' access.
@@ -65,7 +65,7 @@ For instance, let's use the [Prebuilt subscription page with Stripe Checkout](ht
 
 2. In the Success URL handler retrieve the Stripe Session data via [Stripe API](https://stripe.com/docs/api/checkout/sessions/retrieve). Let's name it `stripe_session`. Additional information about success page customization is specified on the Stripe docs page [Customise your success page](https://stripe.com/docs/payments/checkout/custom-success-page)
 
-3. Send your Stripe purchase result to Qonversion via the [API endpoint](https://documentation.qonversion.io/reference/create-a-purchase).
+3. Send your Stripe purchase result to Qonversion via the [API endpoint](/reference/overview).
 
 <CodeGroup>
   ```bash bash

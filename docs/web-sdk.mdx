@@ -85,7 +85,7 @@ Note that some configurations can be changed after the initialization, but we re
 
 ## Properties
 
-User properties are attributes you can set on a user level. You can send user properties to third-party platforms and use them in Qonversion for customer segmentation and analytics. You can read more about user properties [here](https://documentation.qonversion.io/docs/user-properties).
+User properties are attributes you can set on a user level. You can send user properties to third-party platforms and use them in Qonversion for customer segmentation and analytics. You can read more about user properties [here](/docs/user-properties).
 
 We defined some common case properties and provided API for adding them:
 
@@ -154,7 +154,7 @@ The return `UserProperties` class contains several utility fields and methods:
 
 ## Purchases
 
-For now, Qonversion Web SDK accepts only [Stripe](doc:stripe-integration) purchases. We are working on supporting more billing providers. To send the purchase to Qonversion after you receive a successful response from Stripe, call the following method and provide the received data.
+For now, Qonversion Web SDK accepts only [Stripe](/docs/stripe-integration) purchases. We are working on supporting more billing providers. To send the purchase to Qonversion after you receive a successful response from Stripe, call the following method and provide the received data.
 
 <CodeGroup>
   ```bash bash
@@ -166,7 +166,7 @@ Once you have successfully sent a purchase, request the updated user entitlement
 
 ## Entitlements
 
-To let Qonversion handle user entitlements, you should configure them in the [Qonversion dashboard](https://documentation.qonversion.io/docs/subscription-management-mode#1-configure-products--entitlements) first. After you have it done, Qonversion will grant entitlements to the current user each time you send us a successful purchase. Then you can get the current user entitlements as follows.
+To let Qonversion handle user entitlements, you should configure them in the [Qonversion dashboard](/docs/subscription-management-mode#1-configure-products--entitlements) first. After you have it done, Qonversion will grant entitlements to the current user each time you send us a successful purchase. Then you can get the current user entitlements as follows.
 
 <CodeGroup>
   ```bash bash
@@ -176,7 +176,7 @@ To let Qonversion handle user entitlements, you should configure them in the [Qo
 
 ## Identity
 
-User Identity allows cross-device & cross-platform user identification and access management. You can read more about it [here](https://documentation.qonversion.io/docs/user-identifiers#3-user-identity).
+User Identity allows cross-device & cross-platform user identification and access management. You can read more about it [here](/docs/user-identifiers#3-user-identity).
 
 When a user logs into his account, call `identify()`.
 
@@ -194,7 +194,7 @@ And when a user logs out call `logout()`
   ```
 </CodeGroup>
 
-Consider looking at the examples [here](https://documentation.qonversion.io/docs/user-identifiers#examples) to better understand `identify()` at work.
+Consider looking at the examples [here](/docs/user-identifiers#examples) to better understand `identify()` at work.
 
 ***
 

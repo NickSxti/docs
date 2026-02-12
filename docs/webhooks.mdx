@@ -3,7 +3,7 @@ title: "Webhooks"
 description: "Send in-app subscription and purchase events to your server with webhooks"
 ---
 
-Qonversion validates user receipts with app stores and sends subscription events to your HTTP endpoints. Keep in mind events delivery time when using webhooks to manage subscriber statuses on your back-end. Webhook events are delivered within 20 to 120 seconds of the event occurring. Please consider using [checkEntitlements](doc:check-permissions) method of Qonversion SDK to get real-time subscription status on the client-side.
+Qonversion validates user receipts with app stores and sends subscription events to your HTTP endpoints. Keep in mind events delivery time when using webhooks to manage subscriber statuses on your back-end. Webhook events are delivered within 20 to 120 seconds of the event occurring. Please consider using [checkEntitlements](/docs/check-permissions) method of Qonversion SDK to get real-time subscription status on the client-side.
 
 ## 1. Set up the webhook URL
 
@@ -121,18 +121,18 @@ Qonversion sends **POST** request to webhook URL every time an event occurs. The
 
 | Column                     | Required | Description                                                                                                                                                                                                                         |
 | -------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| event\_name                | yes      | Event name provided in the integration config. See the details on the events tracked[here](doc:integrations-overview)                                                                                                               |
+| event\_name                | yes      | Event name provided in the integration config. See the details on the events tracked[here](/docs/integrations-overview)                                                                                                               |
 | user\_id                   | yes      | Unique user identifier assigned by Qonversion                                                                                                                                                                                       |
-| custom\_user\_id           | yes      | Unique user identifier that you can set with Qonversion SDK methods:[User Identifiers](doc:user-identifiers#logging-in)                                                                                                             |
-| identity\_id               | yes      | Unique user ID for the authenticated users that you can set using [identify method](https://documentation.qonversion.io/docs/user-identifiers#3-user-identity) of the Qonversion SDK                                                |
+| custom\_user\_id           | yes      | Unique user identifier that you can set with Qonversion SDK methods:[User Identifiers](/docs/user-identifiers#logging-in)                                                                                                             |
+| identity\_id               | yes      | Unique user ID for the authenticated users that you can set using [identify method](/docs/user-identifiers#3-user-identity) of the Qonversion SDK                                                |
 | advertiser\_id             | yes      | IDFA or AAID                                                                                                                                                                                                                        |
-| time                       | yes      | The time an app store changed a subscription status or a time Qonversion detected the change in the UNIX epoch time format in seconds. Read more about events time[here](doc:integrations-overview#event-time)                      |
+| time                       | yes      | The time an app store changed a subscription status or a time Qonversion detected the change in the UNIX epoch time format in seconds. Read more about events time[here](/docs/integrations-overview#event-time)                      |
 | created\_at                | yes      | The time Qonversion generated the event                                                                                                                                                                                             |
 | product\_id                | yes      | App Store or Google Play Store product identifier                                                                                                                                                                                   |
 | revenue                    | yes      | Dictionary with transaction revenue details. Only events with value filled                                                                                                                                                          |
 | price                      | yes      | Dictionary containing the price details of the product                                                                                                                                                                              |
 | transaction                | yes      | Dictionary with store transaction IDs and expiration timestamp                                                                                                                                                                      |
-| properties                 | yes      | User properties provided by SDK. Read more about user properties[here](doc:user-properties)                                                                                                                                         |
+| properties                 | yes      | User properties provided by SDK. Read more about user properties[here](/docs/user-properties)                                                                                                                                         |
 | device\_id                 | yes      | identifierForVendor or Settings Secure Android ID.                                                                                                                                                                                  |
 | app\_version               | no       | Application version.                                                                                                                                                                                                                |
 | sdk\_version               | no       | Qonversion SDK version.                                                                                                                                                                                                             |
@@ -149,7 +149,7 @@ Qonversion sends **POST** request to webhook URL every time an event occurs. The
 | app\_id                    | yes      | Store App Id. App Store ID for iOS or Android Package Name for Android.                                                                                                                                                             |
 | quantity                   | yes      | Number of consumable in-app purchases. For non-consumable items or subscriptions, it will always return 1.                                                                                                                          |
 | subscription\_renew\_count | yes      | This represents the total number of times a user's subscription has been renewed.                                                                                                                                                   |
-| entitlements               | yes      | Array of granted user entitlements. Entity's fields are synchronized with our[public API](https://documentation.qonversion.io/reference/retrieve-an-entitlement).                                                                   |
+| entitlements               | yes      | Array of granted user entitlements. Entity's fields are synchronized with our[public API](/reference/overview).                                                                   |
 | asa\_attribution           | no       | Dictionary with Apple Search Ads attribution details. Only for events for users who were attributed with the ad.                                                                                                                    |
 
 ## Revenue and price fields
@@ -194,7 +194,7 @@ There are 3 fields that contain transaction details:
 
 ## Apple Search Ads attribution fields
 
-You need to set up [Apple Search Ads integration](https://documentation.qonversion.io/docs/apple-search-ads) first, then we will send ASA attribution with all new events for only attributed users. The data in the table below can be found in the `asa_attribution` field.
+You need to set up [Apple Search Ads integration](/docs/apple-search-ads) first, then we will send ASA attribution with all new events for only attributed users. The data in the table below can be found in the `asa_attribution` field.
 
 <CodeGroup>
   ```bash bash

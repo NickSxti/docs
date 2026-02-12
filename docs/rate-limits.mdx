@@ -13,7 +13,7 @@ description: "Our SDKs include rate limit checks for API requests from the follo
 | Cordova      | 4.1.0   |
 | Capacitor    | 0.1.0   |
 
-Every endpoint and every set of arguments separate the limits. The count of identical API requests per second is limited to 5. Exceeding this amount will cause a `RateLimitExceeded` error, described [here](doc:handling-errors).
+Every endpoint and every set of arguments separate the limits. The count of identical API requests per second is limited to 5. Exceeding this amount will cause a `RateLimitExceeded` error, described [here](/docs/handling-errors).
 
 If you receive the error mentioned above, ensure you don't call Qonversion SDK methods multiple times from several threads on each screen/view render method, etc.
 

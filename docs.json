@@ -25,6 +25,18 @@
       "languages": ["curl", "python", "javascript", "php", "ruby", "go", "java"]
     }
   },
+  "navbar": {
+    "links": [
+      {
+        "label": "Home",
+        "href": "https://qonversion.io"
+      },
+      {
+        "label": "Status",
+        "href": "https://status.qonversion.io"
+      }
+    ]
+  },
   "navigation": {
     "tabs": [
       {
@@ -35,7 +47,11 @@
             "pages": [
               "docs/qonversion-platform",
               "docs/how-qonversion-works",
-              "docs/system-reliability"
+              "docs/system-reliability",
+              {
+                "anchor": "Service Level Agreement",
+                "href": "https://qonversion.io/service-level-agreement/"
+              }
             ]
           },
           {

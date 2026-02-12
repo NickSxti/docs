@@ -15,7 +15,7 @@ Knowing how Qonversion Experiments distributes users between tests is crucial fo
 Splitter in Qonversion Experiments works in the following way:
 
 1. At the top of the processing funnel, Splitter receives User\_A.
-   * Splitter receives User\_A when the [`remoteConfig` method](https://documentation.qonversion.io/docs/launch-experiments#get-your-configuration) is called
+   * Splitter receives User\_A when the [`remoteConfig` method](/docs/launch-experiments#get-your-configuration) is called
 
 2. Splitter sorts experiments with selected **Context key** by **Start date** and checks if User\_A can be assigned to each experiment.
 
@@ -25,14 +25,14 @@ Splitter in Qonversion Experiments works in the following way:
    2. Level of traffic allocation (30%, 50%, 70%, etc.)
 
 4. If User\_A matches segmentation rules, he is assigned to a specific group inside the experiment. Otherwise, Splitter returns to Step #2 to check User\_A against the following experiment in the queue.
-   1. Please note, if you have the traffic level in the first launched experiment (sorted by start date) set to 70% and in the second - 30%, that means that your second experiment is exposed for (100% - 70%) \* 30% = 9% of all users. Set the traffic level to 100% for the second experiment in case you want to use all the remaining from the first experiment users. [Below](https://documentation.qonversion.io/docs/splitting-rules#example-1) you can find some examples that help understand this approach better.
+   1. Please note, if you have the traffic level in the first launched experiment (sorted by start date) set to 70% and in the second - 30%, that means that your second experiment is exposed for (100% - 70%) \* 30% = 9% of all users. Set the traffic level to 100% for the second experiment in case you want to use all the remaining from the first experiment users. [Below](/docs/splitting-rules#example-1) you can find some examples that help understand this approach better.
 
 <Info>
   ### Cross-context experiments
 
   Please note that a User can be assigned to a few experiments with different **Context keys** at a time.
 
-  To turn off exposure to cross-context experiments, please use the [Attached active experiment and Attached experiment context key](https://documentation.qonversion.io/docs/launch-experiments#segment-your-users) segmentation options.
+  To turn off exposure to cross-context experiments, please use the [Attached active experiment and Attached experiment context key](/docs/launch-experiments#segment-your-users) segmentation options.
 </Info>
 
 # Example #1
@@ -65,7 +65,7 @@ Let's consider the case of launching two experiments with the same Context key a
 
 ![](/images/docs/fbec30a-Screenshot_2023-06-01_at_15.09.18.png)
 
-Based on the [General splitting rules](https://documentation.qonversion.io/docs/splitting-rules#general-splitting-rules), you have the following distribution picture:
+Based on the [General splitting rules](/docs/splitting-rules#general-splitting-rules), you have the following distribution picture:
 
 * 70% of users from the UK are assigned to Experiment #1 (with Start date = 09.03.23).
 * (100% - 70%) \* 30% = 9% of users from the UK are assigned to Experiment #2 (with Start date = 15.03.23).

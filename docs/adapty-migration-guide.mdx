@@ -19,7 +19,7 @@ First, let's set up your Stores in the Qonversion dashboard. To do this, gather 
 
 To configure the Apple App Store in Qonversion, you will need the following fields:
 
-1. **App-Specific Shared Secret**: Copy this value from the App Store Connect shared secret field in the App Settings -> iOS SDK section in the Adapty dashboard. [Here's](https://documentation.qonversion.io/docs/app-specific-shared-secret) a more detailed guide on how to obtain this.
+1. **App-Specific Shared Secret**: Copy this value from the App Store Connect shared secret field in the App Settings -> iOS SDK section in the Adapty dashboard. [Here's](/docs/app-specific-shared-secret) a more detailed guide on how to obtain this.
 2. **App Store ID**: You'll find your App Store ID in the URL of your App Store Connect account. For example, if your URL is something like `https://apps.apple.com/us/app/example-app/id123456789`, then 123456789 is your app’s Apple ID.
 
 ![](/images/docs/a4edbc84020939b3e23a7b3de6bab82c3369e1ae62c465d8a516a995d0008359-3d4087e-CleanShot_2023-06-26_at_13.27.042x.png)
@@ -33,7 +33,7 @@ Here's what you have at Adapty:
 To set up your Google Play account in Qonversion, you will need the following:
 
 1. **Android Package Name**: This is the applicationID found in your app-level build.gradle file. You can either copy it from there or use the **Package Name** from your Adapty settings.
-2. **Service Account Credentials JSON**: Copy the value from the **Service account key file** shown in the screenshot above, or attach the same file you used with Adapty. [Here's more](https://documentation.qonversion.io/docs/service-account-key-android) on how you can get Google Play Service Account Key.
+2. **Service Account Credentials JSON**: Copy the value from the **Service account key file** shown in the screenshot above, or attach the same file you used with Adapty. [Here's more](/docs/service-account-key-android) on how you can get Google Play Service Account Key.
 
 <Check>
   ### Configure Stores in Qonversion
@@ -81,7 +81,7 @@ To create Products in Qonversion, go to **Entitlements → Products** and click 
 
 * **AppStore Product ID** – product identifier on Apple App Store. Learn more on how to create [subscriptions on iOS](https://qonversion.io/blog/configure-iap-app-store-connect/).
 
-* **Google Play Product ID** – product identifier on Google Play Console. Learn more on how to set up [Android in-app products ](https://documentation.qonversion.io/docs/android-in-app-products).
+* **Google Play Product ID** – product identifier on Google Play Console. Learn more on how to set up [Android in-app products ](/docs/android-in-app-products).
 
 * **Google Play Base Plan ID** - identifier of the base plan for Google Play Product. This is used for subscription products. If you're creating an in-app, leave this field empty for in-apps. In Qonversion, you will set up different products for the different base plans of the same product.
 
@@ -110,7 +110,7 @@ To seamlessly implement server-to-server notifications, use Adapty S2S URLs as a
 4. Copy the Adapty URL you used for server-to-server notifications and replace it with the URL from step 1.
 5. Set up the Adapty URL as a Proxy URL in Qonversion in [project settings](https://dash.qonversion.io/project-settings/stores?tab=ios).
 
-See more information [here](https://documentation.qonversion.io/docs/server-to-server-notifications).
+See more information [here](/docs/server-to-server-notifications).
 
 ### Google Developer Notifications
 
@@ -125,17 +125,17 @@ See more information [here](https://documentation.qonversion.io/docs/server-to-s
 5. Open the **Google Play Console** for your application, then navigate to **Monetization setup**.
 6. In the **Real-time developer notifications** tab, insert your topic ID, click on **Save changes**, and then the **Send Test Notification** button.
 
-It takes up to 24 hours for your [Google service credentials](https://documentation.qonversion.io/docs/service-account-key-android) to work correctly. Make sure to wait for at least 24 hours after you have created the credentials before connecting to Google Real-Time Developer Notifications.
+It takes up to 24 hours for your [Google service credentials](/docs/service-account-key-android) to work correctly. Make sure to wait for at least 24 hours after you have created the credentials before connecting to Google Real-Time Developer Notifications.
 
-See more information [here](https://documentation.qonversion.io/docs/google-developer-notifications).
+See more information [here](/docs/google-developer-notifications).
 
 # Install SDKs
 
 Check out the links below for the SDK you need and follow the steps provided:
 
-→ [iOS SDK](doc:ios-sdk-setup) → [Android SDK](doc:android-sdk) → [Flutter SDK](doc:flutter-sdk) → [React Native SDK](doc:react-native-sdk) → [Unity SDK](doc:unity-sdk) → [Cordova Plugin](doc:cordova) → [Capacitor Plugin](doc:capacitor) → [Web](doc:web-sdk) → [Kids Mode Qonversion SDKs](doc:kids-mode-sdk)
+→ [iOS SDK](/docs/ios-sdk-setup) → [Android SDK](/docs/android-sdk) → [Flutter SDK](/docs/flutter-sdk) → [React Native SDK](/docs/react-native-sdk) → [Unity SDK](/docs/unity-sdk) → [Cordova Plugin](/docs/cordova) → [Capacitor Plugin](/docs/capacitor) → [Web](/docs/web-sdk) → [Kids Mode Qonversion SDKs](/docs/kids-mode-sdk)
 
-Read more about [Installing the SDKs](https://documentation.qonversion.io/docs/install-sdk).
+Read more about [Installing the SDKs](/docs/install-sdk).
 
 When you're done with the setup, it's time to get into the code!
 
@@ -522,7 +522,7 @@ In Qonversion you can simply fetch products and display them using offerings:
   ```
 </CodeGroup>
 
-[See more about Offerings](https://documentation.qonversion.io/docs/offerings)
+[See more about Offerings](/docs/offerings)
 
 ## Making purchases
 
@@ -1326,7 +1326,7 @@ Follow these steps to sync user status and retrieve the latest data from Google 
 
 Once you have the app version with Qonversion SDK up and running, it's time to proceed to the server-side migration.
 
-1. Prepare files with [AppStore with Base64 encoded receipt data](https://documentation.qonversion.io/docs/migrating-subscriptions#app-store-data-migration-file) or [Google Play with purchase tokens](https://documentation.qonversion.io/docs/migrating-subscriptions#google-play-data-migration-file). If you do not have receipt data or purchase tokens on your side but are already running your subscription management with a third-party vendor, you should ask the vendor’s support team for the required data file.
+1. Prepare files with [AppStore with Base64 encoded receipt data](/docs/migrating-subscriptions#app-store-data-migration-file) or [Google Play with purchase tokens](/docs/migrating-subscriptions#google-play-data-migration-file). If you do not have receipt data or purchase tokens on your side but are already running your subscription management with a third-party vendor, you should ask the vendor’s support team for the required data file.
 2. Then simply **share the files with us** using our support chat and provide CSV files.
 
 # Release

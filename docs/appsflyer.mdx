@@ -9,9 +9,9 @@ Accurately measure what drives your subscription revenue on an ad campaign level
 
 1. You need to have the AppsFlyer SDK integrated into your app before starting with this integration. If you do not have AppsFlyer integration yet, please use [this documentation](https://support.appsflyer.com/hc/en-us/articles/207032066-iOS-SDK-integration-for-developers).
 
-2. Set Qonversion SDKs following [Installing the SDKs](doc:install-sdk) guides.
+2. Set Qonversion SDKs following [Installing the SDKs](/docs/install-sdk) guides.
 
-3. Send AppsFlyer user ID to Qonversion via [User Properties](doc:user-properties). In the **onConversionDataSuccess** callback use the`setProperty()` method with the AppsFlyer user ID value.
+3. Send AppsFlyer user ID to Qonversion via [User Properties](/docs/user-properties). In the **onConversionDataSuccess** callback use the`setProperty()` method with the AppsFlyer user ID value.
 
 <CodeGroup>
   ```bash bash
@@ -226,7 +226,7 @@ Accurately measure what drives your subscription revenue on an ad campaign level
 
 We recommend using the default event names provided by Qonversion. However, you can change the event names to suit your preferences. Note that the event names will not affect revenue recognition. All purchase events containing a value (subscription started, trial converted, subscription renewed, subscription refunded, in-app purchase) will be sent to AppsFlyer with the af\_revenue property, and the revenue will be recognized correctly in AppsFlyer.
 
-**→[Read more about tracked events here](doc:integrations-overview#tracked-events)**
+**→[Read more about tracked events here](/docs/integrations-overview#tracked-events)**
 
 ### Enable the integration
 

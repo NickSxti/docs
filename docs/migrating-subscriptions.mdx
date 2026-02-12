@@ -5,7 +5,7 @@ description: "How to integrate Qonversion with existing subscriber base"
 
 When you integrate Qonversion into your app with an existing subscriber base, it is important to migrate your subscribed users access management and import your historical transactions to get accurate historical analytics data.
 
-Below you can find a simple step-by-step guide on how to migrate to Qonversion for both [Analytics and Subscription management modes](https://documentation.qonversion.io/docs/quickstart).
+Below you can find a simple step-by-step guide on how to migrate to Qonversion for both [Analytics and Subscription management modes](/docs/quickstart).
 
 Additionally, you can [book a demo call](https://meetings.hubspot.com/qonversion/demo-request?utm_source=documentation\&utm_medium=link\&utm_campaign=migration) where we can discuss all the related details.
 
@@ -33,8 +33,8 @@ To leverage all the pros of both migration types, we recommend the following app
 
 Let's start with client-side migration:
 
-1. **Integrate Qonversion SDK** to track analytics and entitlements for your new subscribers using our [quick start guide](https://documentation.qonversion.io/docs/quickstart).
-2. Сall the [*syncHistoricalData*](https://documentation.qonversion.io/docs/migrating-subscriptions#sdks-synchistoricaldata-method) method right after Qonversion SDK initialization to synchronize all the device-related data and ensure that none of the entitlements has been missed.
+1. **Integrate Qonversion SDK** to track analytics and entitlements for your new subscribers using our [quick start guide](/docs/quickstart).
+2. Сall the [*syncHistoricalData*](/docs/migrating-subscriptions#sdks-synchistoricaldata-method) method right after Qonversion SDK initialization to synchronize all the device-related data and ensure that none of the entitlements has been missed.
 3. Launch your app update to production.
 4. After the steps above, you will process new purchases with Qonversion, while your subscribers with the previous app version will continue tracking throughout your system.
 
@@ -42,10 +42,10 @@ Let's start with client-side migration:
 
 Once you have the app version with Qonversion SDK up and running, it's time to proceed to the server-side migration.
 
-1. Prepare files with [AppStore with Base64 encoded receipt data](https://documentation.qonversion.io/docs/migrating-subscriptions#app-store-data-migration-file) or [Google Play with purchase tokens](https://documentation.qonversion.io/docs/migrating-subscriptions#google-play-data-migration-file).
+1. Prepare files with [AppStore with Base64 encoded receipt data](/docs/migrating-subscriptions#app-store-data-migration-file) or [Google Play with purchase tokens](/docs/migrating-subscriptions#google-play-data-migration-file).
 
    1. If you do not have receipt data or purchase tokens on your side but are already running your subscription management with a third-party vendor, you should ask the vendor’s support team for the required data file.
-   2. Additionally, but not necessarily, to keep your historical data granular, provide us with such user attributes as [Country, IDFV, IDFA, GAID, AAID, etc.](https://documentation.qonversion.io/docs/migrating-subscriptions#additional-user-related-fields-for-analytics).
+   2. Additionally, but not necessarily, to keep your historical data granular, provide us with such user attributes as [Country, IDFV, IDFA, GAID, AAID, etc.](/docs/migrating-subscriptions#additional-user-related-fields-for-analytics).
 
 2. Then simply **share the files with us** using our [support chat](https://dash.qonversion.io/account/profile?intercom=open) or [book a demo call](https://meetings.hubspot.com/qonversion/demo-request?utm_source=documentation\&utm_medium=link\&utm_campaign=migration) to discuss all the related details. Additionally, you can also contact us using [email](/cdn-cgi/l/email-protection#59313c3529192836372f3c2b2a303637773036662a2c3b333c3a2d641d382d387914303e2b382d303637) and provide CSV files for iOS or Android.
 
@@ -59,7 +59,7 @@ Every migration step has its own vital details:
 
 ## Entitlements (Premium access) migration
 
-Ensure you [have configured Entitlements and Products](https://documentation.qonversion.io/docs/subscription-management-mode#1-configure-products--entitlements-permissions) before you start users' entitlements migration process, so Qonversion can determine what entitlements should be granted to a user based on product ID of the purchased product.
+Ensure you [have configured Entitlements and Products](/docs/subscription-management-mode#1-configure-products--entitlements-permissions) before you start users' entitlements migration process, so Qonversion can determine what entitlements should be granted to a user based on product ID of the purchased product.
 
 ## SDK's syncHistoricalData() method
 
