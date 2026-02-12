@@ -20,6 +20,9 @@
   "api": {
     "playground": {
       "mode": "simple"
+    },
+    "examples": {
+      "languages": ["curl", "python", "javascript", "php", "ruby", "go", "java"]
     }
   },
   "navigation": {
