@@ -361,10 +361,10 @@
       },
       {
         "tab": "API Reference",
+        "openapi": "api-reference/rest-api.yaml",
         "groups": [
           {
             "group": "REST API",
-            "openapi": "api-reference/rest-api.yaml",
             "pages": [
               "reference/overview",
               "reference/authentication",
