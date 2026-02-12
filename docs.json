@@ -411,6 +411,16 @@
                 "pages": [
                   "POST /users/{user_id}/purchases"
                 ]
+              },
+              {
+                "group": "Products",
+                "pages": [
+                  "GET /products/{id}",
+                  "POST /products",
+                  "PUT /products/{uid}",
+                  "PATCH /products/{uid}",
+                  "DELETE /products/{uid}"
+                ]
               }
             ]
           },
@@ -422,6 +432,14 @@
               "GET /{projectApiKey}/chart/users-overview",
               "GET /{projectApiKey}/chart/paid-subscriptions-movement",
               "GET /{projectApiKey}/chart/active-subscriptions"
+            ]
+          },
+          {
+            "group": "Customers API",
+            "openapi": "api-reference/analytics-api.yaml",
+            "pages": [
+              "GET /{projectApiKey}/customers",
+              "GET /{projectApiKey}/customers-metrics"
             ]
           }
         ]

@@ -159,6 +159,40 @@ components:
         stripe_store_data:
           $ref: "#/components/schemas/StripeStoreData"
 
+    DashboardProduct:
+      type: object
+      properties:
+        uid:
+          type: string
+          description: Unique identifier of the Qonversion product
+          example: premium_monthly
+        type:
+          type: integer
+          enum: [0, 1, 2]
+          description: "Product type: `0` = Subscription With Promo Period, `1` = Regular Subscription, `2` = Non-Recurring Purchase"
+          example: 1
+        apple_product_id:
+          type: string
+          description: Product identifier in App Store Connect
+          example: com.app.premium_monthly
+        google_product_id:
+          type: string
+          description: Product identifier in Google Play Console
+          example: com.app.premium_monthly
+        google_base_plan_id:
+          type: string
+          description: Base plan identifier in Google Play Console
+          example: monthly-base
+        stripe_product_id:
+          type: string
+          description: Product identifier in Stripe
+          example: prod_abc123
+        duration:
+          type: integer
+          enum: [0, 1, 2, 3, 4]
+          description: "Duration: `0` = Weekly, `1` = Monthly, `2` = Three Monthly, `3` = Six Monthly, `4` = Annual"
+          example: 1
+
     Error:
       type: object
       properties:
@@ -798,6 +832,280 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /products/{id}:
+    get:
+      operationId: getProduct
+      summary: Get products
+      description: |
+        Retrieve a single product by ID, or omit the ID to get all dashboard products.
+      tags:
+        - Products
+      security:
+        - ProjectKey: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Qonversion product UID
+          example: premium_monthly
+      responses:
+        "200":
+          description: Product retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardProduct"
+              examples:
+                subscription:
+                  summary: Monthly subscription
+                  value:
+                    uid: premium_monthly
+                    type: 1
+                    apple_product_id: com.app.premium_monthly
+                    google_product_id: com.app.premium_monthly
+                    stripe_product_id: prod_abc123
+                    duration: 1
+                one_time:
+                  summary: One-time purchase
+                  value:
+                    uid: lifetime_access
+                    type: 2
+                    apple_product_id: com.app.lifetime
+                    google_product_id: com.app.lifetime
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /products:
+    post:
+      operationId: createProduct
+      summary: Create a product
+      description: Creates a new Qonversion dashboard product.
+      tags:
+        - Products
+      security:
+        - ProjectKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [uid]
+              properties:
+                uid:
+                  type: string
+                  description: Unique product identifier
+                type:
+                  type: integer
+                  enum: [0, 1, 2]
+                  description: "Product type: `0` = Subscription With Promo, `1` = Regular Subscription, `2` = Non-Recurring"
+                apple_product_id:
+                  type: string
+                  description: App Store Connect product ID
+                google_product_id:
+                  type: string
+                  description: Google Play Console product ID
+                google_base_plan_id:
+                  type: string
+                  description: Google Play base plan ID
+                stripe_product_id:
+                  type: string
+                  description: Stripe product ID
+                duration:
+                  type: integer
+                  enum: [0, 1, 2, 3, 4]
+                  description: "Duration: `0` = Weekly, `1` = Monthly, `2` = 3 Months, `3` = 6 Months, `4` = Annual"
+            example:
+              uid: premium_monthly
+              type: 1
+              apple_product_id: com.app.premium_monthly
+              google_product_id: com.app.premium_monthly
+              duration: 1
+      responses:
+        "200":
+          description: Product created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardProduct"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /products/{uid}:
+    put:
+      operationId: updateProduct
+      summary: Update a product
+      description: |
+        Replaces all product fields. Unlike PATCH, all fields must be provided — omitted fields are reset to defaults.
+      tags:
+        - Products
+      security:
+        - ProjectKey: []
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Qonversion product UID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: integer
+                  enum: [0, 1, 2]
+                apple_product_id:
+                  type: string
+                google_product_id:
+                  type: string
+                google_base_plan_id:
+                  type: string
+                stripe_product_id:
+                  type: string
+                duration:
+                  type: integer
+                  enum: [0, 1, 2, 3, 4]
+            example:
+              type: 1
+              apple_product_id: com.app.premium_monthly
+              google_product_id: com.app.premium_monthly
+              duration: 1
+      responses:
+        "200":
+          description: Product updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardProduct"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    patch:
+      operationId: patchProduct
+      summary: Patch a product
+      description: |
+        Partially updates a product. Only the submitted fields are updated — omitted fields remain unchanged.
+      tags:
+        - Products
+      security:
+        - ProjectKey: []
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Qonversion product UID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: integer
+                  enum: [0, 1, 2]
+                apple_product_id:
+                  type: string
+                google_product_id:
+                  type: string
+                google_base_plan_id:
+                  type: string
+                stripe_product_id:
+                  type: string
+                duration:
+                  type: integer
+                  enum: [0, 1, 2, 3, 4]
+            example:
+              apple_product_id: com.app.premium_yearly
+              duration: 4
+      responses:
+        "200":
+          description: Product patched
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardProduct"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    delete:
+      operationId: deleteProduct
+      summary: Delete a product
+      description: Deletes a Qonversion dashboard product.
+      tags:
+        - Products
+      security:
+        - ProjectKey: []
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Qonversion product UID
+      responses:
+        "200":
+          description: Product deleted
+          content:
+            application/json:
+              schema:
+                type: object
+              example: {}
         "401":
           description: Unauthorized
           content:
