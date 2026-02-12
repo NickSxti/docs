@@ -363,26 +363,58 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "Getting Started",
+            "group": "REST API",
+            "openapi": "api-reference/rest-api.yaml",
             "pages": [
               "reference/overview",
               "reference/authentication",
-              "reference/handling-api-errors"
+              "reference/handling-api-errors",
+              {
+                "group": "Users",
+                "pages": [
+                  "GET /users/{id}",
+                  "POST /users/{id}"
+                ]
+              },
+              {
+                "group": "User Properties",
+                "pages": [
+                  "GET /users/{id}/properties",
+                  "POST /users/{id}/properties"
+                ]
+              },
+              {
+                "group": "Identity",
+                "pages": [
+                  "GET /identities/{identity_id}",
+                  "POST /identities/{identity_id}"
+                ]
+              },
+              {
+                "group": "Entitlements",
+                "pages": [
+                  "GET /users/{user_id}/entitlements",
+                  "POST /users/{user_id}/entitlements",
+                  "DELETE /users/{user_id}/entitlements/{id}"
+                ]
+              },
+              {
+                "group": "Purchases",
+                "pages": [
+                  "POST /users/{user_id}/purchases"
+                ]
+              }
             ]
           },
           {
-            "group": "REST API",
-            "openapi": {
-              "source": "api-reference/rest-api.yaml",
-              "directory": "reference/rest-api"
-            }
-          },
-          {
             "group": "Analytics API",
-            "openapi": {
-              "source": "api-reference/analytics-api.yaml",
-              "directory": "reference/analytics"
-            }
+            "openapi": "api-reference/analytics-api.yaml",
+            "pages": [
+              "GET /{projectApiKey}/chart/proceeds",
+              "GET /{projectApiKey}/chart/users-overview",
+              "GET /{projectApiKey}/chart/paid-subscriptions-movement",
+              "GET /{projectApiKey}/chart/active-subscriptions"
+            ]
           }
         ]
       },
