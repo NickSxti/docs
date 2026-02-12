@@ -1,5 +1,35 @@
 ---
 title: "Overview"
-description: "Ask AI"
+description: "Introduction to the Qonversion REST API"
 ---
 
+The Qonversion REST API follows REST standards. It has predictable resource-oriented URLs, accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
+
+## Base URL
+
+All API requests should be made to:
+
+```
+https://api.qonversion.io/v3
+```
+
+## API Sections
+
+| Section | Description |
+|---------|-------------|
+| [Users](/reference/rest-api/retrieveUser) | Retrieve and create Qonversion users |
+| [User Properties](/reference/rest-api/retrieveUserProperties) | Manage user-level attributes for segmentation and analytics |
+| [Identity](/reference/rest-api/retrieveIdentity) | Cross-platform user identity management |
+| [Entitlements](/reference/rest-api/retrieveEntitlements) | Retrieve, grant, and revoke premium access |
+| [Purchases](/reference/rest-api/createPurchase) | Record Stripe purchases |
+| [Analytics](/reference/analytics/get-proceeds) | Revenue, subscriptions, and user analytics |
+
+## Request Format
+
+All requests must include:
+- `Authorization` header with a Bearer token
+- `Content-Type: application/json` header (for POST/PUT/DELETE requests)
+
+## Response Format
+
+All responses are JSON-encoded. Successful responses return the requested resource directly. Error responses follow a consistent [error format](/reference/handling-api-errors).

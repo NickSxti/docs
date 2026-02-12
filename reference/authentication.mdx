@@ -1,5 +1,54 @@
 ---
 title: "Authentication"
-description: "Ask AI"
+description: "How to authenticate with the Qonversion API"
 ---
 
+The Qonversion API uses Bearer token authentication. There are two types of keys:
+
+## Project Key
+
+Used for standard API requests — retrieving users, properties, identities, entitlements, and creating purchases.
+
+Find your Project Key in **Project settings** in the [Qonversion dashboard](https://dash.qonversion.io).
+
+```bash
+curl --request GET \
+  --url https://api.qonversion.io/v3/users/{id} \
+  --header 'Authorization: Bearer PROJECT_KEY' \
+  --header 'Content-Type: application/json'
+```
+
+<Note>
+All examples in this documentation use the Qonversion sample app Project Key (`test_PV77YHL7qnGvsdmpTs7gimsxUvY-Znl2`) for testing.
+</Note>
+
+## Secret Key
+
+Used for advanced operations that modify user access — **granting and revoking entitlements**.
+
+- Prefixed with `sk_`
+- Found in **Project settings** in the Qonversion dashboard
+
+<Warning>
+The Secret API key should only be stored on your server. **Never use your secret key in Android, iOS, or web apps.**
+</Warning>
+
+```bash
+curl --request POST \
+  --url https://api.qonversion.io/v3/users/{user_id}/entitlements \
+  --header 'Authorization: Bearer sk_YOUR_SECRET_KEY' \
+  --header 'Content-Type: application/json' \
+  --data '{"id": "plus", "expires": 1704067200}'
+```
+
+## Which key to use?
+
+| Endpoint | Key Required |
+|----------|-------------|
+| Retrieve / Create Users | Project Key |
+| Retrieve / Create User Properties | Project Key |
+| Retrieve / Create Identities | Project Key |
+| Retrieve Entitlements | Project Key |
+| **Grant Entitlement** | **Secret Key** |
+| **Revoke Entitlement** | **Secret Key** |
+| Create Purchase | Project Key |

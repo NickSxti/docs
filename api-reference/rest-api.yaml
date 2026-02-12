@@ -1,0 +1,748 @@
+openapi: 3.1.0
+info:
+  title: Qonversion REST API
+  version: "3.1"
+  description: |
+    Qonversion REST API follows REST standards. It has predictable resource-oriented URLs,
+    accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard
+    HTTP response codes, authentication, and verbs.
+servers:
+  - url: https://api.qonversion.io/v3
+    description: Production
+
+security:
+  - ProjectKey: []
+
+components:
+  securitySchemes:
+    ProjectKey:
+      type: http
+      scheme: bearer
+      description: |
+        Use your Project Key from the Qonversion dashboard.
+        Example: `Bearer test_PV77YHL7qnGvsdmpTs7gimsxUvY-Znl2`
+    SecretKey:
+      type: http
+      scheme: bearer
+      description: |
+        Use your Secret Key (prefixed with `sk_`) from the Qonversion dashboard.
+        **Never expose the secret key in client-side code.**
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Qonversion User ID
+          example: QON_7791a27fc4e747412381842b36a
+        identity_id:
+          type: string
+          description: User Identity ID from your auth system
+          example: awesome_user
+        created:
+          type: integer
+          description: User creation time (Unix epoch seconds)
+          example: 1658489733
+        environment:
+          type: string
+          enum: [prod, sandbox]
+          description: "`prod` or `sandbox`"
+          example: prod
+
+    UserProperty:
+      type: object
+      properties:
+        key:
+          type: string
+          description: "Property identifier. Qonversion-defined keys start with `_q_` prefix."
+          example: _q_email
+        value:
+          type: string
+          description: Property value
+          example: test@email.com
+
+    Identity:
+      type: object
+      properties:
+        id:
+          type: string
+          description: User Identity ID
+          example: awesome_user
+        user_id:
+          type: string
+          description: Qonversion User ID
+          example: QON_7791a27fc4e747412381842b36a
+
+    Subscription:
+      type: object
+      properties:
+        current_period_type:
+          type: string
+          enum: [normal, trial, intro]
+          description: Current subscription period type
+          example: normal
+        renew_state:
+          type: string
+          enum: [will_renew, canceled, billing_issue]
+          description: Subscription renewal state
+          example: will_renew
+
+    Product:
+      type: object
+      properties:
+        product_id:
+          type: string
+          description: Qonversion product identifier
+          example: main
+        subscription:
+          $ref: "#/components/schemas/Subscription"
+
+    Entitlement:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Entitlement identifier
+          example: plus
+        active:
+          type: boolean
+          description: Whether the user currently has the entitlement
+          example: true
+        started:
+          type: integer
+          description: Unix epoch seconds when entitlement was activated
+          example: 1652438020
+        expires:
+          type: integer
+          description: Unix epoch seconds when entitlement expires
+          example: 1654215637
+        source:
+          type: string
+          enum: [appstore, playstore, stripe, manual, unknown]
+          description: Purchase origin
+          example: appstore
+        product:
+          $ref: "#/components/schemas/Product"
+
+    StripeStoreData:
+      type: object
+      required: [subscription_id, product_id]
+      properties:
+        subscription_id:
+          type: string
+          description: Stripe subscription identifier
+          example: sub_123e4567
+        product_id:
+          type: string
+          description: Stripe product identifier
+          example: prod_123e4567
+
+    Purchase:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: Qonversion User ID
+        currency:
+          type: string
+          description: Three-letter ISO 4217 currency code
+          example: USD
+        price:
+          type: string
+          description: Monetary amount
+          example: "12.99"
+        purchased:
+          type: integer
+          description: Unix epoch seconds of the transaction
+          example: 1653458781
+        stripe_store_data:
+          $ref: "#/components/schemas/StripeStoreData"
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            type:
+              type: string
+              enum: [request, resource, logical, internal]
+              description: Error category
+            code:
+              type: string
+              description: Machine-readable error code
+            message:
+              type: string
+              description: Human-readable error message
+        _meta:
+          type: object
+          properties:
+            reference:
+              type: string
+            fields:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  messages:
+                    type: array
+                    items:
+                      type: string
+
+paths:
+  /users/{id}:
+    get:
+      operationId: retrieveUser
+      summary: Retrieve a user
+      description: Retrieves a Qonversion user by their ID.
+      tags:
+        - Users
+      security:
+        - ProjectKey: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Qonversion User ID
+          example: QON_7791a27fc4e747412381842b36a
+      responses:
+        "200":
+          description: User retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+              example:
+                id: AvwwDqpnj0H3SvCHw70J1GQSPKlkgZwj
+                identity_id: custom_identity_id
+                created: 1658489733
+                environment: prod
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error:
+                  code: control_unauthorized
+                  message: Bad authorization header
+                  type: request
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error:
+                  code: not_found
+                  message: User not found
+                  type: resource
+
+    post:
+      operationId: createUser
+      summary: Create a user
+      description: Creates a new Qonversion user with the given ID.
+      tags:
+        - Users
+      security:
+        - ProjectKey: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Qonversion User ID. By default generated with the Qonversion SDK.
+          example: QON_MU1yZnydlsoqCM
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [environment]
+              properties:
+                environment:
+                  type: string
+                  enum: [prod, sandbox]
+                  description: "`prod` or `sandbox`. Use sandbox for testing."
+            example:
+              environment: prod
+      responses:
+        "200":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+              example:
+                id: QON_MU1yZnydlsoqCM
+                created: 1665669916000
+                environment: prod
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error:
+                  code: invalid_data
+                  message: unknown environment type
+                  type: request
+        "422":
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error:
+                  code: already_exists
+                  message: User with given uid already exists
+                  type: resource
+
+  /users/{id}/properties:
+    get:
+      operationId: retrieveUserProperties
+      summary: Retrieve user properties
+      description: Retrieves all properties for a given user. Up to 100 properties per user.
+      tags:
+        - User Properties
+      security:
+        - ProjectKey: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Qonversion User ID
+      responses:
+        "200":
+          description: Properties retrieved
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserProperty"
+              example:
+                - key: _q_email
+                  value: test@email.com
+                - key: client_source
+                  value: google_ads
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    post:
+      operationId: createUserProperties
+      summary: Create user properties
+      description: |
+        Sets properties for a user. Supports partial success — returns both saved properties and errors.
+      tags:
+        - User Properties
+      security:
+        - ProjectKey: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Qonversion User ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/UserProperty"
+            example:
+              - key: valid_key
+                value: valid_value
+              - key: "invalid key"
+                value: value
+      responses:
+        "200":
+          description: Properties processed (partial success possible)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  savedProperties:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/UserProperty"
+                  propertyErrors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                        error:
+                          type: string
+              example:
+                savedProperties:
+                  - key: valid_key
+                    value: valid_value
+                propertyErrors:
+                  - key: "invalid key"
+                    error: "Property key: invalid key. Error: invalid key format."
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /identities/{identity_id}:
+    get:
+      operationId: retrieveIdentity
+      summary: Retrieve an identity
+      description: Retrieves an identity by its ID.
+      tags:
+        - Identity
+      security:
+        - ProjectKey: []
+      parameters:
+        - name: identity_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: User Identity ID
+          example: awesome_user
+      responses:
+        "200":
+          description: Identity retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Identity"
+              example:
+                id: new_identity
+                user_id: QON_7791ae4e888bdeb81842b36a
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Identity not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    post:
+      operationId: createIdentity
+      summary: Create an identity
+      description: |
+        Creates an identity. If `user_id` is not provided, a new Qonversion user is created automatically.
+      tags:
+        - Identity
+      security:
+        - ProjectKey: []
+      parameters:
+        - name: identity_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: User Identity ID
+          example: new_identities_user
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                  description: Qonversion User ID. If omitted, a new user is created.
+            example:
+              user_id: QON_8968d347c4a24168b4885ee087fbd635
+      responses:
+        "200":
+          description: Identity created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Identity"
+              example:
+                id: new_identities_user
+                user_id: QON_8968d347c4a24168b4885ee087fbd635
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "422":
+          description: Identity already linked to another user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error:
+                  code: invalid_request
+                  message: "identity already exists: it's linked to another user"
+                  type: request
+
+  /users/{user_id}/entitlements:
+    get:
+      operationId: retrieveEntitlements
+      summary: Retrieve entitlements
+      description: Retrieves all entitlements for a user.
+      tags:
+        - Entitlements
+      security:
+        - ProjectKey: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Qonversion User ID
+      responses:
+        "200":
+          description: Entitlements retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Entitlement"
+              example:
+                data:
+                  - id: plus
+                    active: true
+                    started: 1652438020
+                    expires: 1654215637
+                    source: stripe
+                    product:
+                      product_id: main
+                      subscription:
+                        current_period_type: normal
+                        renew_state: will_renew
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    post:
+      operationId: grantEntitlement
+      summary: Grant an entitlement
+      description: |
+        Manually grants an entitlement to a user. **Requires Secret Key authentication.**
+      tags:
+        - Entitlements
+      security:
+        - SecretKey: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Qonversion User ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [id, expires]
+              properties:
+                id:
+                  type: string
+                  description: Entitlement ID
+                expires:
+                  type: integer
+                  format: int32
+                  description: Unix timestamp (seconds) when entitlement expires. Must be in the future.
+            example:
+              id: plus
+              expires: 1704067200
+      responses:
+        "200":
+          description: Entitlement granted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Entitlement"
+              example:
+                id: plus
+                active: true
+                started: 1678894940
+                expires: 1704067200
+                source: manual
+        "400":
+          description: Invalid entitlement data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error:
+                  code: invalid_entitlement_data
+                  message: "Invalid expires at value has been provided, should be in unix timestamp format in seconds in future"
+                  type: request
+
+  /users/{user_id}/entitlements/{id}:
+    delete:
+      operationId: revokeEntitlement
+      summary: Revoke an entitlement
+      description: |
+        Revokes a manually granted entitlement from a user. **Requires Secret Key authentication.**
+
+        You can only revoke entitlements with source `manual`.
+      tags:
+        - Entitlements
+      security:
+        - SecretKey: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Qonversion User ID
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Entitlement ID
+      responses:
+        "200":
+          description: Entitlement revoked
+          content:
+            application/json:
+              schema:
+                type: object
+              example: {}
+        "400":
+          description: Invalid entitlement
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error:
+                  code: invalid_entitlement_data
+                  message: "Invalid entitlement uid, no such entitlement found"
+                  type: request
+
+  /users/{user_id}/purchases:
+    post:
+      operationId: createPurchase
+      summary: Create a purchase
+      description: Creates a Stripe purchase for a user.
+      tags:
+        - Purchases
+      security:
+        - ProjectKey: []
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Qonversion User ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [currency, price, stripe_store_data]
+              properties:
+                currency:
+                  type: string
+                  description: Three-letter ISO 4217 currency code
+                price:
+                  type: string
+                  description: Monetary amount
+                stripe_store_data:
+                  $ref: "#/components/schemas/StripeStoreData"
+            example:
+              currency: USD
+              price: "12.99"
+              stripe_store_data:
+                subscription_id: sub_123e4567
+                product_id: prod_123e4567
+      responses:
+        "200":
+          description: Purchase created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Purchase"
+              example:
+                currency: USD
+                price: "12.99"
+                purchased: 1653458781
+                stripe_store_data:
+                  subscription_id: sub_123e4567
+                  product_id: prod_123e4567
+        "400":
+          description: Invalid data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"

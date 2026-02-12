@@ -1,5 +1,87 @@
 ---
 title: "Handling Errors"
-description: "Ask AI"
+description: "HTTP response codes and error format for the Qonversion API"
 ---
 
+## HTTP Response Codes
+
+| Code | State | Description |
+|------|-------|-------------|
+| 200 | Success | Everything worked as expected |
+| 201 | Created | Operation led to creation of a resource |
+| 204 | No Content | Server fulfilled request, no content in response body |
+| 400 | Bad Request | Request not accepted, often due to missing required parameter |
+| 401 | Unauthorized | Invalid API key provided |
+| 403 | Forbidden | Authorization by a secret key required |
+| 404 | Not Found | Requested resource does not exist |
+| 422 | Unprocessable Entity | Cannot process request due to logical error |
+| 5xx | Server Errors | Something went wrong on Qonversion's end (rare) |
+
+## Error Response Format
+
+All errors follow a consistent format:
+
+```json
+{
+  "error": {
+    "type": "request",
+    "code": "invalid_data",
+    "message": "Failed validate request data"
+  },
+  "_meta": {
+    "reference": "https://documentation.qonversion.io/reference/handling-api-errors",
+    "fields": [
+      {
+        "name": "short_name",
+        "messages": ["Value is too long"]
+      },
+      {
+        "name": "last_name",
+        "messages": ["Required"]
+      }
+    ]
+  }
+}
+```
+
+## Error Types
+
+| Type | Description |
+|------|-------------|
+| `request` | Error in request validation (not enough data, invalid data, auth required) |
+| `resource` | Request is valid but the action could not be executed |
+| `logical` | Client can execute action but there is an error in communicating with the application |
+| `internal` | All request handling stages succeeded but an internal error occurred |
+
+## Error Codes
+
+### Request Errors
+
+| Code | Description |
+|------|-------------|
+| `invalid_data` | Validation failed. See `_meta.fields` for details |
+| `invalid_request` | Unrecognized request URL |
+| `control_unauthorized` | Authorization required |
+| `not_implemented` | Functionality at the requested address is not implemented |
+
+### Resource Errors
+
+| Code | Description |
+|------|-------------|
+| `not_found` | Requested resource not found |
+| `already_exists` | Requested resource already exists |
+
+### Logical Errors
+
+| Code | Description |
+|------|-------------|
+| `purchase_fraud` | Could not validate purchase with store, potential fraud |
+| `relation_not_found` | Nested objects could not be found or associated |
+
+### Internal Errors
+
+| Code | Description |
+|------|-------------|
+| `storage_error` | Data was not saved |
+| `network_error` | Internal services interaction failed |
+| `unknown_error` | Unknown reason |

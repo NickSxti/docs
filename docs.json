@@ -17,6 +17,11 @@
   "seo": {
     "indexing": "all"
   },
+  "api": {
+    "playground": {
+      "mode": "simple"
+    }
+  },
   "navigation": {
     "tabs": [
       {
@@ -358,7 +363,7 @@
         "tab": "API Reference",
         "groups": [
           {
-            "group": "REST API",
+            "group": "Getting Started",
             "pages": [
               "reference/overview",
               "reference/authentication",
@@ -366,34 +371,11 @@
             ]
           },
           {
-            "group": "Users",
-            "pages": [
-              "reference/get-users"
-            ]
-          },
-          {
-            "group": "User Properties",
-            "pages": [
-              "reference/user-properties-overview"
-            ]
-          },
-          {
-            "group": "Identity",
-            "pages": [
-              "reference/identities"
-            ]
-          },
-          {
-            "group": "Entitlements",
-            "pages": [
-              "reference/user-entitlements"
-            ]
-          },
-          {
-            "group": "Purchases",
-            "pages": [
-              "reference/purchases"
-            ]
+            "group": "REST API",
+            "openapi": {
+              "source": "api-reference/rest-api.yaml",
+              "directory": "reference/rest-api"
+            }
           },
           {
             "group": "Analytics API",
