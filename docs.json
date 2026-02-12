@@ -366,9 +366,14 @@
           {
             "group": "REST API",
             "pages": [
-              "reference/overview",
-              "reference/authentication",
-              "reference/handling-api-errors",
+              {
+                "group": "Introduction",
+                "pages": [
+                  "reference/overview",
+                  "reference/authentication",
+                  "reference/handling-api-errors"
+                ]
+              },
               {
                 "group": "Users",
                 "pages": [
