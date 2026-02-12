@@ -1,0 +1,31 @@
+---
+title: "User Properties"
+description: "Manage user-level attributes for segmentation and analytics"
+---
+
+**User Properties** are key-value pairs attached to a user. They are used for segmentation, analytics filtering, and powering third-party integrations (e.g., sending user emails to Mailchimp or attribution IDs to AppsFlyer).
+
+## Defined vs Custom properties
+
+- **Defined properties** — Qonversion-reserved keys prefixed with `_q_` (e.g., `_q_email`, `_q_appsflyer_user_id`). These power built-in integrations.
+- **Custom properties** — Any key you define for your own segmentation needs.
+
+See the full list of defined properties in the [User Properties guide](/docs/user-properties).
+
+## User Property object
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `key` | string | Property identifier. Defined keys start with `_q_` |
+| `value` | string | Property value |
+
+## Available endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/users/{id}/properties` | Retrieve all properties for a user |
+| POST | `/users/{id}/properties` | Set one or more properties on a user |
+
+## Authentication
+
+All User Properties endpoints require a **Project Key** in the `Authorization` header.

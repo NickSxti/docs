@@ -1,0 +1,36 @@
+---
+title: "Entitlements"
+description: "Retrieve, grant, and revoke premium access for users"
+---
+
+**Entitlements** represent access rights to premium features in your app. When a user makes a purchase, Qonversion automatically grants the corresponding entitlements. You can also grant or revoke entitlements manually via the API.
+
+## Key concepts
+
+- **Active entitlement** — The user currently has access to this feature.
+- **Source** — Where the entitlement originated: `appstore`, `playstore`, `stripe`, `manual`, or `unknown`.
+- **Expiration** — Subscription-based entitlements have an `expires` timestamp. Non-recurring purchases may not expire.
+
+## Entitlement object
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | Entitlement identifier (e.g., `plus`, `premium`) |
+| `active` | boolean | Whether the user currently has the entitlement |
+| `started` | integer | Activation timestamp (Unix epoch seconds) |
+| `expires` | integer | Expiration timestamp (Unix epoch seconds) |
+| `source` | string | Purchase origin (`appstore`, `playstore`, `stripe`, `manual`) |
+| `product` | object | Associated product details |
+
+## Available endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/users/{user_id}/entitlements` | Retrieve all entitlements for a user |
+| POST | `/users/{user_id}/entitlements` | Grant an entitlement to a user |
+| DELETE | `/users/{user_id}/entitlements/{id}` | Revoke an entitlement from a user |
+
+## Authentication
+
+- **GET** requires a **Project Key**.
+- **POST** and **DELETE** require a **Secret Key** (`sk_` prefix). Never expose the secret key in client-side code.

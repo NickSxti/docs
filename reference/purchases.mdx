@@ -1,0 +1,34 @@
+---
+title: "Purchases"
+description: "Record Stripe purchases via the REST API"
+---
+
+The **Purchases** endpoint lets you record Stripe subscription purchases for a user. This is used when processing web payments through Stripe — after a successful Stripe checkout, send the purchase data to Qonversion so entitlements are granted and analytics are tracked.
+
+## When to use this endpoint
+
+- You have a **Stripe integration** and process payments on the web
+- After receiving a successful payment from Stripe, you send the purchase details to Qonversion
+- Qonversion then grants the appropriate entitlements and tracks the revenue
+
+For native mobile purchases (App Store, Google Play), the SDK handles purchase recording automatically.
+
+## Purchase object
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `user_id` | string | Qonversion User ID |
+| `currency` | string | Three-letter ISO 4217 currency code (e.g., `USD`) |
+| `price` | string | Monetary amount (e.g., `"12.99"`) |
+| `purchased` | integer | Transaction timestamp (Unix epoch seconds) |
+| `stripe_store_data` | object | Stripe subscription and product IDs |
+
+## Available endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/users/{user_id}/purchases` | Record a Stripe purchase |
+
+## Authentication
+
+Requires a **Secret Key** (`sk_` prefix) in the `Authorization` header.

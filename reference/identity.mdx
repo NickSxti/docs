@@ -1,0 +1,31 @@
+---
+title: "Identity"
+description: "Cross-platform user identity management"
+---
+
+The **Identity** system lets you link a Qonversion User ID to your own authentication system's user ID. This enables cross-platform access — a user who logs in on both iOS and Android can share the same entitlements.
+
+## How it works
+
+1. A user installs your app → Qonversion SDK generates a `QON_` prefixed user ID
+2. The user logs into your system → you call `identify()` with your user ID
+3. Qonversion links the two IDs together
+4. On another device, calling `identify()` with the same ID restores their entitlements
+
+## Identity object
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | string | Your custom user identity ID |
+| `user_id` | string | Qonversion User ID linked to this identity |
+
+## Available endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/identities/{identity_id}` | Retrieve a Qonversion user by your identity ID |
+| POST | `/identities/{identity_id}` | Create or link an identity to a Qonversion user |
+
+## Authentication
+
+All Identity endpoints require a **Project Key** in the `Authorization` header.

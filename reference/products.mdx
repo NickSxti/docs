@@ -1,0 +1,39 @@
+---
+title: "Products"
+description: "Manage Qonversion dashboard products via the REST API"
+---
+
+**Products** in Qonversion represent the in-app purchases and subscriptions you sell across platforms. Each product links to store-specific identifiers (App Store, Google Play, Stripe) and is used to configure entitlements, offerings, and experiments.
+
+## Key concepts
+
+- **Product UID** — Your unique identifier for the product in Qonversion (e.g., `premium_monthly`).
+- **Product type** — `0` = Subscription With Promo Period, `1` = Regular Subscription, `2` = Non-Recurring Purchase.
+- **Duration** — For subscriptions: `0` = Weekly, `1` = Monthly, `2` = 3 Months, `3` = 6 Months, `4` = Annual.
+- **Store IDs** — Each product can be linked to Apple, Google, and Stripe product identifiers.
+
+## Product object
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `uid` | string | Qonversion product identifier |
+| `type` | integer | Product type (0, 1, or 2) |
+| `apple_product_id` | string | App Store Connect product ID |
+| `google_product_id` | string | Google Play Console product ID |
+| `google_base_plan_id` | string | Google Play base plan ID |
+| `stripe_product_id` | string | Stripe product ID |
+| `duration` | integer | Subscription duration (0-4) |
+
+## Available endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/products/{id}` | Retrieve a product |
+| POST | `/products` | Create a new product |
+| PUT | `/products/{uid}` | Replace all product fields |
+| PATCH | `/products/{uid}` | Partially update a product |
+| DELETE | `/products/{uid}` | Delete a product |
+
+## Authentication
+
+All Product endpoints require a **Project Key** in the `Authorization` header.

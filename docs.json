@@ -396,6 +396,7 @@
               {
                 "group": "Users",
                 "pages": [
+                  "reference/users",
                   "GET /users/{id}",
                   "POST /users/{id}"
                 ]
@@ -403,6 +404,7 @@
               {
                 "group": "User Properties",
                 "pages": [
+                  "reference/user-properties",
                   "GET /users/{id}/properties",
                   "POST /users/{id}/properties"
                 ]
@@ -410,6 +412,7 @@
               {
                 "group": "Identity",
                 "pages": [
+                  "reference/identity",
                   "GET /identities/{identity_id}",
                   "POST /identities/{identity_id}"
                 ]
@@ -417,6 +420,7 @@
               {
                 "group": "Entitlements",
                 "pages": [
+                  "reference/entitlements",
                   "GET /users/{user_id}/entitlements",
                   "POST /users/{user_id}/entitlements",
                   "DELETE /users/{user_id}/entitlements/{id}"
@@ -425,12 +429,14 @@
               {
                 "group": "Purchases",
                 "pages": [
+                  "reference/purchases",
                   "POST /users/{user_id}/purchases"
                 ]
               },
               {
                 "group": "Products",
                 "pages": [
+                  "reference/products",
                   "GET /products/{id}",
                   "POST /products",
                   "PUT /products/{uid}",
