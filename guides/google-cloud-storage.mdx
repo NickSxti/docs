@@ -11,37 +11,37 @@ To upload raw data reports to your bucket, Qonversion needs the service account'
 
 1. Navigate to the [IAM](https://console.cloud.google.com/projectselector2/iam-admin/serviceaccounts) in your Google Cloud account and select your project.
 
-![2790](/guides/images/docs/93b34d3-Screenshot_2022-12-22_at_08.56.23.png "Screenshot 2022-12-22 at 08.56.23.png")
+![2790](/images/docs/93b34d3-Screenshot_2022-12-22_at_08.56.23.png "Screenshot 2022-12-22 at 08.56.23.png")
 
 2. Create a new service account for the Qonversion file uploader using the *+ CREATE SERVICE ACCOUNT BUTTON*.
 
-![2786](/guides/images/docs/7ae3466-Screenshot_2022-12-22_at_08.57.39.png "Screenshot 2022-12-22 at 08.57.39.png")
+![2786](/images/docs/7ae3466-Screenshot_2022-12-22_at_08.57.39.png "Screenshot 2022-12-22 at 08.57.39.png")
 
 3. Fill fields up only in the first step. Access will be granted further.
 
-![2780](/guides/images/docs/fa3a79b-Screenshot_2022-12-22_at_09.00.18.png "Screenshot 2022-12-22 at 09.00.18.png")
+![2780](/images/docs/fa3a79b-Screenshot_2022-12-22_at_09.00.18.png "Screenshot 2022-12-22 at 09.00.18.png")
 
 4. Create and download a private JSON key by clicking the *ADD KEY* button in the *KEYS* section.
 
-![2778](/guides/images/docs/a9a6023-Screenshot_2022-12-22_at_09.05.36.png "Screenshot 2022-12-22 at 09.05.36.png")
+![2778](/images/docs/a9a6023-Screenshot_2022-12-22_at_09.05.36.png "Screenshot 2022-12-22 at 09.05.36.png")
 
 5. Navigate to the *DETAILS* section and copy the Email value from the newly created service account. It will be needed in the following steps to grant bucket write access to the account.
 
-![2772](/guides/images/docs/3a6e5d1-Screenshot_2022-12-22_at_09.02.12.png "Screenshot 2022-12-22 at 09.02.12.png")
+![2772](/images/docs/3a6e5d1-Screenshot_2022-12-22_at_09.02.12.png "Screenshot 2022-12-22 at 09.02.12.png")
 
 6. Navigate to the [Buckets page](https://console.cloud.google.com/storage/browser) in the Google Cloud Storage.
 7. Select existing or create a new bucket for Raw Data reports from Qonversion.
 8. Navigate to the *PERMISSIONS* section and click *GRANT ACCESS*
 
-![2784](/guides/images/docs/26baecf-Screenshot_2022-12-22_at_09.14.14.png "Screenshot 2022-12-22 at 09.14.14.png")
+![2784](/images/docs/26baecf-Screenshot_2022-12-22_at_09.14.14.png "Screenshot 2022-12-22 at 09.14.14.png")
 
 9. Enter the service account's Email from the 5th step above and select the *Storage Object Creator* role. Click *SAVE*.
 
-![1674](/guides/images/docs/29fbcb1-Screenshot_2022-12-22_at_09.17.32.png "Screenshot 2022-12-22 at 09.17.32.png")
+![1674](/images/docs/29fbcb1-Screenshot_2022-12-22_at_09.17.32.png "Screenshot 2022-12-22 at 09.17.32.png")
 
 9. Save the bucket's name for further steps.
 
-![2786](/guides/images/docs/cc5c6e8-Screenshot_2022-12-22_at_09.24.01.png "Screenshot 2022-12-22 at 09.24.01.png")
+![2786](/images/docs/cc5c6e8-Screenshot_2022-12-22_at_09.24.01.png "Screenshot 2022-12-22 at 09.24.01.png")
 
 10. Congratulations! Now you have finished the preparation steps in the Google Cloud console. The only thing left is to enter the bucket's name and provide previously downloaded private key JSON to Qonversion.
 
@@ -49,7 +49,7 @@ To upload raw data reports to your bucket, Qonversion needs the service account'
 
 1. Navigate to the [Google Cloud Storage](https://dash.qonversion.io/app/integration/create?name=google_cloud_storage) integration creation page.
 
-![2184](/guides/images/docs/dff2a98-Screenshot_2022-12-26_at_19.53.50.png "Screenshot 2022-12-26 at 19.53.50.png")
+![2184](/images/docs/dff2a98-Screenshot_2022-12-26_at_19.53.50.png "Screenshot 2022-12-26 at 19.53.50.png")
 
 2. Enter data from the private key JSON and the bucket's name to the *Service Account credentials JSON* and *Bucket name* fields, respectively.
 
