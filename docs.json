@@ -85,8 +85,8 @@
               "guides/how-qonversion-works",
               "guides/system-reliability",
               {
-                "anchor": "Service Level Agreement",
-                "href": "https://qonversion.io/service-level-agreement/"
+                "name": "Service Level Agreement",
+                "url": "https://qonversion.io/service-level-agreement/"
               }
             ]
           },
@@ -426,10 +426,10 @@
       },
       {
         "tab": "API Reference",
-        "openapi": "api-reference/rest-api.yaml",
         "groups": [
           {
             "group": "REST API",
+            "openapi": "api-reference/rest-api.yaml",
             "pages": [
               {
                 "group": "Introduction",
