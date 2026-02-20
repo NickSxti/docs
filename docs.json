@@ -421,95 +421,29 @@
             "pages": [
               "guides/llmtxt"
             ]
+          },
+          {
+            "group": "API Reference Guide",
+            "icon": "square-terminal",
+            "pages": [
+              "reference/overview",
+              "reference/authentication",
+              "reference/handling-api-errors",
+              "reference/users",
+              "reference/user-properties",
+              "reference/identity",
+              "reference/entitlements",
+              "reference/purchases",
+              "reference/products"
+            ]
           }
         ]
       },
       {
         "tab": "API Reference",
-        "groups": [
-          {
-            "group": "REST API",
-            "openapi": "api-reference/rest-api.yaml",
-            "pages": [
-              {
-                "group": "Introduction",
-                "pages": [
-                  "reference/overview",
-                  "reference/authentication",
-                  "reference/handling-api-errors"
-                ]
-              },
-              {
-                "group": "Users",
-                "pages": [
-                  "reference/users",
-                  "GET /users/{id}",
-                  "POST /users/{id}"
-                ]
-              },
-              {
-                "group": "User Properties",
-                "pages": [
-                  "reference/user-properties",
-                  "GET /users/{id}/properties",
-                  "POST /users/{id}/properties"
-                ]
-              },
-              {
-                "group": "Identity",
-                "pages": [
-                  "reference/identity",
-                  "GET /identities/{identity_id}",
-                  "POST /identities/{identity_id}"
-                ]
-              },
-              {
-                "group": "Entitlements",
-                "pages": [
-                  "reference/entitlements",
-                  "GET /users/{user_id}/entitlements",
-                  "POST /users/{user_id}/entitlements",
-                  "DELETE /users/{user_id}/entitlements/{id}"
-                ]
-              },
-              {
-                "group": "Purchases",
-                "pages": [
-                  "reference/purchases",
-                  "POST /users/{user_id}/purchases"
-                ]
-              },
-              {
-                "group": "Products",
-                "pages": [
-                  "reference/products",
-                  "GET /products/{id}",
-                  "POST /products",
-                  "PUT /products/{uid}",
-                  "PATCH /products/{uid}",
-                  "DELETE /products/{uid}"
-                ]
-              }
-            ]
-          },
-          {
-            "group": "Analytics API",
-            "openapi": "api-reference/analytics-api.yaml",
-            "pages": [
-              "GET /{projectApiKey}/chart/proceeds",
-              "GET /{projectApiKey}/chart/users-overview",
-              "GET /{projectApiKey}/chart/paid-subscriptions-movement",
-              "GET /{projectApiKey}/chart/active-subscriptions"
-            ]
-          },
-          {
-            "group": "Customers API",
-            "openapi": "api-reference/analytics-api.yaml",
-            "pages": [
-              "GET /{projectApiKey}/customers",
-              "GET /{projectApiKey}/customers-metrics"
-            ]
-          }
+        "openapi": [
+          "api-reference/rest-api.yaml",
+          "api-reference/analytics-api.yaml"
         ]
       },
       {
