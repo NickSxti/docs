@@ -1,0 +1,898 @@
+---
+title: "Making Purchases"
+description: "Make in-app purchases with Qonversion SDK"
+---
+
+Make sure to [configure Products, Entitlements and Offerings](subscription-management-mode) in the Qonversion dashboard before you start handling purchases with Qonversion SDK:
+
+## 1. Make a purchase
+
+When Products and Entitlements are set, you can start making purchases with the`purchaseProduct` method for iOS and cross-platform SDKs, and `purchase` for Android
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().purchase(product) { (result) in
+    if result.isSuccessful {
+      if let premium: Qonversion.Entitlement = result.entitlements["premium"], premium.isActive {
+        // Grant user access to premium features
+      }
+    } else if result.isCanceledByUser {
+      // Handle canceled purchase
+    } else if result.isPending {
+      // Handle pending purchase
+    } else {
+      // Handle errors
+    }
+  }
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] purchaseWithResult:product completion:^(QONPurchaseResult * _Nonnull result) {
+    if (result.isSuccessful) {
+      QONEntitlement *premiumEntitlement = result.entitlements[@"premium"];
+      if (premiumEntitlement && premiumEntitlement.isActive) {
+        // Grant user access to premium features
+      }
+    } else if (result.isCanceledByUser) {
+      // Handle canceled purchase
+    } else if (result.isPending) {
+      // Handle pending purchase
+    } else {
+      // Handle errors
+    }
+  }];
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().purchase(this, product, new QonversionPurchaseCallback() {
+      @Override
+      public void onResult(@NonNull QPurchaseResult result) {
+          if (result.isSuccessful()) {
+              QEntitlement premium = result.getEntitlements().get("premium");
+              if (premium != null && premium.isActive()) {
+                  // Grant user access to premium features
+              }
+          } else if (result.isCanceledByUser()) {
+              // Handle canceled purchase
+          } else if (result.isPending()) {
+              // Handle pending purchase
+          } else {
+              // Handle errors
+          }
+      }
+  });
+  ```
+
+  ```bash bash
+  Qonversion.shared.purchase(requireActivity(), product, object : QonversionPurchaseCallback {
+      override fun onResult(result: QPurchaseResult) {
+          when {
+              result.isSuccessful -> {
+                  val premium = result.entitlements["premium"]
+                  if (premium != null && premium.isActive) {
+                      // Grant user access to premium features
+                  }
+              }
+              result.isCanceledByUser -> {
+                  // Handle canceled purchase
+              }
+              result.isPending -> {
+                  // Handle pending purchase
+              }
+              else -> {
+                  // Handle errors
+              }
+          }
+      }
+  })
+  ```
+
+  ```bash bash
+  final result = await Qonversion.getSharedInstance().purchaseWithResult(product);
+
+  if (result.isSuccess) {
+    final premium = result.entitlements?['premium'];
+    if (premium != null && premium.isActive) {
+      // Grant user access to premium features
+    }
+  } else if (result.isCanceled) {
+    // Handle canceled purchase
+  } else if (result.isPending) {
+    // Handle pending purchase
+  } else {
+    // Handle errors
+  }
+  ```
+
+  ```bash bash
+  const result: PurchaseResult = await Qonversion.getSharedInstance().purchaseWithResult(product);
+
+  if (result.isSuccess) {
+    const premium = result.entitlements?.get('premium');
+    if (premium && premium.isActive) {
+      // Grant user access to premium features
+    }
+  } else if (result.isCanceled) {
+    // Handle canceled purchase
+  } else if (result.isPending) {
+    // Handle pending purchase
+  } else {
+    // Handle errors
+  }
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().Purchase(product, (result) =>
+  {
+      if (result.IsSuccess)
+      {
+          if (result.Entitlements != null && 
+              result.Entitlements.TryGetValue("premium", out var premium) && 
+              premium.IsActive)
+          {
+              // Grant user access to premium features
+          }
+      }
+      else if (result.IsCanceled)
+      {
+          // Handle canceled purchase
+      }
+      else if (result.IsPending)
+      {
+          // Handle pending purchase
+      }
+      else
+      {
+          // Handle errors
+      }
+  });
+  ```
+
+  ```bash bash
+  const result = await Qonversion.getSharedInstance().purchase(product);
+
+  if (result.isSuccess) {
+    const premium = result.entitlements?.get('premium');
+    if (premium && premium.isActive) {
+      // Grant user access to premium features
+    }
+  } else if (result.isCanceled) {
+    // Handle canceled purchase
+  } else if (result.isPending) {
+    // Handle pending purchase
+  } else {
+    // Handle errors
+  }
+  ```
+
+  ```bash bash
+  const result = await Qonversion.getSharedInstance().purchase(product);
+
+  if (result.isSuccess) {
+    const premium = result.entitlements?.get('premium');
+    if (premium && premium.isActive) {
+      // Grant user access to premium features
+    }
+  } else if (result.isCanceled) {
+    // Handle canceled purchase
+  } else if (result.isPending) {
+    // Handle pending purchase
+  } else {
+    // Handle errors
+  }
+  ```
+</CodeGroup>
+
+Where **"product"** is the Qonversion Product created in the [Dashboard](https://dash.qonversion.io/entitlements/products). See the [previous step](displaying-products) to display Products.
+
+### 1.1. Define a specific offer (Android only)
+
+Google Play Billing Library allows you to sell a subscription with different offers. You can get information about available offers from `QProduct.storeDetails`. Use one of the following options to provide the chosen offer for the purchase.
+
+<CodeGroup>
+  ```bash bash
+  // Specify the concrete offer:
+  final QProductOfferDetails productOfferDetails = ...; // Choose an offer from `storeDetails`
+  final QPurchaseOptions purchaseOptions = new QPurchaseOptions.Builder()
+          .setOffer(productOfferDetails)
+          .build();
+
+  // or specify only the offer ID:
+  final QPurchaseOptions purchaseOptions = new QPurchaseOptions.Builder()
+          .setOfferId("offer_id")
+          .build();
+
+  // and then provide created `QPurchaseOptions` to the `purchase` method:
+  Qonversion.getSharedInstance().purchase(this, product, purchaseOftions, new QonversionPurchaseCallback() {
+      ...
+  });
+  ```
+
+  ```bash bash
+  // Specify the concrete offer:
+  val productOfferDetails = ... // Choose an offer from `storeDetails`
+  val purchaseOptions = QPurchaseOptions.Builder()
+      .setOffer(productOfferDetails)
+      .build()
+
+  // or specify only the offer ID:
+  val purchaseOptions = QPurchaseOptions.Builder()
+      .setOfferId("offer_id")
+      .build()
+
+  // and then provide created `QPurchaseOptions` to the `purchase` method:
+  Qonversion.shared.purchase(this, product, purchaseOptions, callback = object: QonversionPurchaseCallback {
+      ...
+  })
+  ```
+
+  ```bash bash
+  // Specify the concrete offer:
+  final productOfferDetails = ... // Choose an offer from `storeDetails`
+  final purchaseOptions = QPurchaseOptionsBuilder()
+      .setOffer(productOfferDetails)
+      .build()
+
+  // or specify only the offer ID:
+  final purchaseOptions = QPurchaseOptionsBuilder()
+      .setOfferId('offer_id')
+      .build()
+
+  // and then provide created `QPurchaseOptions` to the `purchaseWithResult` method:
+  final result = await Qonversion.getSharedInstance().purchaseWithResult(
+    product,
+    purchaseOptions: purchaseOptions
+  );
+  ```
+
+  ```bash bash
+  // Specify the concrete offer:
+  const productOfferDetails = ...; // Choose an offer from `storeDetails`
+  const purchaseOptions = new PurchaseOptionsBuilder()
+    .setOffer(productOfferDetails)
+    .build();
+
+  // or specify only the offer ID:
+  const purchaseOptions = new PurchaseOptionsBuilder()
+    .setOfferId('offer_id')
+    .build();
+
+  // and then provide created `PurchaseOptions` to the `purchaseWithResult` method:
+  const result: PurchaseResult = await Qonversion.getSharedInstance().purchaseWithResult(product, purchaseOptions);
+  ```
+
+  ```bash bash
+  // Specify the concrete offer:
+  ProductOfferDetails productOfferDetails = ...; // Choose an offer from StoreDetails
+  var purchaseOptions = new PurchaseOptionsBuilder()
+      .SetOffer(productOfferDetails)
+      .Build();
+
+  // or specify only the offer ID:
+  var purchaseOptions = new PurchaseOptionsBuilder()
+      .SetOfferId("offer_id")
+      .Build();
+
+  // and then provide created PurchaseOptions to the Purchase method:
+  Qonversion.GetSharedInstance().Purchase(product, purchaseOptions, (result) =>
+  {
+      ...
+  });
+  ```
+
+  ```bash bash
+  // Specify the concrete offer:
+  const productOfferDetails = ...; // Choose an offer from `storeDetails`
+  const purchaseOptions = new Qonversion.PurchaseOptionsBuilder()
+    .setOffer(productOfferDetails)
+    .build();
+
+  // or specify only the offer ID:
+  const purchaseOptions = new Qonversion.PurchaseOptionsBuilder()
+    .setOfferId('offer_id')
+    .build();
+
+  // and then provide created `PurchaseOptions` to the `purchase` method:
+  const result = await Qonversion.getSharedInstance().purchase(product, purchaseOptions);
+  ```
+
+  ```bash bash
+  // Specify the concrete offer:
+  const productOfferDetails = ...; // Choose an offer from `storeDetails`
+  const purchaseOptions = new PurchaseOptionsBuilder()
+    .setOffer(productOfferDetails)
+    .build();
+
+  // or specify only the offer ID:
+  const purchaseOptions = new PurchaseOptionsBuilder()
+    .setOfferId('offer_id')
+    .build();
+
+  // and then provide created `PurchaseOptions` to the `purchase` method:
+  const result = await Qonversion.getSharedInstance().purchase(product, purchaseOptions);
+  ```
+</CodeGroup>
+
+If provided, we will try to find and purchase the offer with the specified ID for the requested Qonversion product. If there is no offer with the specified ID, an error will be returned. If no offer ID is provided for the subscription purchase of Qonversion product with a specified base plan ID, then we will choose the most profitable offer for the client from all the available offers. We calculate the cheapest price for the client by comparing all the trial or intro phases and the base plan. For old Qonversion products (where the base plan ID is not specified), as well as for in-app products, the offer ID is ignored.
+
+You can also remove any intro/trial offer from the purchase (to keep only a base plan). For that purpose, you should call `removeOffer` method of purchase options builder:
+
+<CodeGroup>
+  ```bash bash
+  final QPurchaseOptions purchaseOptions = new QPurchaseOptions.Builder()
+          .removeOffer()
+          .build();
+  ```
+
+  ```bash bash
+  val purchaseOptions = QPurchaseOptions.Builder()
+      .removeOffer()
+      .build()
+  ```
+
+  ```bash bash
+  final purchaseOptions = QPurchaseOptionsBuilder()
+      .removeOffer()
+      .build()
+  ```
+
+  ```bash bash
+  const purchaseOptions = new PurchaseOptionsBuilder()
+    .removeOffer()
+    .build();
+  ```
+
+  ```bash bash
+  var purchaseOptions = new PurchaseOptionsBuilder()
+      .RemoveOffer()
+      .Build();
+  ```
+
+  ```bash bash
+  const purchaseOptions = new Qonversion.PurchaseOptionsBuilder()
+    .removeOffer()
+    .build();
+  ```
+
+  ```bash bash
+  const purchaseOptions = new PurchaseOptionsBuilder()
+    .removeOffer()
+    .build();
+  ```
+</CodeGroup>
+
+## 2. Handle a purchase result
+
+### iOS, Android, React-Native, Flutter SDKs
+
+The product purchase method returns a result object containing all the information about the purchase, including its status, user entitlements after the purchase, store transaction, or an error (if it happened). You should first check the status and then the entitlements, if the purchase was successful. See the examples above.
+
+### Other cross-platform SDKs
+
+The product purchase method returns a dictionary with the user's entitlements on success (either via callback/completion block or as return value depending on the platform). If something goes wrong, the method returns an error or throws an exception with the failure description.
+
+There is a`isCancelled` flag available, which equals true if a user cancels the purchasing process on Unity. For other platforms, there is an additional field in the thrown exception for that purpose (see the code examples above).
+
+Entitlement IDs are the keys to the `entitlements` dictionary. The values are the objects of the [Qonversion.Entitlement](check-permissions#the-entitlement-object) class.
+
+## 3. Update purchases (Android only)
+
+Upgrading, downgrading, or changing a subscription on Google Play Store requires setting additional options through the `PurchaseOptions` builder. See [Google Play Documentation](https://developer.android.com/google/play/billing/subscriptions#upgrade-downgrade) for more details.
+
+<CodeGroup>
+  ```bash bash
+  final QPurchaseOptions purchaseOptions = new QPurchaseOptions.Builder()
+          .setOldProduct(oldProduct)
+          .build();
+  Qonversion.getSharedInstance().purchase(this, product, purchaseOftions, new QonversionPurchaseCallback() {
+      ...
+  });
+  ```
+
+  ```bash bash
+  val purchaseOptions = QPurchaseOptions.Builder()
+      .setOldProduct(oldProduct)
+      .build()
+  Qonversion.shared.purchase(this, product, purchaseOptions, callback = object: QonversionPurchaseCallback {
+      ...
+  })
+  ```
+
+  ```bash bash
+  final purchaseOptions = QPurchaseOptionsBuilder()
+      .setOldProduct(oldProduct)
+      .build();
+  final result = await Qonversion.getSharedInstance().purchaseWithResult(
+    product,
+    purchaseOptions: purchaseOptions
+  );
+  ```
+
+  ```bash bash
+  const purchaseOptions = new PurchaseOptionsBuilder()
+    .setOldProduct(oldProduct)
+    .build();
+  const result: PurchaseResult = await Qonversion.getSharedInstance().purchaseWithResult(product, purchaseOptions);
+  ```
+
+  ```bash bash
+  var purchaseOptions = new PurchaseOptionsBuilder()
+      .SetOldProduct(oldProduct)
+      .SetUpdatePolicy(PurchaseUpdatePolicy.WithTimeProration)
+      .Build();
+  Qonversion.GetSharedInstance().Purchase(product, purchaseOptions, (result) =>
+  {
+      ...
+  });
+  ```
+
+  ```bash bash
+  const purchaseOptions = new Qonversion.PurchaseOptionsBuilder()
+    .setOldProduct(oldProduct)
+    .build();
+  const result = await Qonversion.getSharedInstance().purchase(product, purchaseOptions);
+  ```
+
+  ```bash bash
+  const purchaseOptions = new PurchaseOptionsBuilder()
+    .setOldProduct(oldProduct)
+    .build();
+  const result = await Qonversion.getSharedInstance().purchase(product, purchaseOptions);
+  ```
+</CodeGroup>
+
+Also, Qonversion supports providing any replacement mode for the old purchase. Just provide the necessary purchase update policy while building purchase options as follows:
+
+<CodeGroup>
+  ```bash bash
+  final QPurchaseOptions purchaseOptions = new QPurchaseOptions.Builder()
+          .setOldProduct(oldProduct)
+          .setUpdatePolicy(QPurchaseUpdatePolicy.WithTimeProration)
+          .build();
+  ```
+
+  ```bash bash
+  val purchaseOptions = QPurchaseOptions.Builder()
+      .setOldProduct(oldProduct)
+      .setUpdatePolicy(QPurchaseUpdatePolicy.WithTimeProration)
+      .build()
+  ```
+
+  ```bash bash
+  final purchaseOptions = QPurchaseOptionsBuilder()
+      .setOldProduct(oldProduct)
+      .setUpdatePolicy(QPurchaseUpdatePolicy.withTimeProration)
+      .build();
+  ```
+
+  ```bash bash
+  const purchaseOptions = new PurchaseOptionsBuilder()
+    .setOldProduct(oldProduct)
+    .setUpdatePolicy(PurchaseUpdatePolicy.WITH_TIME_PRORATION)
+    .build();
+  ```
+
+  ```bash bash
+  var purchaseOptions = new PurchaseOptionsBuilder()
+      .SetOldProduct(oldProduct)
+      .SetUpdatePolicy(PurchaseUpdatePolicy.WithTimeProration)
+      .Build();
+  ```
+
+  ```bash bash
+  const purchaseOptions = new Qonversion.PurchaseOptionsBuilder()
+    .setOldProduct(oldProduct)
+    .setUpdatePolicy(PurchaseUpdatePolicy.WITH_TIME_PRORATION)
+    .build();
+  ```
+
+  ```bash bash
+  const purchaseOptions = new PurchaseOptionsBuilder()
+    .setOldProduct(oldProduct)
+    .setUpdatePolicy(PurchaseUpdatePolicy.WITH_TIME_PRORATION)
+    .build();
+  ```
+</CodeGroup>
+
+Purchase update policy can be one of the following values:
+
+| Name                  | Description                                                                                                                                                                              |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ChargeFullPrice`     | The new plan takes effect immediately, and the user is charged full price of new plan and is given a full billing cycle of subscription, plus remaining prorated time from the old plan. |
+| `ChargeProratedPrice` | The new plan takes effect immediately, and the billing cycle remains the same.                                                                                                           |
+| `WithTimeProration`   | The new plan takes effect immediately, and the remaining time will be prorated and credited to the user.                                                                                 |
+| `Deferred`            | The new purchase takes effect immediately, the new plan will take effect when the old item expires.                                                                                      |
+| `WithoutProration`    | The new plan takes effect immediately, and the new price will be charged on next recurrence time.                                                                                        |
+
+The default update policy is `WithTimeProration`.
+
+## 4. Multi-quantity purchases (iOS only)
+
+When buying in-app products, you have the option to choose how many items you want to purchase. On Android, you can adjust the quantity directly in the purchase pop-up. However, on iOS, you’ll need to set the quantity beforehand. You can do it while building purchase options as follows:
+
+<CodeGroup>
+  ```bash bash
+  let purchaseOptions = Qonversion.PurchaseOptions(quantity: quantity)
+  Qonversion.shared().purchase(product, options: purchaseOptions) { (result) in  
+    ...
+  }
+  ```
+
+  ```bash bash
+  QONPurchaseOptions *purchaseOptions = [[QONPurchaseOptions alloc] initWithQuantity:3];
+  [[Qonversion sharedInstance] purchaseWithResult:product
+                                          options:purchaseOptions
+                                       completion:^(QONPurchaseResult * _Nonnull result) {
+    ...
+  }];
+  ```
+
+  ```bash bash
+  final purchaseOptions = QPurchaseOptionsBuilder()
+      .setQuantity(3)
+      .build();
+  final result = await Qonversion.getSharedInstance().purchaseWithResult(
+    product,
+    purchaseOptions: purchaseOptions
+  );
+  ```
+
+  ```bash bash
+  const purchaseOptions = new PurchaseOptionsBuilder()
+    .setQuantity(3)
+    .build();
+  const result: PurchaseResult = await Qonversion.getSharedInstance().purchaseWithResult(product, purchaseOptions);
+  ```
+
+  ```bash bash
+  var purchaseOptions = new PurchaseOptionsBuilder()
+      .SetQuantity(3)
+      .Build();
+  Qonversion.GetSharedInstance().Purchase(product, purchaseOptions, (result) =>
+  {
+      ...
+  });
+  ```
+
+  ```bash bash
+  const purchaseOptions = new Qonversion.PurchaseOptionsBuilder()
+    .setQuantity(3)
+    .build();
+  const result = await Qonversion.getSharedInstance().purchase(
+    roduct,
+    purchaseOptions
+  );
+  ```
+
+  ```bash bash
+  const purchaseOptions = new PurchaseOptionsBuilder()
+    .setQuantity(3)
+    .build();
+  const result = await Qonversion.getSharedInstance().purchase(
+    roduct,
+    purchaseOptions
+  );
+  ```
+</CodeGroup>
+
+## 5. Check user entitlements
+
+Use the `checkEntitlements()` SDK method in case you want to check users’ entitlements separately from a purchase. Learn more [here](check-permissions).
+
+## 6. Restore purchases
+
+When users, for example, upgrade to a new phone, they need to restore purchases so they can keep access to your premium features.
+
+Call the `restore()` method to restore purchases:
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().restore { [weak self] (entitlements, error) in
+    if let error = error {
+      // Handle error
+    }
+    
+    if let entitlement: Qonversion.Entitlement = entitlements["plus"], entitlement.isActive {
+      // Restored and entitlement is active 
+    }
+  }
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] restore:^(NSDictionary<NSString *, QONEntitlement *> * _Nonnull result, NSError * _Nullable error) {
+    if (error) {
+      // Handle error
+    }
+    QONEntitlement *entitlement = result[@"active"];
+    if (entitlement && entitlement.isActive) {
+      // Restored and entitlement is active
+    }
+  }];
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().restore(new QonversionEntitlementsCallback() {
+      @Override
+      public void onSuccess(@NotNull Map<String, QEntitlement> entitlements) {
+          QEntitlement premiumEntitlement = entitlements.get("premium");
+
+          if (premiumEntitlement != null && premiumEntitlement.isActive()) {
+              // handle active entitlement here
+          }
+      }
+
+      @Override
+      public void onError(@NotNull QonversionError error) {
+          // handle error here
+      }
+  });
+  ```
+
+  ```bash bash
+  Qonversion.shared.restore(object : QonversionEntitlementsCallback {
+      override fun onSuccess(entitlements: Map<String, QEntitlement>) {
+          val premiumEntitlement = entitlements["premium"]
+          if (premiumEntitlement != null && premiumEntitlement.isActive) {
+              // handle active entitlement here
+          }
+      }
+
+      override fun onError(error: QonversionError) {
+          // handle error here
+      }
+  })
+  ```
+
+  ```bash bash
+  try {
+    final Map<String, QEntitlement> entitlements = await Qonversion.getSharedInstance().restore();
+  } catch (e) {
+    print(e);
+  }
+  ```
+
+  ```bash bash
+  try {
+    const entitlements: Map<string, Entitlement> = await Qonversion.getSharedInstance().restore();
+   } catch (e) {
+    console.log(e);
+  }
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().Restore((entitlements, error) =>
+  {
+        if (error == null)
+        {
+           // Handle entitlements here
+        }
+        else
+        {
+          // Handle the error  
+          Debug.Log("Error" + error.ToString());
+        }
+  });
+  ```
+
+  ```bash bash
+  try {
+      const entitlements = await Qonversion.getSharedInstance().restore();
+  } catch (e) {
+      console.log(e);
+  }
+  ```
+
+  ```bash bash
+  try {
+    const entitlements: Map<string, Entitlement> = await Qonversion.getSharedInstance().restore();
+   } catch (e) {
+    console.log(e);
+  }
+  ```
+</CodeGroup>
+
+## 7. Consumable in-app purchases
+
+How to handle consumable in-app purchases in your application.
+
+Since consumable in-app purchases do not make sense to tie to a specific entitlement, when making a purchase, you only need to look at the purchase outcome (success/error). If there is an error, do not grant bonuses for the consumable purchase; if the purchase is successful, then grant bonuses. Let’s go through the scenario step by step:
+
+1. The customer initiates the consumable in-app purchase.
+
+2. You call the Qonversion purchase method.
+
+3. You receive a response after the purchase is made.
+
+   1. Is the response successful? Grant the user bonuses.
+   2. Was there an error? No bonuses should be granted.
+
+On iOS and Android, you can also use the purchased transaction from the store.
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().purchase(product) { (result) in  
+    if result.isSuccessful {
+      // Grant coins here
+      // Also check the store transaction if necessary
+      if let transaction = result.transaction {
+
+      }
+    } else if result.isCanceledByUser {
+      // Handle canceled purchase
+    } else if result.isPending {
+      // Handle pending purchase
+    } else {
+      // Handle errors
+    }
+  }
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] purchaseWithResult:product completion:^(QONPurchaseResult * _Nonnull result) {
+    if (result.isSuccessful) {
+      // Grant coins here
+      // Also check the store transaction if necessary
+      if (result.transaction != nil) {
+        
+      }
+    } else if (result.isCanceledByUser) {
+      // Handle canceled purchase
+    } else if (result.isPending) {
+      // Handle pending purchase
+    } else {
+      // Handle errors
+    }
+  }];
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().purchase(this, product, new QonversionPurchaseCallback() {
+      @Override
+      public void onResult(@NonNull QPurchaseResult result) {
+          if (result.isSuccessful()) {
+              // Grant coins here
+              // Also check the store purchase if necessary
+              if (result.purchase != null) {
+                  
+              }
+          } else if (result.isCanceledByUser()) {
+              // Handle canceled purchase
+          } else if (result.isPending()) {
+              // Handle pending purchase
+          } else {
+              // Handle errors
+          }
+      }
+  });
+  ```
+
+  ```bash bash
+  Qonversion.shared.purchase(requireActivity(), product, object : QonversionPurchaseCallback {
+      override fun onResult(result: QPurchaseResult) {
+          when {
+              result.isSuccessful -> {
+                  // Grant coins here
+                  // Also check the store purchase if necessary
+                  result.purchase?.let {
+                  
+                  }
+              }
+              result.isCanceledByUser -> {
+                  // Handle canceled purchase
+              }
+              result.isPending -> {
+                  // Handle pending purchase
+              }
+              else -> {
+                  // Handle errors
+              }
+          }
+      }
+  })
+  ```
+
+  ```bash bash
+  final result = await Qonversion.getSharedInstance().purchaseWithResult(product);
+
+  if (result.isSuccess) {
+    // Grant coins here
+    // Also check the store purchase if necessary
+    if (result.storeTransaction != null) {
+
+    }
+  } else if (result.isCanceled) {
+    // Handle canceled purchase
+  } else if (result.isPending) {
+    // Handle pending purchase
+  } else {
+    // Handle errors
+  }
+  ```
+
+  ```bash bash
+  const result: PurchaseResult = await Qonversion.getSharedInstance().purchaseWithResult(product);
+
+  if (result.isSuccess) {
+    // Grant coins here
+    // Also check the store purchase if necessary
+    if (result.storeTransaction) {
+
+    }
+  } else if (result.isCanceled) {
+    // Handle canceled purchase
+  } else if (result.isPending) {
+    // Handle pending purchase
+  } else {
+    // Handle errors
+  }
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().Purchase(product, (result) =>
+  {
+      if (result.IsSuccess)
+      {
+          // Grant coins here
+          // Also check the store purchase if necessary
+          if (result.StoreTransaction != null)
+          {
+              
+          }
+      }
+      else if (result.IsCanceled)
+      {
+          // Handle canceled purchase
+      }
+      else if (result.IsPending)
+      {
+          // Handle pending purchase
+      }
+      else
+      {
+          // Handle errors
+      }
+  });
+  ```
+
+  ```bash bash
+  const result = await Qonversion.getSharedInstance().purchase(product);
+
+  if (result.isSuccess) {
+    // Grant coins here
+    // Also check the store purchase if necessary
+    if (result.storeTransaction) {
+
+    }
+  } else if (result.isCanceled) {
+    // Handle canceled purchase
+  } else if (result.isPending) {
+    // Handle pending purchase
+  } else {
+    // Handle errors
+  }
+  ```
+
+  ```bash bash
+  const result = await Qonversion.getSharedInstance().purchase(product);
+
+  if (result.isSuccess) {
+    // Grant coins here
+    // Also check the store purchase if necessary
+    if (result.storeTransaction) {
+
+    }
+  } else if (result.isCanceled) {
+    // Handle canceled purchase
+  } else if (result.isPending) {
+    // Handle pending purchase
+  } else {
+    // Handle errors
+  }
+  ```
+</CodeGroup>
+
+***
+
+[Displaying Products](displaying-products)
+
+[Subscription Status](check-permissions)

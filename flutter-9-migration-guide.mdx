@@ -1,0 +1,83 @@
+---
+title: "Flutter SDK 8.x to 9.x migration guide"
+description: "We've upgraded the Google Play Billing Library dependency for Android to version 7 in this release, leading to several changes in our SDK. These are described below."
+---
+
+## Upgrading version
+
+Increase the dependency version in your *prodspec.yaml* file to upgrade your Qonversion SDK to the latest
+
+<CodeGroup>
+  ```bash bash
+  dependencies:
+    qonversion_flutter: ^9.0.0
+  ```
+</CodeGroup>
+
+## Android deployment upgrades
+
+With the new Google Play Billing Library 7 we've increased our `minSdkVersion` to 21 and `targetSdkVersion` to 34 for Android.
+
+If you were using lower `minSdkVersion` you should upgrade it to 21 to use the latest version of our SDK and Google Play Billing Library. If you have already targeted the 21+ version, you should do nothing.
+
+## Installment plans support
+
+In the latest library version, Google introduces installment plans, when a customer commits to pay for several subsequent subscription periods. In our release, we've added a new field `installmentPlanDetails` to `QProductOfferDetails` with the details of the installment plan if they exist. It contains the following information:
+
+| Field                               | Type | Description                                                               |
+| ----------------------------------- | ---- | ------------------------------------------------------------------------- |
+| `commitmentPaymentsCount`           | int  | Committed payments count after a user signs up for this subscription plan |
+| `subsequentCommitmentPaymentsCount` | int  | Subsequent committed payments count after this subscription plan renews   |
+
+We've also added an `isInstallment` flag to `QProductStoreDetails` to check if the current product has an installment plan or not.
+
+Below is an example of those fields usage:
+
+<CodeGroup>
+  ```bash bash
+  var products = await Qonversion.getSharedInstance().products();
+  var installmentProduct = products["installmentProductId"];
+  var storeDetails = installmentProduct?.storeDetails;
+  if (storeDetails?.isInstallment == true) {
+    var installmentPlanDetails = storeDetails?.basePlanSubscriptionOfferDetails?.installmentPlanDetails;
+    // Use the installment plan information
+  }
+  ```
+</CodeGroup>
+
+## Fallback files
+
+We're happy to introduce the fallback files support in this release to make our system reliability even higher. Fallback files allow your app to work as expected in rare cases of network connection or Qonversion API issues for new users without a cache available. This allows purchases and entitlements to be processed for new users even if the Qonversion API faces issues. This also makes it possible to receive remote configs for cases when the network connection is unavailable.
+
+Fallback files are available both on iOS and Android.
+
+Read more about the fallback files in [the documentation](system-reliability#fallback-files).
+
+## Error codes
+
+In this release, we have added the `QErrorCode` enum with the list of defined Qonversion error codes. Now you can compare any error code with the defined one to check any specific case as follows:
+
+<CodeGroup>
+  ```bash bash
+  try {
+    await Qonversion.getSharedInstance().purchase(...);
+  } catch (e) {
+    if (e.code == QErrorCode.storeProductNotAvailable) {
+      // The requested product is unavailable for purchase.
+    }
+  }
+  ```
+</CodeGroup>
+
+We've also changed the type of `QError.code` field from `String` to `QErrorCode`.
+
+## The other changes
+
+* Pending purchases support was added for prepaid subscriptions on Android.
+* `QEligibilityStatus` `nonIntroProduct` was renamed to `nonIntroOrTrialProduct` to better reflect the meaning.
+
+***
+
+[Android SDK 7.x to 8.x migration guide](android-8-migration-guide)
+
+[React Native SDK 7.x to 8.x migration guide](react-native-8-migration-guide)

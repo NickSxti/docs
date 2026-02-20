@@ -1,0 +1,139 @@
+---
+title: "Flutter 5.+ migration guide"
+---
+
+## Upgrading version
+
+Increase the dependency version in your *prodspec.yaml* file to upgrade your Qonversion SDK to the latest
+
+<CodeGroup>
+  ```bash bash
+  dependencies:
+    qonversion_flutter: ^5.0.0
+  ```
+</CodeGroup>
+
+## Initialization
+
+Qonversion Flutter SDK 5 contains significant changes in how the library is initialized. We are moving from a static class approach to an instance-based one. Before, you initialized Qonversion using the `launch` call:
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.launch('projectKey', isObserveMode: true);
+  ```
+</CodeGroup>
+
+Now, instead, you should create a `QonversionConfig` object using `QonversionConfigBuilder` and provide it to the initialization method as follows:
+
+<CodeGroup>
+  ```bash bash
+  final config = new QonversionConfigBuilder(
+    'projectKey',
+    QLaunchMode.subscriptionManagement
+  ).build();
+  Qonversion.initialize(config);
+  ```
+</CodeGroup>
+
+Note that instead of providing the `observeMode` flag to the `launch` call, you should provide a concrete value from the `QLaunchMode` enum, depending on which mode you use Qonversion. Also, we've renamed our modes to make them more transparent for users:
+
+* "Observe" mode becomes "Analytics" mode,
+* "Infrastructure" mode becomes "Subscription Management" mode.
+
+After the initialization, you can access the Qonversion instance whenever you want as follows:
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.getSharedInstance();
+  ```
+</CodeGroup>
+
+So you should replace all your Qonversion calls with the construction above.
+
+Also, if you were using `Qonversion.setDebugMode()` for testing purposes, you should now call the `setEnvironment(QEnvironment.sandbox)` method of the `QonversionConfigBuilder`.
+
+As no `launch` method is available anymore, you won't get `QLaunchResult` as a result. The good news is that there are analogues for all the fields you might have been using from there:
+
+* for `uid`, call `userInfo()` and get the `QUser.qonversionId` from the result,
+* for `products` call `products()`,
+* for `offerings` call `offerings()`,
+* for `permissions`, call `checkEntitlements()`.
+
+## Entitlements
+
+We are on the way to renaming permissions to entitlements as this naming suits more what it is used for. So, the following objects and methods were renamed in this release:
+
+| Version \<4               | Version 4+                 |
+| ------------------------- | -------------------------- |
+| QPermission               | QEntitlement               |
+| QProductRenewState        | QEntitlementRenewState     |
+| QPermissionSource         | QEntitlementSource         |
+| QPermissionsCacheLifetime | QEntitlementsCacheLifetime |
+| checkPermissions          | checkEntitlements          |
+| updatedPurchasesStream    | updatedEntitlementsStream  |
+
+The `QEntitlement` class contains the same information as the `QPermission` with a renaming of the `permissionId` field - now it's named simply `id`.
+
+* There is no `setPermissionsCacheLifetime` method in Qonversion. You should provide `QEntitlementsCacheLifetime` to `QonversionConfigBuilder` during the initialization using the `setEntitlementsCacheLifetime` method.
+
+<CodeGroup>
+  ```bash bash
+  final config = new QonversionConfigBuilder(
+      'projectKey',
+      QLaunchMode.subscriptionManagement
+  )
+      .setEntitlementsCacheLifetime(QEntitlementsCacheLifetime.year)
+      .build();
+  Qonversion.initialize(config);
+  ```
+</CodeGroup>
+
+## Automation changes
+
+We've also changed the way the `Automations` is used. As in Qonversion, you should use `Automations` via the shared instance. On the first access, it will be initialized and returned. Then the initialized instance will be used.
+
+<Info>
+  ### You should access the shared instance of `Automations` strictly after you initialize Qonversion, else an exception will be thrown.
+</Info>
+
+<CodeGroup>
+  ```bash bash
+  final config = new QonversionConfigBuilder(
+      'projectKey',
+      QLaunchMode.subscriptionManagement
+  ).build();
+  Qonversion.initialize(config);
+  Automations.getSharedInstance().setDelegate(...);
+  ```
+</CodeGroup>
+
+Also, the methods for working with push notifications were moved from `Qonversion` to `Automations`, so if you were using the following methods:
+
+* `setNotificationsToken`,
+* `handleNotification`,
+* `getNotificationCustomPayload`, make sure to make calls from the Automations instance instead of the Qonversion one.
+
+## Rest of the changes
+
+Along with the changes described above, there are several technical improvements and other changes in the new major release:
+
+* all the internal classes were moved to the `internal` package, and DTO classes were moved to the `dto` package to make the library file structure more readable;
+* the deprecated methods `resetUser` and `setUserId` were removed. `resetUser` was deprecated for a long time, and it did nothing, so there is nothing to replace this call with, remove the call if you were still using it for some reason. `setUserId` should be replaced with the `setProperty` call with `QUserProperties.customUserId` parameter;
+* added the new method `userInfo`, which returns the information about the current Qonversion user. Now it contains internal Qonversion and identity identifiers. The user info may be extended in future releases;
+* added new enum values - `QOfferingTag.Unknown` and `QTrialDuration.Unknown`, which are used when parsing fails;
+* `facebookAttribution` and `advertisingId` values were added to the `QUserProperty` enum;
+* native modules' error codes were refactored - now clear textual error codes are provided.
+* the following methods and classes renaming took place:
+
+| Old name                              | New name                           |
+| ------------------------------------- | ---------------------------------- |
+| `addAttributionData`                  | `attribution`                      |
+| `setAdvertisingID`                    | `collectAdvertisingId`             |
+| `setAppleSearchAdsAttributionEnabled` | `collectAppleSearchAdsAttribution` |
+| `ProrationMode`                       | `QProrationMode`                   |
+
+***
+
+[Android 4.+ migration guide](android-4-migration-guide)
+
+[React Native 4.+ migration guide](react-native-4-migration-guide)

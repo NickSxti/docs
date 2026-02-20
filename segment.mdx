@@ -1,0 +1,61 @@
+---
+title: "Segment"
+description: "Send in-app revenue events to your Segment account"
+---
+
+## 1. Set up the SDKs
+
+1. Make sure you have Segment SDK installed. If you do not have Segment integration yet, please use [this documentation](https://segment.com/docs/connections/sources/#mobile).
+
+2. Set Qonversion SDKs following [installing the SDKs](install-sdk) guides.
+
+3. Attribute events sent from Qonversion and events received from the Segment SDK to the same user by setting the same user id to Segment that you set to Qonversion SDK in the [User Identifiers guide](user-identifiers#2-user-id-for-third-party-integrations).
+
+<CodeGroup>
+  ```bash bash
+  SEGAnalytics.sharedAnalytics().identify("yourSideUserID")
+  ```
+
+  ```bash bash
+  [[SEGAnalytics sharedAnalytics] identify:@"yourSideUserID"];
+  ```
+
+  ```bash bash
+  Analytics.with(context).identify("yourSideUserID", null, null);
+  ```
+
+  ```bash bash
+  Analytics.with(context).identify("yourSideUserID")
+  ```
+</CodeGroup>
+
+## 2. Configure the Segment Integration
+
+1. Go to your Segment account and copy the [Write Key](https://segment.com/docs/connections/find-writekey/) .
+
+2. Navigate to the Integrations section in your Qonversion project, select [Segment ](https://dash.qonversion.io/app/integration/segment), provide the **Write Key** and Save.
+
+## Event Payload
+
+In case you need details about data sent to Segment, follow the example below:
+
+<CodeGroup>
+  ```bash bash
+  {
+     "userId":"",
+     "event":"subscription_renewed",
+     "timestamp":1686761639,
+     "properties":{
+        "product":"product_id",
+        "price":2.99,
+        "currency":"EUR"
+     }
+  }
+  ```
+</CodeGroup>
+
+***
+
+[SplitMetrics Acquire](splitmetrics)
+
+[Singular](singular)

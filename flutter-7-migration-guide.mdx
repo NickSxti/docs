@@ -1,0 +1,65 @@
+---
+title: "Flutter 7.+ migration guide"
+---
+
+## Upgrading version
+
+Increase the dependency version in your *prodspec.yaml* file to upgrade your Qonversion SDK to the latest
+
+<CodeGroup>
+  ```bash bash
+  dependencies:
+    qonversion_flutter: ^7.0.0
+  ```
+</CodeGroup>
+
+## Renamings
+
+In this major version, we have renamed several entities and public methods to make our namings more clear. To make everything work just change all the occurrences from the left column of the table below to the new ones.
+
+| Before upgrade    | After upgrade           |
+| ----------------- | ----------------------- |
+| `QUserProperty`   | `QUserPropertyKey`      |
+| `setUserProperty` | `setCustomUserProperty` |
+| `setProperty`     | `setUserProperty`       |
+
+## User properties changes
+
+As mentioned above, we have renamed the`QUserProperty` enum to `QUserPropertyKey`. It was made to release the name `QUserProperty` for a class, containing both the property key and its value. This class will be used in the new Qonversion method `userProperties`, which will return all the properties set for the current user.
+
+<CodeGroup>
+  ```bash bash
+  try {
+    QUserProperties userProperties = await Qonversion.getSharedInstance().userProperties();
+    userProperties.properties.forEach((userProperty) {
+      print('User property - key: ' + userProperty.key + ', value: ' + userProperty.value);
+    });
+  } catch (e) {
+    // handle error here
+  }
+  ```
+</CodeGroup>
+
+`QUserProperties` class returned as the successful result of `userProperties` contains several useful fields and methods to get all the types of properties you may want:
+
+| Field                      | Description                                                                 |
+| -------------------------- | --------------------------------------------------------------------------- |
+| `properties`               | List of all user properties                                                 |
+| `definedProperties`        | Subset of all user properties, which were set using Qonversion-defined keys |
+| `customProperties`         | Subset of all user properties, which were set using custom keys             |
+| `flatPropertiesMap`        | A flattened version of all user properties as a key-value map               |
+| `flatDefinedPropertiesMap` | A flattened version of defined user properties as a key-value map           |
+| `flatCustomPropertiesMap`  | A flattened version of custom user properties as a key-value map            |
+
+| Method               | Arguments                  | Description                                                                                              |
+| -------------------- | -------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `getProperty`        | `key` - string             | Searches for a property with the given property `key` in all properties list                             |
+| `getDefinedProperty` | `key` - `QUserPropertyKey` | Searches for a property with the given Qonversion-defined property `key` in the defined properties list. |
+
+The last change here is that we've enriched `QUserPropertyKey` enum with a `custom` key to represent all the custom properties.
+
+***
+
+[Android 6.+ migration guide](android-6-migration-guide)
+
+[React Native 6.+ migration guide](react-native-6-migration-guide)

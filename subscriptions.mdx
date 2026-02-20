@@ -1,0 +1,56 @@
+---
+title: "Subscriptions"
+description: "Get insights on your active subscriptions"
+---
+
+## Active Subscriptions
+
+The Active Subscriptions chart shows the number of active paid subscriptions at the selected dates. This chart includes only paid subscriptions, i.e. it does not include free trials. The Active Subscriptions chart shows the subscriptions split by their auto-renewable state. When a user cancels an auto-renewable subscription on the app store, it is still active till the expiration date.
+
+The chart's title shows your active subscriptions at the end of the selected period, and the percentage reflects the change in subscriptions during the period chosen. In the example below, for the 30th of June, you have 21,438 active paid subscriptions, which is 17.6% higher than you had for the 1st of June.
+
+<Frame caption="Active Subscriptions - Mobile Analytics - Qonversion">
+  <img src="/images/docs/b96e4a6-Screenshot_2022-11-23_at_22.39.03.png" />
+</Frame>
+
+<Info>
+  ### Subscriptions in the Billing Retry state
+
+  A subscription can be in the [Billing Retry](https://developer.apple.com/documentation/storekit/in-app_purchase/original_api_for_in-app_purchase/subscriptions_and_offers/reducing_involuntary_subscriber_churn) and [Account Hold](https://developer.android.com/google/play/billing/subscriptions#account-hold) states on the App Store and Google Play, respectively. These states help reduce subscribers' involuntary churn. Users no longer have premium access in these states. Qonversion excludes such subscriptions from the Active Subscriptions chart. These subscriptions are shown in the Subscriptions Movement chart as Churned subscriptions once Qonversion receives the Subscription Expired event from the stores.
+</Info>
+
+## New Subscriptions
+
+The New Subscriptions chart shows paid subscribers added for the selected period. The chart includes users who started subscriptions and converted from a free trial.
+
+The chart's title displays the total amount of new paid subscriptions during the selected period; the percentage shows how it changed compared to the previous period of the same length.
+
+<Frame caption="New Subscriptions - Mobile Analytics - Qonversion">
+  <img src="/images/docs/080acd8-Screenshot_2022-11-23_at_22.59.07.png" />
+</Frame>
+
+## Subscriptions Movement
+
+Subscriptions Movement helps you understand how your subscriber base changes over time. This chart shows new paid subscriptions (above zero), and subscriptions churned (below zero), i.e., expired or refunded subscriptions.
+
+Please note that the subscription cancellation, i.e., turning off auto-renewal, does not mean the subscription has churned. Such subscriptions show up as churned in this chart only once they expire. Additionally, if a user did not cancel a subscription, but a platform (Apple/Google) can not renew a subscription due to lack of funds or incorrect payment details provided by a user, this subscription expires after being in a billing issue state for some time. A refund requested by a user immediately leads to subscription expiration.
+
+The chart's title shows the net number of new paid subscriptions during the selected period; the percentage shows how this value changed compared to the previous period of the same length. In the example below, the subscription base increased by 3,770 active paid subscriptions, which is 5.59% higher than your growth in the previous period of the same length (31 days).
+
+<Frame caption="Subscriptions Movement - Mobile Analytics - Qonversion">
+  <img src="/images/docs/621bcdb-Screenshot_2022-11-23_at_23.03.49.png" />
+</Frame>
+
+## Subscription cancellation rate
+
+The subscription cancellation rate is calculated as the ratio of: → Numerator: subscription cancelled events attributed to subscription start date → Denominator: subscriptions started events for the selected period
+
+<Frame caption="Subscription cancellation rate - Mobile Analytics - Qonversion">
+  <img src="/images/docs/70b26e4-Screenshot_2022-12-07_at_18.14.36.png" />
+</Frame>
+
+***
+
+[Trials](trials)
+
+[Events](events-analytics)

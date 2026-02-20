@@ -1,0 +1,171 @@
+---
+title: "Fallbacks"
+description: "The  ensures your No-Code screens remain available even when a network connection is lost or your app cannot reach Qonversion’s servers. Think of it as a backup plan that automatically loads a locally stored version of your screen when the live one can’t be fetched."
+---
+
+***
+
+### Why Do You Need It?
+
+Network conditions aren’t always reliable — especially for users who:
+
+* Are in areas with weak or unstable connections
+* Use restrictive networks or firewalls
+* Experience short-term server or CDN outages
+
+Without fallbacks, users might see **blank screens** or **failed paywall loads**. With fallbacks enabled, they’ll see a **locally stored** version of your paywall or onboarding screen instead — completely offline.
+
+<Info>
+  **In short:** Fallbacks make your screens fail-safe.
+</Info>
+
+***
+
+# How It Works
+
+When you publish a screen, Qonversion automatically allows you to generate a fallback file for it. This file contains all visual elements and logic needed to display the screen offline.
+
+The system then behaves intelligently:
+
+* **Smart Detection** – Automatically detects when a network or server error occurs.
+* **Seamless Switch** – Instantly displays a locally cached fallback screen.
+* **Fast Loading** – Fallback screens open from the device storage (no request delay).
+* **Graceful Recovery** – When the connection returns, the SDK automatically switches back to online mode.
+
+***
+
+## What Triggers Fallback?
+
+Fallbacks activate automatically when:
+
+* **Network issues** — DNS failure, timeout, or unreachable endpoint.
+* **Server errors** — HTTP 500-599 responses, rate limiting, or geoblocking.
+* **Provider blocking** — Connection refused or socket exceptions.
+* **CDN problems** — Gateway timeout or invalid cache.
+
+You don’t need to handle these conditions manually — the SDK does it for you.
+
+***
+
+## Adding Fallback to Your Project
+
+### Step 1 — Download Your Fallback File
+
+1. Go to your **Dashboard** → **No-Codes** → **Screens**.
+2. Select one or more published screens.
+3. Click **Download Fallback File**.
+
+![](/images/docs/215af5da4516489ed778556c6d8e7b5763297e6a9ece5ed0c4a63f6d320bfe6f-Fallbacks.gif)
+
+This will generate a JSON file (e.g. `qonversion_fallbacks.json`) containing all published screens and their local data.
+
+<Warning>
+  Keep in mind that whenever you release new screens or modify the existing ones, it’s essential to update your fallback file as well. Otherwise, it will still have outdated screens.
+</Warning>
+
+<Info>
+  **Tip:** You can download fallbacks for all screens at once, or only for selected ones.
+</Info>
+
+***
+
+### Step 2 — Add the File to Your Project
+
+Once downloaded, you’ll integrate it into your app bundle so that the SDK can access it when offline.
+
+✅ **Default Setup (No Code Required)**
+
+Simply place the downloaded file in:
+
+* `assets` folder for Android, or
+* project root for iOS (same directory where Qonversion SDK is initialized).
+
+When your app starts, the SDK will automatically detect and load the fallback file. No extra configuration is needed.
+
+**Custom Setup (If You Need a Custom Path or Filename)**
+
+<Warning>
+  For iOS, you only need to specify the filename as the file will be automatically located within the app bundle. For Android, you should specify both the path and filename.
+</Warning>
+
+You can specify the file path manually when initializing the SDK:
+
+<CodeGroup>
+  ```bash bash
+  let configuration = NoCodesConfiguration(projectKey: "your-project-key", fallbackFileName: "my_custom_fallbacks.json")
+  NoCodes.initialize(with: configuration)
+  ```
+
+  ```bash bash
+  val config = NoCodesConfig.Builder(context, "your-project-key")
+      .setCustomFallbackFileName("my_custom_fallbacks.json")
+      .build()
+
+  NoCodes.initialize(config)
+  ```
+
+  ```bash bash
+  NoCodesConfig config = new NoCodesConfig.Builder(context, "your-project-key")
+      .setCustomFallbackFileName("my_custom_fallbacks.json")
+      .build();
+
+  NoCodes.initialize(config);
+  ```
+</CodeGroup>
+
+**Examples:**
+
+**iOS**
+
+* Custom name: `"my_offline_screens.json"`
+
+**Android**
+
+* Custom name: `"my_offline_screens.json"`
+* File in subdirectory: `"assets/fallbacks/my_fallbacks.json"`
+* Different path: `"assets/offline/my_screens.json"`
+
+The system will automatically detect and use your fallback file, providing seamless offline experience for your users.
+
+***
+
+### ⚠️ Store Products Still Require Internet
+
+While fallback screens load instantly, any screens that display App Store or Google Play products (subscriptions, one-time purchases, etc.) will still require an internet connection to fetch current pricing and availability information.
+
+***
+
+### ⚠️ Important Note About Android Asset Caching
+
+When working with fallback files in your Android project, be aware that changes to asset files (including fallback JSON files) are cached by the build system. If you modify the fallback file's content, filename, or location, you must run a clean build to ensure the changes are properly included in your app. Without a clean build, the old cached version of the file may continue to be used, even if you've updated the source file.
+
+***
+
+## Summary
+
+| **Feature**      | **Purpose**                                              |
+| ---------------- | -------------------------------------------------------- |
+| **Fallbacks**    | Ensure No-Code screens remain available offline.         |
+| **How it works** | Detects network errors and loads locally cached screens. |
+| **Setup time**   | \~5 minutes                                              |
+| **Supported on** | iOS, Android, React Native, Flutter                      |
+| **Maintenance**  | Re-download after each screen update.                    |
+
+***
+
+## Best Practices
+
+* Always run `./gradlew clean` after modifying fallback files during development
+* Test fallback functionality after any file changes
+
+<Info>
+  **💡 Fallbacks are your safety net.** Even if something breaks in the network or API layer, your users will still see a working screen — and your revenue stays protected.
+</Info>
+
+***
+
+***
+
+[Localization](ai-localization)
+
+[Screens Preloading](screens-preloading)

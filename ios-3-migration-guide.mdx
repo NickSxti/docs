@@ -1,0 +1,152 @@
+---
+title: "iOS 3.+ migration guide"
+---
+
+## Initialization
+
+Qonversion iOS SDK 3 contains significant changes in how the library is initialized. Before, you initialized Qonversion using the `launch` call:
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.launch(withKey: "projectKey")
+  ```
+
+  ```bash bash
+  [Qonversion launchWithKey:@"projectKey"];
+  ```
+</CodeGroup>
+
+Now, instead, you should create a Qonversion Configuration object and provide it to the initialization method as follows:
+
+<CodeGroup>
+  ```bash bash
+  let configuration = Qonversion.Configuration(projectKey: "projectKey", launchMode: .subscriptionManagement)
+  Qonversion.initWithConfig(configuration)
+  ```
+
+  ```bash bash
+  QONConfiguration *configuration = [[QONConfiguration alloc] initWithProjectKey:@"projectKey" launchMode:QONLaunchModeSubscriptionManagement];
+  [Qonversion initWithConfig:configuration];
+  ```
+</CodeGroup>
+
+Note that now you should provide a concrete value from the `Qonverion.LaunchMode` enum, depending on which mode you use Qonversion. Also, we've renamed our modes to make them clearer for users:
+
+* "Observe" mode becomes [Analytics mode](analytics-mode),
+* "Infrastructure" mode becomes [Subscription Management mode](subscription-management-mode).
+
+After the initialization, you can access the Qonversion instance whenever you want as follows:
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared()
+  ```
+
+  ```bash bash
+  [Qonversion sharedInstance];
+  ```
+</CodeGroup>
+
+So you should replace all your Qonversion calls with the construction above.
+
+Also, if you were using `Qonversion.setDebugMode()` for testing purposes, you should now call the `setEnvironment(.sandbox)` method of the `Qonversion Config before calling Qonversion.initWithConfig()`.
+
+<CodeGroup>
+  ```bash bash
+  let configuration = Qonversion.Configuration(projectKey: "projectKey", launchMode: .subscriptionManagement)
+  configuration.setEnvironment(.sandbox)
+  Qonversion.initWithConfig(configuration)
+  ```
+
+  ```bash bash
+  QONConfiguration *configuration = [[QONConfiguration alloc] initWithProjectKey:@"projectKey" launchMode:QONLaunchModeSubscriptionManagement];
+  [configuration setEnvironment:QONEnvironmentSandbox];
+  [Qonversion initWithConfig:configuration];
+  ```
+</CodeGroup>
+
+As no `launch` method is available anymore, you won't get `QNLaunchResult` as a result. The good news is that there are analogues for all the fields you might have been using from there:
+
+* for `uid`, call `userInfo()` and get the `qonversionId` field of the `Qonversion.User` object from the result,
+* for `products` call `products()`,
+* for `offerings` call `offerings()`,
+* for `permissions`, call `checkEntitlements()`.
+
+## Entitlements
+
+We are on the way to renaming permissions to entitlements as this naming suits more what it is used for. So, the following objects and methods were renamed in this release:
+
+| Version \<3                             | Version 3+                               |
+| --------------------------------------- | ---------------------------------------- |
+| Qonversion.Permission                   | Qonversion.Entitlement                   |
+| Qonversion.PermissionsCompletionHandler | Qonversion.EntitlementsCompletionHandler |
+| Qonversion.PermissionRenewState         | Qonversion.EntitlementRenewState         |
+| Qonversion.PermissionSource             | Qonversion.EntitlementSource             |
+| Qonversion.PermissionsCacheLifetime     | Qonversion.EntitlementsCacheLifetime     |
+| Qonversion.checkPermissions()           | Qonversion.checkEntitlements()           |
+| UpdatedPurchasesListener                | Qonversion.EntitlementsUpdateListener    |
+
+The `Qonversion.Entitlement` class contains the same information as the `Qonversion.Permission` with minor renaming.
+
+* `permissionID` was renamed to `entitlementID`,
+
+There is no `setUpdatedPurchasesListener` method in Qonversion. You should provide `UpdatedEntitlementsListener` to `Qonversion.Configuration` during the initialization using the `setEntitlementsUpdateListener` method. The exact change is made to the `setPermissionsCacheLifetime` method. Now you can set the required lifetime using the `Qonversion.Configuration` `setEntitlementsCacheLifetime` function while Qonversion initialization.
+
+<CodeGroup>
+  ```bash bash
+  let configuration = Qonversion.Configuration(projectKey: "projectKey", launchMode: .subscriptionManagement)
+  configuration.setEntitlementsUpdateListener(self)
+  Qonversion.initWithConfig(config)
+  ```
+
+  ```bash bash
+  QONConfiguration *configuration = [[QONConfiguration alloc] initWithProjectKey:@"projectKey" launchMode:QONLaunchModeSubscriptionManagement];
+  [configuration setEntitlementsCacheLifetime:QONEntitlementsCacheLifetimeThreeMonths];
+  [Qonversion initWithConfig:configuration];
+  ```
+</CodeGroup>
+
+## Automation changes
+
+We've also changed the way the `Automations` is used. As in Qonversion, you should use `Automations` via the shared instance. On the first access, it will be initialized and returned. Then the initialized instance will be used.
+
+<Warning>
+  You should access the shared instance of `Automations` strictly after you initialize Qonversion.
+</Warning>
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.initWithConfig(...)
+  Qonversion.Automations.shared().setDelegate(...)
+  ```
+
+  ```bash bash
+  [Qonversion initWithConfig:...];
+  [[QONAutomations sharedInstance] setDelegate:...];
+  ```
+</CodeGroup>
+
+Also, the methods for working with push notifications were moved from `Qonversion` to `Automations`, so if you were using the following methods:
+
+* `setNotificationsToken`,
+* `handleNotification`,
+* `getNotificationCustomPayload` make sure to make calls from the Automations instance instead of the Qonversion one.
+
+## Rest of the changes
+
+Along with the changes described above, there are several technical improvements and other changes in the new major release:
+
+* the deprecated methods `resetUser` and `setUserId` were removed. `resetUser` was deprecated for a long time and did nothing, so there is nothing to replace this call with, remove the call if you were still using it for some reason. `setUserId` should be replaced with the `setProperty` call with `.userID` parameter.
+* the `experiments` method was removed - we are now working on a new design of A/B experiments;
+* the `Qonversion.AttributionSource` enum was renamed to `Qonversion.AttributionProvider`.
+* the `checkTrialIntroEligibilityForProductIds` method was shortened to `checkTrialIntroEligibility`;
+* added the new method `userInfo`, which returns the information about the current Qonversion user. Now it contains internal Qonversion and identity identifiers. The user info may be extended in future releases;
+* added new enum values - `Qonversion.OfferingTag.Unknown` and `Qonversion.TrialDuration.Unknown`, which are used when parsing fails.
+* all the classes and functions' namings were fixed for Swift;
+* all the class prefixes were changed from `QN` to `QON` for Objective-C.
+
+***
+
+[\[Dec 2022\] Migration Guide](migrate-to-the-actual-qonversion-sdk-version-december-2022)
+
+[Android 4.+ migration guide](android-4-migration-guide)

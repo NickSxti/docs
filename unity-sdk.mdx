@@ -1,0 +1,54 @@
+---
+title: "Unity"
+description: "Install Unity SDK to validate user receipts, get in-app subscription analytics, and 3-rd party integrations."
+---
+
+[![GitHub release](https://img.shields.io/github/v/release/qonversion/unity-sdk?label=Latest%20Release)](https://github.com/qonversion/unity-sdk/releases)
+
+## Install via Git URL
+
+Available starting from Unity 2018.3. Just add this line to the *Packages/manifest.json* file of your Unity Project:
+
+<CodeGroup>
+  ```bash bash
+  "dependencies": {
+      "com.qonversion.unity": "https://github.com/qonversion/unity-sdk.git#9.0.1"
+  }
+  ```
+</CodeGroup>
+
+## Install via OpenUPM
+
+Qonversion SDK package is available on the [openupm registry](https://openupm.com/). You can install it via [openupm-cli](https://github.com/openupm/openupm-cli).
+
+<CodeGroup>
+  ```bash bash
+  openupm add com.qonversion.unity
+  ```
+</CodeGroup>
+
+## Install Native Dependencies
+
+Make sure your project contains the External Dependencies Manager package. Otherwise, iOS & Android dependencies won't be resolved. This can result in a package import issues. Here are the steps describing how to install the External Dependency Manager:
+
+1. Download the last version of the [External Dependencies Manager](https://github.com/googlesamples/unity-jar-resolver/tags) package.
+2. In the Unity Editor click **Import package** -> **Custom package**
+3. Choose a file with the `.unitypackage` dependency from the folder you've downloaded before and install it.
+
+After the installation, do the following:
+
+1. For iOS - **Assets** -> **External Dependency Manager** -> **iOS Resolver** -> **Install Cocoapods**
+2. For Android - **Assets** -> **External Dependency Manager** -> **Android Resolver** -> **Resolve**
+
+Now you are ready to build and run your project!
+
+## Kids Mode for Qonversion Unity SDK
+
+In case you are building an App for Kids, please, [Kids Mode Qonversion SDKs](kids-mode-sdk) to learn more about Kids Mode for Qonversion SDKs.
+
+***
+
+What’s Next
+
+* [Analytics (Observer) Mode](analytics-mode)
+* [Subscription Management Mode](subscription-management-mode)

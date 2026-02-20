@@ -1,0 +1,31 @@
+---
+title: "Upgrade and Downgrade a Subscription"
+---
+
+## App Store
+
+Kindly note that you do not need to change your code to support upgrades, downgrades, and crossgrades for iOS subscriptions in your app. All users can upgrade, downgrade, or crossgrade between subscriptions unlimited times.
+
+According to [Apple Documentation](<https://developer.apple.com/app-store/subscriptions/#ranking >), if you offer multiple subscriptions with different prices tiers, you can assign each to a level in App Store Connect. Ranking your subscriptions determines the upgrade, downgrade, and crossgrade paths available:
+
+**Upgrade.** User purchases a subscription that offers a higher level of service than their current subscription. They are immediately upgraded and receive a refund of the prorated amount of their original subscription. If you’d like users to instantly access more content or features, rank the subscription higher to make it an upgrade.
+
+**Downgrade.** User selects a subscription that offers a lower level of service than their current subscription. The subscription continues until the next renewal date, then is renewed at the lower level and price.
+
+**Crossgrade.** User switches to a new subscription of the equivalent level. If the subscriptions are the same duration, the new subscription begins immediately. If the durations are different, the new subscription goes into effect at the next renewal date.
+
+In the following [blog post](<https://qonversion.io/blog/ios-subscription-upgrades-downgrades-and-service-levels/ >), you can find more information about setting up subscription groups in the App Store Connect.
+
+## Google Play
+
+In order to perform upgrading, downgrading, or changing a subscription on Google Play Store requires calling [updatePurchase()](making-purchases#3-update-purchases-android-only) function. When upgrading or downgrading a subscription, you can set the proration mode, or how the change affects your subscribers. You can find more information about the proration mode in the following [documentation](google-upgrade-downgrade-or-change-subscription).
+
+<Info>
+  ### Qonversion supports `IMMEDIATE_WITH_TIME_PRORATION`. In this mode, the subscription is upgraded or downgraded immediately. Any time remaining is adjusted based on the price difference and credited toward the new subscription by pushing forward the next billing date. Pricing will not be reflected accurately by using alternate proration modes in Qonversion.
+</Info>
+
+***
+
+[Store Product Price Changes](store-product-price-changes)
+
+[App Store Connect Shared Secret](app-specific-shared-secret)

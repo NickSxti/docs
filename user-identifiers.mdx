@@ -1,0 +1,485 @@
+---
+title: "User Identifiers"
+description: "Share your User ID with Qonversion to manage user access on various devices and platforms."
+---
+
+User identification is essential for a mobile application with an in-app subscription. Each subscriber should have a User ID that identifies them within your app. With Qonversion, you can use different ways to identify your users within the app based on your requirements.
+
+## 1. Qonversion User ID
+
+Qonversion creates a unique User ID each time an app is installed and opened for the first time. To use **Qonversion User ID**, call the *userInfo* method. You can use Qonversion User ID for third-party integrations or other purposes like matching data from webhook notifications to your server.
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().userInfo { user, error in
+    // use user?.qonversionId
+  }
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] userInfo:^(QONUser * _Nullable user, NSError * _Nullable error) {
+    // use [user qonversionId] if no error occurred
+  }]
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().userInfo(new QonversionUserCallback() {
+      @Override
+      public void onSuccess(@NonNull QUser user) {
+          // use user.getQonversionId()
+      }
+
+      @Override
+      public void onError(@NonNull QonversionError error) {
+          // handle error here
+      }
+  });
+  ```
+
+  ```bash bash
+  Qonversion.shared.userInfo(object : QonversionUserCallback {
+      override fun onSuccess(user: QUser) {
+          // use user.qonversionId
+      }
+
+      override fun onError(error: QonversionError) {
+          // handle error here
+      }
+  })
+  ```
+
+  ```bash bash
+  try {
+    final userInfo = await Qonversion.getSharedInstance().userInfo();
+    // use userInfo.qonversionId
+  } catch (e) {
+    // handle error here
+  }
+  ```
+
+  ```bash bash
+  try {
+    const userInfo = await Qonversion.getSharedInstance().userInfo();
+    // use userInfo.qonversionId
+  } catch (e) {
+    // handle error here
+  }
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().UserInfo((userInfo, error) =>
+  {
+      if (error == null)
+      {
+          // use userInfo.QonversionId
+      }
+      else
+      {
+          // Handle the error  
+          Debug.Log("Error" + error.ToString());
+      }
+  });
+  ```
+
+  ```bash bash
+  try {
+    const userInfo = await Qonversion.getSharedInstance().userInfo();
+    // use userInfo.qonversionId
+  } catch (e) {
+    // handle error here
+  }
+  ```
+
+  ```bash bash
+  curl --location --request GET 'https://api.qonversion.io/v3/users/QON_38a2d811afd54a433587620f8696266e' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer '
+
+  {"created":1658489733000,"environment":"prod","id":"QON_38a2d811afd54a433587620f8696266e","identity_id":"your_custom_user_id"}
+  ```
+</CodeGroup>
+
+## 2. User ID for third-party Integrations
+
+Qonversion SDK provides an asynchronous method to set your user ID, which will later be sent to third-party integrations you enabled.
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().setUserProperty(.userID, value: "yourSideUserId")
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] setUserProperty:QONUserPropertyKeyUserID value:@"yourSideUserId"];
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(QUserPropertyKey.CustomUserId, "yourSideUserID");
+  ```
+
+  ```bash bash
+  Qonversion.shared.setUserProperty(QUserPropertyKey.CustomUserId, "yourSideUserID")
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(QUserPropertyKey.customUserId, 'yourSideUserId');
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(UserPropertyKey.CUSTOM_USER_ID, 'yourSideUserId');
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().SetUserProperty(UserPropertyKey.CustomUserId, "yourSideUserId");
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().setUserProperty(Qonversion.UserPropertyKey.CUSTOM_USER_ID, 'yourSideUserId');
+  ```
+</CodeGroup>
+
+<Warning>
+  Use User ID for third-party Integrations to attribute events to existing users in other platforms. For managing user access across multiple devices or Apple and Google app stores, use [User Identifiers](offline-sdk-mode).
+</Warning>
+
+## 3. User Identity
+
+**User Identity allows cross-device & cross-platform user identification and access management.**
+
+<Warning>
+  Use the documentation below and the User Identity concept only if you want to manage user access across multiple devices or Apple, Google and Web platforms for users logged into their accounts within your apps.
+
+  If you need to assign your user ID for analytical purposes, use the `setProperty()` method described above.
+</Warning>
+
+User identification is critical in building cross-platform apps where you want to manage user access based on payments across different platforms. This can be a complex task as users can log in and out of your application, use multiple devices, or reinstall the app. To provide flexible subscription infrastructure and consistent data, we have built a comprehensive solution using a combination of Qonversion IDs, your backend IDs, and the merging concept for users.
+
+Qonversion lets you identify your signed-in users and unlock premium access across multiple devices. Use the `identify()` method to link a user to your signed-in subscriber. Call this method every time you want to use User Identity. For example, when a user logs in. User Identity provides a convenient way of managing premium access of your existing subscribers, including the following cases:
+
+* A user reinstalls your app for any reason. Using the same User ID allows you to provide premium access linked to previously purchased products.
+* A user logs in on several devices. You can provide premium access based on a subscription purchased on one of his devices.
+* A user logs in on iOS and Android versions of your app. You can provide premium access based on a subscription purchased on one of the platforms.
+
+### Logging in
+
+When a user logs into his account, call `identify()`.
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().identify("your_custom_user_id")
+
+  // or the following option, if you want to get notified about the result.
+
+  Qonversion.shared().identify("your_custom_user_id") { user, error in
+    // use user if necessary
+  }
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] identify:@"your_custom_user_id"];
+
+  // or the following option, if you want to get notified about the result.
+
+  [[Qonversion sharedInstance] identify:@"your_custom_user_id" completion:^(QONUser * _Nullable user, NSError * _Nullable error) {
+    // use user if necessary
+  }];
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().identify("your_custom_user_id");
+
+  // or the following option, if you want to get notified about the result.
+
+  Qonversion.getSharedInstance().identify("your_custom_user_id", new QonversionUserCallback() {
+      @Override
+      public void onSuccess(@NonNull QUser user) {
+          // use user if necessary
+      }
+
+      @Override
+      public void onError(@NonNull QonversionError error) {
+          // handle error here
+      }
+  });
+  ```
+
+  ```bash bash
+  Qonversion.shared.identify("your_custom_user_id")
+
+  // or the following option, if you want to get notified about the result.
+
+  Qonversion.shared.identify("your_custom_user_id", object : QonversionUserCallback {
+      override fun onSuccess(user: QUser) {
+          // use user if necessary
+      }
+
+      override fun onError(error: QonversionError) {
+          // handle error here
+      }
+  })
+  ```
+
+  ```bash bash
+  try {
+    final userInfo = await Qonversion.getSharedInstance().identify("your_custom_user_id");
+    // use userInfo if necessary
+  } catch (e) {
+    // handle error here
+  }
+  ```
+
+  ```bash bash
+  try {
+    const userInfo = await Qonversion.getSharedInstance().identify('your_custom_user_id');
+    // use userInfo if necessary
+  } catch (e) {
+    // handle error here
+  }
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().Identify("your_custom_user_id")
+
+  // or the following option, if you want to get notified about the result.
+
+  Qonversion.GetSharedInstance().Identify("your_custom_user_id", (userInfo, error) =>
+  {
+      if (error == null)
+      {
+          // use userInfo if necessary
+      }
+      else
+      {
+          // Handle the error  
+          Debug.Log("Error" + error.ToString());
+      }
+  });
+  ```
+
+  ```bash bash
+  try {
+    const userInfo = await Qonversion.getSharedInstance().identify('your_custom_user_id');
+    // use userInfo if necessary
+  } catch (e) {
+    // handle error here
+  }
+  ```
+
+  ```bash bash
+  try {
+    const userInfo = await Qonversion.getSharedInstance().identify('your_custom_user_id');
+    // use userInfo if necessary
+  } catch (e) {
+    // handle error here
+  }
+  ```
+
+  ```bash bash
+  curl --location --request POST 'https://api.qonversion.io/v3/identities/new_identities_user' \
+  --header 'Authorization: Bearer ' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+      "user_id": "QON_38a2d811afd54a433587620f8696266e"
+  }'
+
+  {
+      "id": "new_identities_user",
+      "user_id": "QON_38a2d811afd54a433587620f8696266e"
+  }
+  ```
+</CodeGroup>
+
+<Warning>
+  Always use unique user ID values. Otherwise, a user can get matched to another user's premium status.
+</Warning>
+
+To check entitlements for identified users, you can call [checkEntitlements()](check-permissions). You can check the details of setting up entitlements [here](entitlements).
+
+### Logging out
+
+You need to call the `logout()` method to handle entitlements for an unauthorized user. Call this method when a user logs out within your app:
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().logout()
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] logout];
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().logout();
+  ```
+
+  ```bash bash
+  Qonversion.shared.logout()
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().logout();
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().logout();
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().Logout();
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().logout();
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().logout();
+  ```
+</CodeGroup>
+
+When a user logs back into his account, **don't forget to use`identify()` method again.**
+
+### Examples
+
+Let's look at the following examples to understand better `Qonversion.identify()`.
+
+<Warning>
+  ### In the following examples:
+
+  * Anonymous ID corresponds to the same app store account (Apple or Google).
+  * A and B correspond to two different app store accounts (Apple or Google).
+</Warning>
+
+### Example 1. No User Identity.
+
+Two anonymous users install the app using separate devices and subscribe without using the`identify()` method. These users have not been linked to each other.
+
+| Anonymous ID | User ID | Action                                     |
+| ------------ | ------- | ------------------------------------------ |
+| A            | null    | Install                                    |
+| B            | null    | Install                                    |
+| B            | null    | Start Subscription X -> Gets Entitlement X |
+| A            | null    | Start Subscription Y -> Gets Entitlement Y |
+
+Now let's look at the `identify()` way of usage.
+
+### Example 2. Single User Identity for two separate devices.
+
+Let's consider the following user flow:
+
+1. A user installs the app on his iPhone (first device).
+2. He installs the same app on his second device (iPad/Android device/etc).
+3. He makes a purchase and creates an account on the second device.
+4. He uses the same credentials to log into the app on his iPhone (first device).
+
+| Anonymous ID | User ID     | Action                                        |
+| ------------ | ----------- | --------------------------------------------- |
+| A            | null        | Install                                       |
+| B            | null        | Install                                       |
+| B            | null        | Start Subscription X -> Gets Entitlement X    |
+| B            | user\_id\_1 | identify("user\_id\_1")                       |
+| A            | user\_id\_1 | identify("user\_id\_1") -> Gets Entitlement X |
+
+In this case, Qonversion will provide users `A` and `B` the same entitlements while they use the same `user_id_1`.
+
+### Example 3. One anonymous user logs in & logs out.
+
+Let's consider the following user flow:
+
+1. A user installs the app and subscribes to the product `X`.
+2. He creates his user account in the app with the following ID: `user_id_1`.
+3. Then he purchases the product `Y` using the same app store account.
+4. The user logs out from the app.
+
+In this case, the user keeps having entitlements based on both products, `X` and `Y` since the purchases were made using the same app store account.
+
+| Anonymous ID | User ID                                     | Action                                          |
+| ------------ | ------------------------------------------- | ----------------------------------------------- |
+| A            | null                                        | Install                                         |
+| A            | null                                        | Start Subscription X -> Gets Entitlement X      |
+| A            | user\_id\_1 (login for the very first time) | identify("user\_id\_1")                         |
+| A            | user\_id\_1                                 | Purchase product Y -> Gets Entitlement Y        |
+| A            | null                                        | Logout                                          |
+| A            | null                                        | Entitlement X & Entitlement Y are still granted |
+
+### Example 4. Two different anonymous users log in & Log out.
+
+Let's consider the following user flow:
+
+1. User `A` installs the app and subscribes for the product `X`.
+2. User `A` logs into `user_id_1` account.
+3. User `A` purchases product `Y`. Now User `A` has both entitlements `X` and `Y` granted.
+4. User `B` installs the app and logs in with `user_id_1` credentials. Based on the User's Identity details, he also can use the app considering entitlements `X` and `Y` are granted.
+5. User `A` logs out using the `logout()` method, he still has entitlements granted based on both purchases he has made on the device.
+6. User `B` logs out and loses all the entitlements. His anonymous account has no purchases associated with him, as no purchases were made on his device.
+   1. It is worth mentioning, in this case, User `A` and User `B` have different store accounts on their devices.
+
+| Anonymous ID | User ID                                     | Action                                             |
+| ------------ | ------------------------------------------- | -------------------------------------------------- |
+| A            | null                                        | Install                                            |
+| A            | null                                        | Start Subscription X -> Gets Entitlement X         |
+| A            | user\_id\_1 (login for the very first time) | identify("user\_id\_1")                            |
+| A            | user\_id\_1                                 | Purchase product Y -> Gets Entitlement Y           |
+| B            | null                                        | Install                                            |
+| B            | user\_id\_1                                 | identify("user\_id\_1") -> Gets Entitlements X & Y |
+| A            | null                                        | Log out -> Keeps having Entitlements X & Y         |
+| B            | null                                        | Log out -> Loses Entitlements X & Y                |
+
+### Example 5. Two accounts with two separate purchases.
+
+Let's consider the following user flow:
+
+1. User `A` and User `B` install the app using separate devices.
+   1. User `A` and User `B` have different store accounts on their devices.
+2. User `A` subscribes to product `Х`
+3. User `B` subscribes to product `Y`.
+4. User `A` then logs in with the ID `user_id_1` for the very first time. At this moment, this user ID is created and Entitlement `X` attaches to the `user_id_1` User Identity.
+5. User `B` logs in with the same ID `user_id_1`.
+6. User `B` now has Entitlement `X` (based on the User Identity) on top of Entitlement `Y`.
+7. User `A` logs out, he still has Entitlement `Х` (based on the device purchases).
+8. User `B` logs out, he loses Entitlement `Х` but still has Entitlement `Y` (based on the device purchases).
+
+| Anonymous ID | User ID                                     | Action                                                                |
+| ------------ | ------------------------------------------- | --------------------------------------------------------------------- |
+| A            | null                                        | Install                                                               |
+| B            | null                                        | Install                                                               |
+| A            | null                                        | Start Subscription X -> Gets Entitlement X                            |
+| A            | user\_id\_1 (login for the very first time) | identify("user\_id\_1")                                               |
+| B            | null                                        | Start Subscription Y -> Gets Entitlement Y                            |
+| B            | user\_id\_1                                 | identify("user\_id\_1") -> Gets Entitlement X and Keeps Entitlement Y |
+| A            | null                                        | Log out -> Keeps having Entitlement X                                 |
+| B            | null                                        | Log out -> Loses Entitlement X but still has Entitlement Y            |
+
+### Example 6. Two accounts log in using the same device with one active purchase.
+
+<Info>
+  ### Activate this behaviour in entitlements
+
+  For enabling this feature, navigate to the [entitlements settings section](https://dash.qonversion.io/entitlements/transferring) and modify the coping strategy setting to "Transfer entitlement." [Read more here](transferring)
+</Info>
+
+Let's consider the following user flow:
+
+1. User `A` installs the app on his iOS device and subscribes for the product `X`.
+2. User `A` logs into `user_id_1` account. Now Identity user `user_id_1` has Entitlement `X`
+3. User `A'` installs the app on his Android device and logs into `user_id_1` account. Now User `A'` can get access to the Entitlement `X` - based content on his Android device.
+4. User `B` takes User `A`'s iOS device and logs him out from the app.
+5. User `B` logs into `user_id_2` account and restores subscription. Now Identity user `user_id_1` stops having Entitlement `X`, as it has been transferred to Identity user `user_id_2`
+6. User `A` being logged in his Android device with `user_id_1` account stops having access to the Entitlement `X` - based content. Now only Identity user `user_id_2` is entitled to it.
+
+| Anonymous ID | User ID     | Action                                                                          |
+| ------------ | ----------- | ------------------------------------------------------------------------------- |
+| A            | null        | iOS device install                                                              |
+| A            | null        | Start Subscription X -> Gets Entitlement X                                      |
+| A            | user\_id\_1 | identify("user\_id\_1")                                                         |
+| A'           | null        | Android device install                                                          |
+| A'           | user\_id\_1 | identify("user\_id\_1") -> Gets Entitlement X for Android device                |
+| B            | null        | iOS device log out                                                              |
+| B            | user\_id\_2 | identify("user\_id\_2")                                                         |
+| B            | user\_id\_2 | Subscription Restore -> Transfers Entitlement X to user\_id\_2 from user\_id\_1 |
+| A'           | user\_id\_1 | Loses Entitlement X                                                             |
+
+***
+
+[Offline SDK mode](offline-sdk-mode)
+
+[Restore behavior](transferring)

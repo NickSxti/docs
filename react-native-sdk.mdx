@@ -1,0 +1,63 @@
+---
+title: "React Native"
+description: "Building subscriptions with Qonversion React Native SDK is simple. Learn more about  and  for free now."
+---
+
+[![GitHub release](https://img.shields.io/github/v/release/qonversion/react-native-sdk?label=Latest%20Release)](https://github.com/qonversion/react-native-sdk/releases)
+
+Install Qonversion React Native SDK to validate user receipts, and get in-app subscription analytics and third-party integrations.
+
+## Install via npm
+
+Qonversion SDK package is available on [npm](https://www.npmjs.com/package/react-native-qonversion).
+
+<CodeGroup>
+  ```bash bash
+  npm install react-native-qonversion --save
+  ```
+</CodeGroup>
+
+If you don't have auto-linking enabled, link the SDK to the native project manually:
+
+<CodeGroup>
+  ```bash bash
+  react-native link react-native-qonversion
+  ```
+</CodeGroup>
+
+## Extra steps
+
+### iOS
+
+If you've installed the library using auto-linking, then all you need to do is run `pod install` from your iOS folder.
+
+### Android
+
+Include the `BILLING` permission in your `AndroidManifest.xml` file as follows:
+
+<CodeGroup>
+  ```bash bash
+  <uses-permission android:name="com.android.vending.BILLING" />
+  ```
+</CodeGroup>
+
+## Running with Expo
+
+If you are using Qonversion in an Expo app you will have to create [Development Builds](https://docs.expo.dev/develop/development-builds/create-a-build/).
+
+<Warning>
+  ### Solving `TypeError: null is not an object (evaluating ‘RNQonversion.storeSDKInfo’)`
+
+  As Qonversion React Native SDK contains native modules, there is no option to run your app using Expo Go. Make sure you use Development Builds as described above to solve this issue.
+</Warning>
+
+## Kids Mode for Qonversion React Native SDK
+
+In case you are building an App for Kids, [follow this guide](kids-mode-sdk) to learn about Kids Mode for Qonversion SDKs.
+
+***
+
+What’s Next
+
+* [Analytics (Observer) Mode](analytics-mode)
+* [Subscription Management Mode](subscription-management-mode)

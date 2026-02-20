@@ -1,0 +1,104 @@
+---
+title: "Success and Failure Actions"
+description: "Configure custom behaviors after purchase or restore actions complete."
+---
+
+## Overview
+
+Success and Failure Actions allow you to define custom behaviors that occur after a purchase or restore action completes in your No-Code screens.
+
+By default:
+
+* **On Success**: The screen closes (`Close All`)
+* **On Failure**: Nothing happens, the user stays on the screen (`None`)
+
+With custom Success/Failure Actions, you can override these defaults to create more engaging user experiences.
+
+***
+
+## Available Actions
+
+The following actions can be configured as Success or Failure handlers:
+
+| Action         | Description                                         |
+| -------------- | --------------------------------------------------- |
+| **None**       | Do nothing, stay on the current screen              |
+| **Close**      | Close the current screen only                       |
+| **Close All**  | Close all No-Code screens                           |
+| **Navigate**   | Navigate to another No-Code screen                  |
+| **Open URL**   | Open a URL in the browser                           |
+| **Deep Link**  | Open a deep link in your app                        |
+| **Go to Page** | Navigate to another page within a multi-page screen |
+
+***
+
+## Supported Actions
+
+Success and Failure handlers can be configured for the following actions:
+
+* **Make Purchase** — triggered when a user initiates a product purchase
+* **Restore** — triggered when a user restores previous purchases
+
+***
+
+## Platform-Specific Configuration
+
+When **Platform-Specific Actions** is enabled, you can configure different Success/Failure behaviors for iOS and Android platforms independently.
+
+***
+
+## Minimum SDK Versions
+
+Success and Failure Actions require the following minimum SDK versions:
+
+| Platform     | Minimum Version |
+| ------------ | --------------- |
+| iOS          | 6.5.0           |
+| Android      | No-Codes 1.5.0  |
+| Flutter      | 11.3.0          |
+| React Native | 10.3.0          |
+| Unity        | 9.2.0           |
+| Cordova      | 7.2.0           |
+| Capacitor    | 1.2.0           |
+
+<Info>
+  ### **Note**
+
+  If you're using an older SDK version, the default behavior will be applied:
+
+  * Success: Close all screens
+  * Failure: Stay on the screen
+</Info>
+
+***
+
+## Configuration
+
+To configure Success/Failure Actions in the No-Code Builder:
+
+1. Select a component with a **Make Purchase** or **Restore** action
+
+2. In the **Action** section of the right sidebar, you'll see:
+
+   * **On Success** — action to execute after successful completion
+   * **On Failure** — action to execute after failure
+
+3. Select the desired action for each case
+
+4. If the action requires a value (e.g., URL, screen ID), enter it in the corresponding field
+
+![Success/Failure Actions Configuration](https://files.readme.io/placeholder-success-failure-actions.png)
+
+***
+
+## Best Practices
+
+* **Success Actions**: Consider navigating to a thank-you screen or closing all screens to return users to your app
+* **Failure Actions**: Keep users on the screen (`None`) so they can retry, or navigate to a help/support screen
+* **Platform Differences**: Use platform-specific actions when iOS and Android require different post-purchase flows
+
+***
+
+[Displaying No-Codes](displaying-no-codes)
+
+[Using No-Codes with custom purchases handling](using-no-codes-with-custom-purchases-handling)

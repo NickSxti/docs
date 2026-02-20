@@ -1,0 +1,573 @@
+---
+title: "Create Remote Config"
+description: "Create Remote Configs to manage your onboarding flows, paywall UI, or pricing settings, avoiding extra app releases"
+---
+
+The [Remote Config](https://dash.qonversion.io/ab-testing/remote-configs) feature helps you change your onboarding flows, paywall UI, or pricing settings without additional app releases. Moreover, it enables you to rapidly [iterate with your monetization experiments](https://qonversion.io/blog/a-b-paywall-experiments-for-subscription-apps-guide/)
+
+# 1. Select your app context to configure
+
+As a first step, name your remote configuration and select a context (part of your application) you'd like to manage remotely. Examples of app contexts you may configure with us:
+
+* *main\_paywall*: to set up settings for different user segments for your main paywall.
+* *main\_paywall\_products*: to manage only products remotely.
+* *onboarding*: to set up the entire user onboarding journey.
+* *onboarding\_step\_2*: to configure only specific steps of the user onboarding flow.
+* *\[your\_key]*: to set up any part of your user's monetization experience.
+
+![](/images/docs/3dd5f7f-Screenshot_2024-03-25_at_13.43.35.png)
+
+# 2. Add attributes for your configuration
+
+Qonversion Remote Config provides you with flexible in-app values using which **you can set up any behavior and appearance of your app**. The core of these in-app values is a plain JSON file consisting of key-value data. We support the following data types:
+
+* **String**.
+
+  * Use this option to validate pricing, communication, or visual hypothesis.
+  * Examples: *native.subs.full.v4.w\.8.99.trial.7d*, *Unlock Fast and Secure Browsing*, *#3076FF*, etc.
+
+* **Number**.
+
+  * Use this option, for example, to show only a subset of your onboarding screens.
+  * Examples: *2*, *5*, *23*, etc.
+
+* **Boolean**.
+
+  * Use this option to turn on or off some features.
+  * Examples: *true*, *false*
+
+* **Json**.
+
+  * Use this option to validate advanced changes in your app's behavior.
+  * Examples: `{"banner_text": "Choose your plan", "product_top": "native.subs.full.v4.w.8.99.trial.7d", "product_bottom": "subs.month.17.99", "skip_onboarding": true}`.
+
+![](/images/docs/fb54100-Screenshot_2024-03-25_at_14.03.36.png)
+
+# 3. Integrate changes into your app
+
+<Info>
+  ### Configuration source
+
+  Qonversion Remote Configs and Experiments share single methods to get configurations. You can distinguish the source of the result received by looking at the *source* field. [Learn more about fields available](remote-config#remoteconfig-fields-description).
+</Info>
+
+To receive the configuration **with the Context key set**, call the following Qonversion `remoteConfig` method.
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().remoteConfig(contextKey: "my_context_key") { remoteConfig, error in
+      // Use remoteConfig here
+  }
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] remoteConfig:@"my_context_key" completion:^(QONRemoteConfig * _Nullable remoteConfig, NSError * _Nullable error) {
+      // Use remoteConfig here                           
+  }];
+  ```
+
+  ```bash bash
+  Qonversion.shared.remoteConfig("my_context_key", object : QonversionRemoteConfigCallback {
+      override fun onSuccess(remoteConfig: QRemoteConfig) {
+          // Use remoteConfig here                             
+      }
+
+      override fun onError(error: QonversionError) {
+          // Handle error here
+      }
+  })
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().remoteConfig("my_context_key", new QonversionRemoteConfigCallback() {
+      @Override
+      public void onSuccess(@NonNull QRemoteConfig remoteConfig) {
+          // Use remoteConfig here
+      }
+
+      @Override
+      public void onError(@NonNull QonversionError error) {
+          // Handle error here
+      }
+  });
+  ```
+
+  ```bash bash
+  const remoteConfig = await Qonversion.getSharedInstance().remoteConfig('my_context_key');
+  ```
+
+  ```bash bash
+  final remoteConfig = await Qonversion.getSharedInstance().remoteConfig(contextKey: "my_context_key");
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().RemoteConfig("my_context_key", (remoteConfig, error) =>
+  {
+      // Use remoteConfig here
+  });
+  ```
+
+  ```bash bash
+  const remoteConfig = await Qonversion.getSharedInstance().remoteConfig('my_context_key');
+  ```
+
+  ```bash bash
+  const remoteConfig = await Qonversion.getSharedInstance().remoteConfig('my_context_key');
+  ```
+</CodeGroup>
+
+In case you're using configurations with **empty Context key**, call the same method with no arguments added:
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().remoteConfig { remoteConfig, error in
+      // Use remoteConfig here
+  }
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] remoteConfig:^(QONRemoteConfig * _Nullable remoteConfig, NSError * _Nullable error) {
+      // Use remoteConfig here                           
+  }];
+  ```
+
+  ```bash bash
+  Qonversion.shared.remoteConfig(object : QonversionRemoteConfigCallback {
+      override fun onSuccess(remoteConfig: QRemoteConfig) {
+          // Use remoteConfig here                             
+      }
+
+      override fun onError(error: QonversionError) {
+          // Handle error here
+      }
+  })
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().remoteConfig(new QonversionRemoteConfigCallback() {
+      @Override
+      public void onSuccess(@NonNull QRemoteConfig remoteConfig) {
+          // Use remoteConfig here
+      }
+
+      @Override
+      public void onError(@NonNull QonversionError error) {
+          // Handle error here
+      }
+  });
+  ```
+
+  ```bash bash
+  const remoteConfig = await Qonversion.getSharedInstance().remoteConfig();
+  ```
+
+  ```bash bash
+  final remoteConfig = await Qonversion.getSharedInstance().remoteConfig();
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().RemoteConfig((remoteConfig, error) =>
+  {
+      // Use remoteConfig here
+  });
+  ```
+
+  ```bash bash
+  const remoteConfig = await Qonversion.getSharedInstance().remoteConfig();
+  ```
+
+  ```bash bash
+  const remoteConfig = await Qonversion.getSharedInstance().remoteConfig();
+  ```
+</CodeGroup>
+
+If necessary, you can also request a list of remote configs for all the context keys, including the empty one.
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().remoteConfigList { remoteConfigList, error in
+    // Use remoteConfigList here
+  }
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] remoteConfigList:^(QONRemoteConfigList * _Nullable remoteConfigList, NSError * _Nullable error) {
+    // Use remoteConfigList here
+  }]
+  ```
+
+  ```bash bash
+  Qonversion.shared.remoteConfigList(object : QonversionRemoteConfigListCallback {
+      override fun onSuccess(remoteConfigList: QRemoteConfigList) {
+          // Use remoteConfigList here
+      }
+
+      override fun onError(error: QonversionError) {
+          // Handle error here
+      }
+  })
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().remoteConfigList(new QonversionRemoteConfigListCallback() {
+      @Override
+      public void onSuccess(@NonNull QRemoteConfigList remoteConfigList) {
+        // Use remoteConfigList here
+      }
+
+      @Override
+      public void onError(@NonNull QonversionError error) {
+        // Handle error here
+      }
+  });
+  ```
+
+  ```bash bash
+  const remoteConfigList = await Qonversion.getSharedInstance().remoteConfigList();
+  ```
+
+  ```bash bash
+  final remoteConfigList = await Qonversion.getSharedInstance().remoteConfigList();
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().RemoteConfigList((remoteConfigList, error) =>
+  {
+      // Use remoteConfigList here
+  });
+  ```
+
+  ```bash bash
+  const remoteConfigList = await Qonversion.getSharedInstance().remoteConfigList();
+  ```
+
+  ```bash bash
+  const remoteConfigList = await Qonversion.getSharedInstance().remoteConfigList();
+  ```
+</CodeGroup>
+
+If you need remote configs for a specific set of context keys, just use the following method.
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().remoteConfigList(
+    contextKeys: ["my_context_key", "another_context_key"],
+    includeEmptyContextKey: true // to include remote config without context key
+  ) { remoteConfigList, error in
+    // Use remoteConfigList here
+  }
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] remoteConfigList:@[@"my_context_key", @"another_context_key"]
+                         includeEmptyContextKey:YES // to include remote config without context key
+   																	 completion:^(QONRemoteConfigList * _Nullable remoteConfigList, NSError * _Nullable error) {
+    // Use remoteConfigList here
+  }
+  ```
+
+  ```bash bash
+  Qonversion.shared.remoteConfigList(
+      listOf("my_context_key", "another_context_key"),
+      true, // to include remote config without context key
+      object : QonversionRemoteConfigListCallback {
+          override fun onSuccess(remoteConfigList: QRemoteConfigList) {
+              // Use remoteConfigList here
+          }
+
+          override fun onError(error: QonversionError) {
+              // Handle error here
+          }
+  	  }
+  )
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().remoteConfigList(
+      Arrays.asList("my_context_key", "another_context_key"),
+      true, // to include remote config without context key
+      new QonversionRemoteConfigListCallback() {
+          @Override
+          public void onSuccess(@NonNull QRemoteConfigList remoteConfigList) {
+              // Use remoteConfigList here
+          }
+
+          @Override
+          public void onError(@NonNull QonversionError error) {
+              // Handle error here
+          }
+  		}
+  );
+  ```
+
+  ```bash bash
+  const remoteConfigList = await Qonversion.getSharedInstance().remoteConfigListForContextKeys(
+    ['my_context_key', 'another_context_key'],
+    true // to include remote config without context key
+  );
+  ```
+
+  ```bash bash
+  final remoteConfigList = await Qonversion.getSharedInstance().remoteConfigListForContextKeys(
+    ["my_context_key", "another_context_key"],
+    true // to include remote config without context key
+  );
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().RemoteConfigList(
+    new string[] {"my_context_key", "another_context_key"},
+    true, // to include remote config without context key
+    (remoteConfigList, error) =>
+  {
+      // Use remoteConfigList here
+  });
+  ```
+
+  ```bash bash
+  const remoteConfigList = await Qonversion.getSharedInstance().remoteConfigListForContextKeys(
+    ['my_context_key', 'another_context_key'],
+    true // to include remote config without context key
+  );
+  ```
+
+  ```bash bash
+  const remoteConfigList = await Qonversion.getSharedInstance().remoteConfigListForContextKeys(
+    ['my_context_key', 'another_context_key'],
+    true // to include remote config without context key
+  );
+  ```
+</CodeGroup>
+
+### `RemoteConfigList` fields description
+
+| Field                          | Description                                                                           |
+| ------------------------------ | ------------------------------------------------------------------------------------- |
+| remoteConfigs                  | The list of requested remote configs                                                  |
+| remoteConfigForContextKey      | Function for requesting specific remote config from the above list by the context key |
+| remoteConfigForEmptyContextKey | Function for requesting the remote config from the above list with empy context key   |
+
+### `RemoteConfig` fields description
+
+| Field      | Description                                                      |
+| ---------- | ---------------------------------------------------------------- |
+| payload    | JSON payload you have configured using the Qonversion dashboard. |
+| experiment | Object (`Experiment`) with the experiment's information.         |
+| source     | Source (`RemoteConfigurationSource`) of the configuration.       |
+
+### `Experiment` description
+
+| Field         | Description                                                                                   |
+| ------------- | --------------------------------------------------------------------------------------------- |
+| identifier/id | Experiment's identifier.                                                                      |
+| name          | Experiment's name. The same as you set in Qonversion. You can use it for analytical purposes. |
+| group         | Experiment's group (`ExperimentGroup`) the user has been assigned to.                         |
+
+### `ExperimentGroup` description
+
+| Field         | Description                                                                                         |
+| ------------- | --------------------------------------------------------------------------------------------------- |
+| identifier/id | Experiment group's identifier.                                                                      |
+| name          | Experiment group's name. The same as you set in Qonversion. You can use it for analytical purposes. |
+| type          | Type of the experiment's group. Either control or treatment.                                        |
+
+### `RemoteConfigurationSource` description
+
+| Field          | Description                                                                                             |
+| -------------- | ------------------------------------------------------------------------------------------------------- |
+| identifier/id  | Either experiment's or remote config's ID.                                                              |
+| name           | Either experiment's or remote config's name.                                                            |
+| assignmentType | How the current payload was assigned to the user. Either automatically or manually.                     |
+| type           | One of the following: *experiment control group*, *experiment treatment group*, *remote configuration*. |
+| contextKey     | Context key assigned to either experiment or remote config.                                             |
+
+Please, note:
+
+* If you're using the [Qonversion Experiments](https://dash.qonversion.io/ab-testing) feature, the `remoteConfig`object will also contain experiment-related fields.
+* Qonversion assigns eligible users to launched experiments once the `remoteConfig` is called. We also recommend paying attention to the [Segmentation rules](remote-config#2-segment-users) for the configuration.
+
+# 4. Test changes before launch
+
+<Info>
+  Please, note, the guide below allows you to test only configurations created through the [Remote Config dashboard section](https://dash.qonversion.io/remote-configs). To test configurations from the [Experiments section](https://dash.qonversion.io/ab-testing), please, follow the [test experimental changes before launch](launch-experiments#test-experimental-changes-before-launch) guide.
+</Info>
+
+We highly recommend testing if your app works properly with the changes you want to roll out to your users. You can do so by following the following steps:
+
+1. Copy the ID for your remote config
+
+![](/images/docs/3b597ba-Screenshot_2024-03-25_at_14.04.58.png)
+
+2. Pass the values to Qonversion SDK by using the `attachUserToRemoteConfiguration` method
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().attachUser(toRemoteConfiguration: "your_remote_configuration_id") { success, error in
+       // handle result
+  }
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] attachUserToRemoteConfiguration:@"your_remote_configuration_id" completion:^(BOOL success, NSError * _Nullable error) {
+      // handle result
+  }];
+  ```
+
+  ```bash bash
+  Qonversion.shared.attachUserToRemoteConfiguration("your_remote_configuration_id", object : QonversionRemoteConfigurationAttachCallback {
+      override fun onSuccess() {
+          // handle success
+      }
+
+      override fun onError(error: QonversionError) {
+          // handle error
+      }
+  })
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().attachUserToRemoteConfiguration("your_remote_configuration_id", new QonversionRemoteConfigurationAttachCallback() {
+      @Override
+      public void onSuccess() {
+          // handle success
+      }
+
+      @Override
+      public void onError(@NonNull QonversionError error) {
+          // handle error
+      }
+  });
+  ```
+
+  ```bash bash
+  await Qonversion.getSharedInstance().attachUserToRemoteConfiguration("your_remote_configuration_id");
+  ```
+
+  ```bash bash
+  await Qonversion.getSharedInstance().attachUserToRemoteConfiguration("your_remote_configuration_id");
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().AttachUserToRemoteConfiguration("your_remote_configuration_id", (success, error) =>
+  {
+      // handle result
+  });
+  ```
+
+  ```bash bash
+  await Qonversion.getSharedInstance().attachUserToRemoteConfiguration("your_remote_configuration_id");
+  ```
+
+  ```bash bash
+  await Qonversion.getSharedInstance().attachUserToRemoteConfiguration("your_remote_configuration_id");
+  ```
+</CodeGroup>
+
+* In case your user has already been attached to another configuration, use the `detachUserFromRemoteConfiguration` method.
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().detachUser(fromRemoteConfiguration: "attached_remote_configuration_id") { success, error in  
+      // handle result  
+  }
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] detachUserFromRemoteConfiguration:@"attached_remote_configuration_id" completion:^(BOOL success, NSError * _Nullable error) {
+      // handle result
+  }];
+  ```
+
+  ```bash bash
+  Qonversion.shared.detachUserFromRemoteConfiguration("attached_remote_configuration_id", object : QonversionRemoteConfigurationAttachCallback {
+      override fun onSuccess() {
+          // handle success
+      }
+
+      override fun onError(error: QonversionError) {
+          // handle error
+      }
+  })
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().detachUserFromRemoteConfiguration("attached_remote_configuration_id", new QonversionRemoteConfigurationAttachCallback() {
+      @Override
+      public void onSuccess() {
+          // handle success
+      }
+
+      @Override
+      public void onError(@NonNull QonversionError error) {
+          // handle error
+      }
+  });
+  ```
+
+  ```bash bash
+  await Qonversion.getSharedInstance().detachUserFromRemoteConfiguration("attached_remote_configuration_id");
+  ```
+
+  ```bash bash
+  await Qonversion.getSharedInstance().detachUserFromRemoteConfiguration("attached_remote_configuration_id");
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().DetachUserFromRemoteConfiguration("attached_remote_configuration_id", (success, error) =>
+  {
+      // handle result
+  });
+  ```
+
+  ```bash bash
+  await Qonversion.getSharedInstance().detachUserFromRemoteConfiguration("attached_remote_configuration_id");
+  ```
+
+  ```bash bash
+  await Qonversion.getSharedInstance().detachUserFromRemoteConfiguration("attached_remote_configuration_id");
+  ```
+</CodeGroup>
+
+3. Call the Qonversion `remoteConfig` method. Now Qonversion SDK returns data associated with previously set remote config.
+4. Validate your app logic without launching the configuration.
+
+<Warning>
+  ### Pay attention before release
+
+  Do not forget to remove the usage of the `attachUserToRemoteConfiguration` method before your app release. Otherwise, all your users may be exposed to only one remote config.
+</Warning>
+
+# 5. Segment users
+
+Qonversion Remote Config has flexible options to target a desired user segment.
+
+Segment users by:
+
+* **App install date**
+  * Use this option to assign the configuration only to new app installs.
+* **App version**
+  * Use this option to assign the configuration only for users with the app version with the new features implemented.
+* **Country**
+  * Use this option to run new behavior only in selected countries.
+* **Store**
+  * Use this option to target only a specific store (Apple App Store or Google Play).
+* **User's active subscription**
+  * User this option to target only users with/without any active subscriptions or having a specific one.
+
+![](/images/docs/77d8b42-Screenshot_2024-03-25_at_14.06.10.png)
+
+# 6. Launch the configuration
+
+Once you have added all the necessary properties to your in-app configuration, validated changes in your app, and assigned desired segmentation rules, the only thing left is to click the Create button to move the configuration from Draft to Active state.
+
+![](/images/docs/170933e-Screenshot_2024-03-25_at_14.07.13.png)
+
+# 7. Fallback files (optional)
+
+To enhance the reliability of remote configurations, consider utilizing Qonversion [fallback files](system-reliability#/fallback-files). These files will serve as a backup in case of network provider errors or system failures, ensuring that your application continues to receive essential data and avoids any downtime. For more information on fallback files and how to install them, please refer to [this page](system-reliability#/fallback-files).
+
+***
+
+What’s Next
+
+* [Launch A/B test from Remote Config](launch-test-from-remote-config)

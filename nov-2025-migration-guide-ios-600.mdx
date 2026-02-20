@@ -1,0 +1,118 @@
+---
+title: "[Nov 2025] Migration guide. iOS 6.0.0"
+description: "In this major release of our Qonversion iOS SDK, we've incorporated numerous essential updates."
+---
+
+## No-Codes SDK merge into Qonversion SDK
+
+We are now concluding the public beta phase of our No-Code Builder. Therefore, we have chosen to integrate No-Codes SDK with the Qonversion SDK. You no longer need to include separate packages to utilize Qonversion No-Codes.
+
+If you installed No-Codes SDK through CocoaPods, simply substitute the No-Codes dependency with the Qonversion dependency. If you were using both, just remove the No-Codes package. Make sure to update your pods to access the latest version of the Qonversion SDK.
+
+<CodeGroup>
+  ```bash bash
+  // Before
+  pod 'NoCodes'
+
+  // Now
+  pod 'Qonversion'
+  ```
+</CodeGroup>
+
+If you have installed the No-Codes SDK using Swift Package Manager, please uninstall that package and import the package `https://github.com/qonversion/no-codes-ios` if you haven't done so already.
+
+Integrating No-Codes into the Qonversion SDK requires renaming the public entities and interfaces since the `NoCodes` namespace is no longer available.
+
+| Before                                | Now                                  |
+| ------------------------------------- | ------------------------------------ |
+| `NoCodes.Configuration`               | `NoCodesConfiguration`               |
+| `NoCodes.Action`                      | `NoCodesAction`                      |
+| `NoCodes.ActionType`                  | `NoCodesActionType`                  |
+| `NoCodes.PresentationConfiguration`   | `NoCodesPresentationConfiguration`   |
+| `NoCodes.PresentationStyle`           | `NoCodesPresentationStyle`           |
+| `NoCodes.Delegate`                    | `NoCodesDelegate`                    |
+| `NoCodes.ScreenCustomizationDelegate` | `NoCodesScreenCustomizationDelegate` |
+
+## No-Code screens preloading
+
+We are introducing a way to enhance the loading speed of your No-Code screens. With the new preloading feature, our SDK will fetch your screens immediately after initialization, ensuring that when you request them, there is no delay from API requests. The best part is that no coding is required; simply mark your screen as preloadable in the Qonversion dashboard, and you’re good to go. For more details, check out the related [documentation](screens-preloading).
+
+## Automations removal
+
+With this release, we are discontinuing the deprecated Automations support from the SDK. If you are still utilizing Automations, we encourage you to transition to our No-Code Builder. It offers a more flexible and supported approach to displaying your paywalls or onboarding flows without the need for custom development of these screens.
+
+Your Automation screens will keep functioning with the earlier SDK versions until the complete support phase-out.
+
+## Error Codes alignment
+
+We are aligning our error codes with this release to make them clearer and simpler. Previously, there were two classes: `Qonversion.Error` and `Qonversion.APIError` (`QONError` and `QONAPIError` for Objective C). Now we merge them into a single class `Qonversion.ErrorCode` (`QONErrorCode` for Objective C) and changing some names as follows.
+
+| Before                                        | Now                                               |
+| --------------------------------------------- | ------------------------------------------------- |
+| `QONErrorUnknown`                             | `QONErrorCodeUnknown`                             |
+| `QONErrorCancelled`                           | `QONErrorCodePurchaseCanceled`                    |
+| `QONErrorProductNotFound`                     | `QONErrorCodeProductNotFound`                     |
+| `QONErrorClientInvalid`                       | `QONErrorCodeClientInvalid`                       |
+| `QONErrorPaymentInvalid`                      | `QONErrorCodePaymentInvalid`                      |
+| `QONErrorPaymentNotAllowed`                   | `QONErrorCodePaymentNotAllowed`                   |
+| `QONErrorStoreFailed`                         | *removed*                                         |
+| `QONErrorStoreProductNotAvailable`            | `QONErrorCodeStoreProductNotAvailable`            |
+| `QONErrorCloudServicePermissionDenied`        | `QONErrorCodeCloudServicePermissionDenied`        |
+| `QONErrorCloudServiceNetworkConnectionFailed` | `QONErrorCodeCloudServiceNetworkConnectionFailed` |
+| `QONErrorCloudServiceRevoked`                 | `QONErrorCodeCloudServiceRevoked`                 |
+| `QONErrorPrivacyAcknowledgementRequired`      | `QONErrorCodePrivacyAcknowledgementRequired`      |
+| `QONErrorUnauthorizedRequestData`             | `QONErrorCodeUnauthorizedRequestData`             |
+| `QONErrorIncorrectSharedSecret`               | *removed*                                         |
+| `QONErrorConnectionFailed`                    | `QONErrorCodeNetworkConnectionFailed`             |
+| `QONErrorInternetConnectionFailed`            | *removed*                                         |
+| `QONErrorDataFailed`                          | *removed*                                         |
+| `QONErrorInternalError`                       | `QONErrorCodeInternalError`                       |
+| `QONErrorStorePaymentDeferred`                | `QONErrorCodePurchasePending`                     |
+| `QONErrorRemoteConfigurationNotAvailable`     | `QONErrorCodeRemoteConfigurationNotAvailable`     |
+| `QONErrorOfferingsNotAvailable`               | `QONErrorCodeOfferingsNotAvailable`               |
+| `QONAPIErrorFailedReceiveData`                | `QONErrorCodeFailedToReceiveData`                 |
+| `QONAPIErrorFailedParseResponse`              | `QONErrorCodeResponseParsingFailed`               |
+| `QONAPIErrorIncorrectRequest`                 | `QONErrorCodeResponseParsingFailed`               |
+| `QONAPIErrorInternalError`                    | `QONErrorCodeBackendError`                        |
+| `QONAPIErrorUnknown`                          | `QONErrorCodeUnknown`                             |
+| `QONAPIErrorInvalidCredentials`               | `QONErrorCodeInvalidCredentials`                  |
+| `QONAPIErrorInvalidClientUID`                 | `QONErrorCodeInvalidClientUID`                    |
+| `QONAPIErrorUnknownClientPlatform`            | `QONErrorCodeUnknownClientPlatform`               |
+| `QONAPIErrorFraudPurchase`                    | `QONErrorCodeFraudPurchase`                       |
+| `QONAPIErrorFeatureNotSupported`              | `QONErrorCodeFeatureNotSupported`                 |
+| `QONAPIErrorAppleStoreError`                  | `QONErrorCodeAppleStoreError`                     |
+| `QONAPIErrorPurchaseInvalid`                  | `QONErrorCodePurchaseInvalid`                     |
+| `QONAPIErrorProjectConfigError`               | `QONErrorCodeProjectConfigError`                  |
+| `QONAPIErrorInvalidStoreCredentials`          | `QONErrorCodeInvalidStoreCredentials`             |
+| `QONAPIErrorReceiptValidation`                | `QONErrorCodeReceiptValidationError`              |
+| `QONAPIErrorRateLimitExceeded`                | `QONErrorCodeApiRateLimitExceeded`                |
+
+## Proxy URL for No-Codes
+
+You can now set a proxy URL for all the No-Codes requests. To do it, just provide the proxy URL to the No-Codes configuration during the initialization as follows:
+
+<CodeGroup>
+  ```bash bash
+  // Set proxy URL during initialization
+  let configuration = NoCodesConfiguration(
+      projectKey: "projectKey",
+      proxyURL: "https://your-proxy-server.com"
+  )
+  NoCodes.initialize(with: configuration)
+
+  // Or set proxy URL using configuration object
+  var configuration = NoCodesConfiguration(projectKey: "projectKey")
+  configuration.proxyURL = "https://your-proxy-server.com"
+  NoCodes.initialize(with: configuration)
+  ```
+</CodeGroup>
+
+## Other changes
+
+The `IntroEligibilityStatus` `NonIntroProduct` was renamed to more correct `NonIntroOrTrialProduct` (`QONIntroEligibilityStatusNonIntroProduct` to `QONIntroEligibilityStatusNonIntroOrTrialProduct` for Objective C).
+
+***
+
+[\[Jan 2026\] Migration guide. Capacitor 1.](jan-2026-migration-guide-capacitor-1)
+
+[\[Nov 2025\] Migration guide. React Native 10.](sep-2025-migration-guide-react-native-10)

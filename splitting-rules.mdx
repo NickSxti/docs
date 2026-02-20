@@ -1,0 +1,79 @@
+---
+title: "Splitting rules"
+description: "Launch A/B experiments with the clear picture of what is going on under the hood."
+---
+
+There is often a need to run a few experiments simultaneously:
+
+* There is enough traffic to validate a few hypotheses at a time.
+* There are separate teams responsible for onboarding experience, paywalls, and monetization strategy.
+
+Knowing how Qonversion Experiments distributes users between tests is crucial for your work. Let's consider the main rules and examples demonstrating how users are assigned into variants in Qonversion Experiments.
+
+# General splitting rules
+
+Splitter in Qonversion Experiments works in the following way:
+
+1. At the top of the processing funnel, Splitter receives User\_A.
+   * Splitter receives User\_A when the [`remoteConfig` method](launch-experiments#get-your-configuration) is called
+
+2. Splitter sorts experiments with selected **Context key** by **Start date** and checks if User\_A can be assigned to each experiment.
+
+3. When Splitter validates if User\_A matches experiment rules, it checks the following attributes:
+
+   1. Segmentation rules (Country, App version, etc.)
+   2. Level of traffic allocation (30%, 50%, 70%, etc.)
+
+4. If User\_A matches segmentation rules, he is assigned to a specific group inside the experiment. Otherwise, Splitter returns to Step #2 to check User\_A against the following experiment in the queue.
+   1. Please note, if you have the traffic level in the first launched experiment (sorted by start date) set to 70% and in the second - 30%, that means that your second experiment is exposed for (100% - 70%) \* 30% = 9% of all users. Set the traffic level to 100% for the second experiment in case you want to use all the remaining from the first experiment users. [Below](splitting-rules#example-1) you can find some examples that help understand this approach better.
+
+<Info>
+  ### Cross-context experiments
+
+  Please note that a User can be assigned to a few experiments with different **Context keys** at a time.
+
+  To turn off exposure to cross-context experiments, please use the [Attached active experiment and Attached experiment context key](launch-experiments#segment-your-users) segmentation options.
+</Info>
+
+# Example #1
+
+Let's consider the case of launching two experiments with the same Context key at a time:
+
+1. One for users from the UK, 100% traffic allocation level. Start date = 09.03.23
+
+![](/images/docs/cc91bd9-Screenshot_2023-06-01_at_15.02.21.png)
+
+2. One for users from the US. 100% traffic allocation level. Start date = 15.03.23.
+
+![](/images/docs/b00e51b-Screenshot_2023-06-01_at_15.01.45.png)
+
+As a result
+
+* 100% of users from the UK are assigned to experiment #1.
+* 100% of users from the US are assigned to experiment #2.
+* None of the remaining users have been assigned to experiments with the selected Context key.
+
+# Example #2
+
+Let's consider the case of launching two experiments with the same Context key at a time but with similar segmentation settings:
+
+1. One for users from the UK, 70% traffic allocation level. Start date = 09.03.23
+
+![](/images/docs/ea07d39-Screenshot_2023-06-01_at_15.09.02.png)
+
+2. Another one is for users from the UK as well. 30% traffic allocation level. Start date = 15.03.23.
+
+![](/images/docs/fbec30a-Screenshot_2023-06-01_at_15.09.18.png)
+
+Based on the [General splitting rules](splitting-rules#general-splitting-rules), you have the following distribution picture:
+
+* 70% of users from the UK are assigned to Experiment #1 (with Start date = 09.03.23).
+* (100% - 70%) \* 30% = 9% of users from the UK are assigned to Experiment #2 (with Start date = 15.03.23).
+* 100% - 70% - 9% = 21% of users from the UK are not assigned to any experiment.
+* 100% of users outside the UK have not been assigned to experiments with the selected Context key.
+
+***
+
+[Stop experiments](finish-experiment)
+
+[Apple App Store](apple-app-store)

@@ -1,0 +1,98 @@
+---
+title: "Apple Ads Integration"
+description: "Apple Ads attribution with Qonversion"
+---
+
+Qonversion automatically collects the attribution data for Apple Ads through its SDK and AdServices Framework. The attribution data and raw data export are available in the Qonversion Apple Ads dashboard.
+
+## 1. Generate Apple Ads credentials
+
+1. Create a user with the API Account Manager role in your Apple Ads [account](<https://app.searchads.apple.com/cm/app/ >) (you need the admin rights to create a user): Account Settings → User Management → Invite Users → Select the user role
+
+2. Log in to your Apple Ads account using the user's credentials with API access created above. You need to create an **OAuth client** in the API settings. To generate private and public keys, please follow [Apple's Documentation](https://developer.apple.com/documentation/apple_search_ads/implementing_oauth_for_the_apple_search_ads_api#3733114). Paste your public key including "BEGIN" and "END" headers to create client credentials. Download the private key, you will need it later: Account Settings → API → Client Credentials
+
+<Warning>
+  ### Create a user with the API Account Manager role
+
+  If you authorize using the main account, the credentials screen might not always appear. To prevent this issue, create a user with an API access role and use that account to authorize and retrieve the public key.
+</Warning>
+
+![](/images/docs/c7ca4e6-client-credentials.png "client-credentials.png")
+
+3. Сopy and save `clientId`, `teamId`, `keyId`.
+4. Fill **Public Key** with the public part of the certificate that you made in step 2.
+
+## 2) Configure Qonversion with ASA credentials
+
+1. Navigate to the [Apple Ads settings](https://dash.qonversion.io/project/apple-search-ads) in your Qonversion project
+
+2. Provide your **Client ID**, **Team ID**, **Key ID**, **Private key** and save the information.
+
+   1. Take **Client ID**, **Team ID**, **Key ID** from the Apple Ads account API settings page.
+   2. Take **Private Key** from the private part of the certification mentioned above.
+      1. Do not trim "-----BEGIN EC PRIVATE KEY-----" and "-----END EC PRIVATE KEY-----" from the private key. Past it in our Settings as is.
+
+![](/images/docs/361c9a7c3d935ab5b9afb1b8e5b067d6a3da271d5e866649712f4a2af18b0b80-CleanShot_2024-08-30_at_15.44.102x.png)
+
+## 3. Configure SDK
+
+### 3.1 Enable Data Collection
+
+After you have completed the first three steps from the [Quick Start guide](quickstart) and have Qonversion SDK installed, enable data collection using the following SDK method:
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().collectAppleSearchAdsAttribution()
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] collectAppleSearchAdsAttribution];
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().collectAppleSearchAdsAttribution();
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().collectAppleSearchAdsAttribution();
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().CollectAppleSearchAdsAttribution();
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().collectAppleSearchAdsAttribution();
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().collectAppleSearchAdsAttribution();
+  ```
+</CodeGroup>
+
+<Warning>
+  ### Tips
+
+  1. Run `collectAppleSearchAdsAttribution` method regardless of user App Tracking Transparency (ATT) response; it allows us to collect attribution in the most accurate way
+  2. Make sure you are using Qonversion iOS SDK version 2.18.2 or above
+</Warning>
+
+### 3.2 Import AdServices framework
+
+Starting with iOS 14.3, Apple Ads campaigns are measured through a new self-attributing integration based on the [AdServices framework](https://developer.apple.com/documentation/ad_services).
+
+![](/images/docs/d510b3b-apple-search-ads-attribution-adservices.png)
+
+<Check>
+  ### Done
+
+  You've successfully set up the Apple Ads attribution with Qonversion. Wait for a day and check the attribution data in Apple Ads dashboard in your Qonversion account.
+
+  Please contact us using if you don't see the Apple Ads dashboard in your Qonversion account.
+</Check>
+
+***
+
+[Apple Ads](apple-search-ads-analytics)
+
+[Analytics](analytics)

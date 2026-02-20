@@ -1,0 +1,140 @@
+---
+title: "Overview"
+sidebarTitle: "Sandbox Testing"
+description: "Test in-app purchases and subscriptions after implementing Qonversion SDKs"
+---
+
+## 1. View Test Data
+
+You can see the test data in Qonversion by switching the *Sandbox mode* toggle on the right side at the top in [Qonversion Dashboard](https://dash.qonversion.io/) . While using this mode, you will see the Test Mode label at the top of all the dashboards. Remember to switch it off when you have finished testing.
+
+<Warning>
+  Make sure to use a device (not a simulator) when testing iOS purchases.
+</Warning>
+
+<Frame caption="View Sandbox Purchases">
+  <img src="/images/docs/7ff26c4-Screenshot_2024-02-07_at_13.29.44.png" />
+</Frame>
+
+With Qonversion SDK initialization, you can set the environment to distinguish sandbox and production users.
+
+<CodeGroup>
+  ```bash bash
+  let config = Qonversion.Configuration(projectKey: "projectKey", launchMode: .subscriptionManagement)
+  config.setEnvironment(.sandbox)
+  Qonversion.initWithConfig(config)
+  ```
+
+  ```bash bash
+  QONConfiguration *configuration = [[QONConfiguration alloc] initWithProjectKey:@"projectKey" launchMode:QONLaunchModeSubscriptionManagement];
+  [configuration setEnvironment:QONEnvironmentSandbox];
+  [Qonversion initWithConfig:configuration];
+  ```
+
+  ```bash bash
+  final QonversionConfig qonversionConfig = new QonversionConfig.Builder(
+          this,
+          "projectKey",
+          QLaunchMode.SubscriptionManagement
+  )
+          .setEnvironment(QEnvironment.Sandbox)
+          .build();
+  Qonversion.initialize(qonversionConfig);
+  ```
+
+  ```bash bash
+  val qonversionConfig = QonversionConfig.Builder(
+      this,
+      "projectKey",
+      QLaunchMode.SubscriptionManagement
+  )
+      .setEnvironment(QEnvironment.Sandbox)
+      .build()
+  Qonversion.initialize(qonversionConfig)
+  ```
+
+  ```bash bash
+  final config = new QonversionConfigBuilder(
+      'projectKey',
+      QLaunchMode.subscriptionManagement
+  )
+      .setEnvironment(QEnvironment.sandbox)
+      .build();
+  Qonversion.initialize(config);
+  ```
+
+  ```bash bash
+  const config = new QonversionConfigBuilder(
+    'projectKey',
+    LaunchMode.SUBSCRIPTION_MANAGEMENT
+  )
+    .setEnvironment(Environment.SANDBOX)
+    .build();
+  Qonversion.initialize(config);
+  ```
+
+  ```bash bash
+  QonversionConfig config = new QonversionConfigBuilder(
+          "projectKey",
+          LaunchMode.SubscriptionManagement
+      )
+      .SetEnvironment(Environment.Sandbox)
+      .Build();
+  Qonversion.Initialize(config);
+  ```
+
+  ```bash bash
+  const config = new Qonversion.ConfigBuilder(
+    'projectKey',
+    LaunchMode.SUBSCRIPTION_MANAGEMENT
+  )
+    .setEnvironment(Qonversion.Environment.SANDBOX)
+    .build();
+  Qonversion.initialize(config);
+  ```
+
+  ```bash bash
+  const config = new QonversionConfigBuilder(
+    'projectKey',
+    LaunchMode.SUBSCRIPTION_MANAGEMENT
+  )
+    .setEnvironment(Environment.SANDBOX)
+    .build();
+  Qonversion.initialize(config);
+  ```
+</CodeGroup>
+
+<Warning>
+  Do not use the sandbox environment in production. Set the production environment before releasing your app to an app store.
+</Warning>
+
+Please note that sandbox subscriptions renew at an accelerated rate and will auto-renew 6-9 times before the user is unsubscribed. This lets you test how your app handles subscription renewal and expiration states.
+
+| Subscription Duration | Apple Test Subscription Renewal | Google Test Subscription Renewal |
+| --------------------- | ------------------------------- | -------------------------------- |
+| 1 week                | 3 minutes                       | 5 minutes                        |
+| 1 month               | 5 minutes                       | 5 minutes                        |
+| 2 months              | 10 minutes                      | –                                |
+| 3 months              | 15 minutes                      | 10 minutes                       |
+| 6 months              | 30 minutes                      | 15 minutes                       |
+| 1 year                | 1 hour                          | 30 minutes                       |
+
+## 2. Send Test Events to the Integrations
+
+You can test an integration by sending test events to it. Navigate to the integration you want to test and switch on the *Send sandbox events* toggle. Remember to turn it off once you have completed the testing to avoid having mixed sandbox & production data in your integration.
+
+## 3. Testing Checklist
+
+☑️ Make sure you can see test trials and subscriptions on your Qonversion Dashboard.
+
+If you see the test subscriptions, your integration with the subscription provider (App Store, Google Play, Stripe) is correct. Qonversion adds purchases to dashboards after validating them with Apple, Google, or Stripe. If you can't see any test subscriptions with *Sandbox mode* turned on after making a purchase, check the App-Specific Shared Secret for the iOS app, Service Account Key for the Android App, or Stripe Sandbox your [project settings](https://dash.qonversion.io/project/stores).
+
+☑️ Check your test events have been delivered to your integrations.
+
+Make sure to turn on the *Send sandbox events* toggle in the integrations you want to test before purchasing. You can see the last events sent to active integration in the [Events Dashboard ](https://dash.qonversion.io/events)on the left side menu. You can see the status of each event by clicking on it. Make sure that the event was delivered. In case you see an error message, check your integration settings.
+
+***
+
+[Users and Access](users-and-access)
+
+[Troubleshooting](troubleshooting)

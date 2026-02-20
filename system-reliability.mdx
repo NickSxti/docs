@@ -1,0 +1,124 @@
+---
+title: "System Reliability"
+description: "At Qonversion, reliability has always been our priority. We have multiple protection mechanisms that allow us to avoid any downtimes and provide a reliable in-app subscription management service SLA. These mechanisms can be categorized into three levels:"
+---
+
+* Internal infrastructure reliability
+* External backend-replacement service
+* SDK-level protection
+
+# Aegis
+
+We have an independent service called Aegis, based on Cloudflare infrastructure, that can replace our API if our internal infrastructure fails. Aegis responds just like our main API. We prepare necessary caches in Cloudflare’s storage from our database while it's operational. During an outage, incoming traffic is redirected to a Cloudflare Worker that handles requests using cached data. It also queues incoming requests to resend to the API once it's back online to update our database. This is all based on Cloudflare's infrastructure, which guarantees 100% SLA. [Read more here.](https://qonversion.io/blog/most-reliable-in-app-subscription-management-service/#3)
+
+# Fallback files
+
+The Fallback Files feature in Qonversion ensures data reliability and continuity by maintaining backup files directly within the SDK for critical functionalities like purchases, remote configs, and offerings. In the event of a network provider error or system failure, these files allow the SDK to preserve essential operations, ensuring that purchases in stores can still be completed successfully. This feature is crucial for maintaining high availability and a seamless user experience, even under adverse conditions.
+
+## How to Set Up Fallback Files
+
+**Download Fallback File**
+
+To set up Fallback Files, navigate to either the [Entitlements](https://dash.qonversion.io/entitlements) or [Remote Configs](https://dash.qonversion.io/remote-configs) section in your Qonversion dashboard and click the Fallbacks button to download the file. The configuration content is the same in both sections.
+
+<Warning>
+  ### **Do not change** the name of the file you downloaded from the Qonversion dashboard.
+</Warning>
+
+### iOS
+
+Place the fallback file into the project directory, and Qonversion **will automatically detect** and utilize it.
+
+### Android
+
+Place the fallback file in the `main/assets` directory and Qonversion **will automatically detect** and utilize it.
+
+If you prefer to store resources in the `res/raw` directory, you can certainly keep the fallback file there. However, in this scenario, you’ll need to explicitly inform the Qonversion SDK about the fallback file’s location.
+
+Use the following code to set a fallback file:
+
+<CodeGroup>
+  ```bash bash
+  val config = QonversionConfig.Builder(this, "your_project_key",QLaunchMode.SubscriptionManagement)
+    .setFallbackFileIdentifier(R.raw.qonversion_android_fallbacks)
+    .build()
+  ```
+
+  ```bash bash
+  final QonversionConfig qonversionConfig = new QonversionConfig.Builder(this,"your_project_key",QLaunchMode.SubscriptionManagement)
+  	.setFallbackFileIdentifier(R.raw.qonversion_android_fallbacks)
+    .build();
+  ```
+</CodeGroup>
+
+### React Native / Cordova / Flutter
+
+Place the fallback file in the project directory for both iOS and Android platforms, and Qonversion **will handle the rest by automatically** fetching and using it. For Android use `main/assets` directory.
+
+### Unity
+
+Place both `qonversion_ios_fallbacks.json` and `qonversion_android_fallbacks.json` files into the `Assets/StreamingAssets` directory. This ensures the fallback files are included in both iOS and Android platform projects during the export process. Qonversion **will then automatically retrieve and utilize these files.**
+
+### Availability
+
+Please note that fallback files are supported only for the SDKs starting from the following versions:
+
+| SDK          | Version |
+| ------------ | ------- |
+| iOS          | 5.11.0  |
+| Android      | 8.0.0   |
+| React-Native | 8.0.0   |
+| Flutter      | 9.0.0   |
+| Unity        | 8.0.0   |
+| Cordova      | 6.0.0   |
+| Capacitor    | 0.1.0   |
+
+## How to test?
+
+Call the following function to ensure the fallback file is placed into the correct directory and can be successfully fetched and mapped by Qonversion SDK.
+
+Use this function only during development, and make sure to remove it before the final release. Using it in production will not harm the product, but it is unnecessary code.
+
+<CodeGroup>
+  ```bash bash
+  let isFallbackFileAccessible = Qonversion.shared.isFallbackFileAccessible()
+  ```
+
+  ```bash bash
+  BOOL isFallbackFileAccessible = [[Qonversion sharedInstance] isFallbackFileAccessible];
+  ```
+
+  ```bash bash
+  val isFallbackFileAccessible = Qonversion.shared.isFallbackFileAccessible()
+  ```
+
+  ```bash bash
+  Boolean isFallbackFileAccessible = Qonversion.getSharedInstance().isFallbackFileAccessible();
+  ```
+
+  ```bash bash
+  bool isFallbackFileAccessible = await Qonversion.getSharedInstance().isFallbackFileAccessible();
+  ```
+
+  ```bash bash
+  const isFallbackFileAccessible = await Qonversion.getSharedInstance().isFallbackFileAccessible();
+  ```
+
+  ```bash bash
+  bool isFallbackFileAccessible = Qonversion.GetSharedInstance().IsFallbackFileAccessible();
+  ```
+
+  ```bash bash
+  const isFallbackFileAccessible = await Qonversion.getSharedInstance().isFallbackFileAccessible();
+  ```
+
+  ```bash bash
+  const isFallbackFileAccessible = await Qonversion.getSharedInstance().isFallbackFileAccessible();
+  ```
+</CodeGroup>
+
+***
+
+[How Qonversion Works](how-qonversion-works)
+
+[Quick Start](quickstart)

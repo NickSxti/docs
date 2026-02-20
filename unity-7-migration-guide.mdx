@@ -1,0 +1,163 @@
+---
+title: "Unity SDK 6.x to 7.x migration guide"
+description: "We've upgraded the Google Play Billing Library dependency on Android to version 6 in this release, which has led to major changes in the product and subscription management parts of our SDK. These are described below."
+---
+
+## Upgrading version
+
+Increase the dependency version in your *Packages/manifest.json* file to upgrade your Qonversion SDK to the latest
+
+<CodeGroup>
+  ```bash bash
+  "com.qonversion.unity": "https://github.com/qonversion/unity-sdk.git#7.0.0"
+  ```
+</CodeGroup>
+
+## Product updates
+
+### Qonversion and Google Play product link changes
+
+Google Play has recently upgraded the structure of their subscription products. We've written about it [in our blog](https://qonversion.io/blog/google-play-billing-library-5-0/). In short, they combined the same subscriptions with different durations into a single subscription with different base plans. In addition, they announced different kinds of offers to base plans, including free trials or introductory prices. In this release, we begin to support those changes.
+
+Previously Qonversion **subscription** products required a Google Play subscription identifier. Now you can also set a specific **base plan** for the subscription. Different base plans of the same subscription can be linked to different Qonversion products. Let's have a look at an example.
+
+Let's say you sell monthly and annual subscriptions in your app, both on Android and iOS. With the previous Qonversion SDK versions, you would specify two Qonversion products (`premium_monthly` and `premium_annual`), two App Store products (`premium_monthly_ios` and `premium_annual_ios`), and two Google Play products (`premium_monthly_android` and `premium_annual_android`). Then you would link those store products to Qonversion products as follows:
+
+`premium_monthly` - `premium_monthly_ios` and `premium_monthly_android`,
+
+`premium_annual` - `premium_annual_ios` and `premium_annual_android`.
+
+With the new Google Play Subscriptions structure, you can create only one subscription for Android - `premium_android` and two base plans for it (`monthly` and `annual`). With this done, you can now use a single subscription for both Qonversion products as follows:
+
+`premium_monthly` - `premium_monthly_ios` and `premium_android` with `monthly` base plan,
+
+`premium_annual` - `premium_annual_ios` and `premium_android` with `annual` base plan.
+
+### Store details for the `QProduct` class
+
+Speaking of the SDK side - the first big part of the changes is the addition of the new `BasePlanId` field to `Product` which can be set to the product via Qonversion Dashboard.
+
+We have deprecated the `Product.SkuDetails` field, because `SkuDetails` contain information only for backward compatible base plans and are now deprecated in the Google Play Billing Library. Instead, we have added the new `StoreDetails` field of type `ProductStoreDetails`, which contains all the store information for the Google Play Product. You can find the specifications of that class [on this page](google-play-product-details).
+
+If `BasePlanId` is not specified for a product, it means one of the following:
+
+* it is a one-time (in-app) product that can not have any base plans,
+* it is a product that was not updated in the Qonversion dashboard after this version was released,
+* it is an iOS-only product.
+
+In the case of the in-app product, both `SkuDetails` and `StoreDetails` fields will contain information about that in-app. But in the second case, when there is a subscription product without a specified base plan, the `SkuDetails` field will contain information about the **backward compatible** base plan, while the `StoreDetails` field will only contain common subscription information without base-plan-specific data. It means that you should start using `StoreDetails` field for base-plan-specific data (like price, duration, and so on) for Android subscription products only if you've specified their base plan IDs in Qonversion product settings.
+
+### The other `Product` fields changes
+
+Along with the above changes, we have changed the `Type` field and removed the `Duration` and `TrialDuration` fields from the product class. The `Type` and `Duration` were previously being set via the dashboard, and the `TrialDuration` was calculated from the store details and was represented as an enumeration with several common durations. Now, the product `Type` is calculated from the store details both for Android and iOS. We've also added the `Intro` value to `ProductType` to separate `trial` and `intro` products (Android only for now). An `Unknown` value was also added for the cases where we are unable to determine the product type. The `Duration` and `TrialDuration` fields were replaced with `SubscriptionPeriod` and `TrialPeriod`. Both properties are of type `SubscriptionPeriod` and the values are also calculated from the store details for both platforms.
+
+The last thing to note is that we've also changed the `PrettyPrice` and `PrettyIntrodactoryPrice` fields calculation for Android. Earlier they were calculated from `SkuDetails`, while now we first try to use `StoreDetails` if possible and only then fall back to `SkuDetails`.
+
+### `Product` updates summary
+
+Below is the shortened summary of the `Product` changes:
+
+* new `BasePlanId` field, specifying concrete subscription base plan for Google Play subscriptions, added,
+* `SkuDetails` field deprecated,
+* new `StoreDetails` field, containing information about Google Play product, added;
+* the `Type` field is now calculated based on store details both for Android and iOS, instead of the value set via the Qonversion dashboard. The `Intro` and `Unknown` values were added to `ProductType` to separate cases of trial and intro products (Android only for now) and also the case when we are unable to determine the product type;
+* the `Duration` and `TrialDuration` fields were replaced with `SubscriptionPeriod` and `TrialPeriod` fields of type `SubscriptionPeriod` with the values calculated from the store details both for Android and iOS;
+* the `PrettyPrice` and `PrettyIntroductoryPrice` fields on Android now prefers `StoreDetails` to get the price from, and only then - `SkuDetails`.
+
+## Purchase flow updates
+
+In this release, we have changed the `Purchase` and `UpdatePurchase` methods signatures. Previously there were several methods for different sets of arguments. Now we've arranged all those properties into classes - `PurchaseModel` and `PurchaseUpdateModel`, that should be instantiated and provided to the single `Purchase` or `UpdatePurchase` method.
+
+You can create instances of those classes either manually or by using the utility functions `ToPurchaseModel` and `ToPurchaseUpdateModel` added to the `Product` class.
+
+Below is an example of how the `Purchase` flow has changed:
+
+<CodeGroup>
+  ```bash bash
+  // Old
+  Qonversion.GetSharedInstance().PurchaseProduct(product, (entitlements, error, isCancelled) => {...});
+
+  // New
+  PurchaseModel purchaseModel = product.ToPurchaseModel();
+  Qonversion.GetSharedInstance().Purchase(purchaseModel, (entitlements, error, isCancelled) => {...});
+  ```
+</CodeGroup>
+
+And an `UpdatePurchase` flow example:
+
+<CodeGroup>
+  ```bash bash
+  // Old
+  Qonversion.GetSharedInstance().UpdatePurchaseWithProduct(newProduct, "oldProductId", (entitlements, error, isCancelled) => {...});
+
+  // New
+  PurchaseUpdateModel purchaseUpdateModel = product.ToPurchaseUpdateModel("oldProductId");
+  Qonversion.GetSharedInstance().UpdatePurchase(purchaseUpdateModel, (entitlements, error, isCancelled) => {...});
+  ```
+</CodeGroup>
+
+If you were using only product identifiers, you can create purchase models manually as follows:
+
+<CodeGroup>
+  ```bash bash
+  // Old
+  Qonversion.GetSharedInstance().PurchaseProduct("productId", (entitlements, error, isCancelled) => {...});
+
+  // New
+  PurchaseModel purchaseModel = new PurchaseModel("newProductId");
+  Qonversion.GetSharedInstance().Purchase(purchaseModel, (entitlements, error, isCancelled) => {...});
+  ```
+</CodeGroup>
+
+<CodeGroup>
+  ```bash bash
+  // Old
+  Qonversion.GetSharedInstance().UpdatePurchase("newProductId", "oldProductId", (entitlements, error, isCancelled) => {...});
+
+  // New
+  PurchaseUpdateModel purchaseUpdateModel = new PurchaseUpdateModel("newProductId", "oldProductId");
+  Qonversion.GetSharedInstance().UpdatePurchase(purchaseUpdateModel, (entitlements, error, isCancelled) => {...});
+  ```
+</CodeGroup>
+
+If necessary, you can provide a specific offer for subscription purchase.
+
+<CodeGroup>
+  ```bash bash
+  // Specifying offer via the `ToPurchaseModel` method:
+  ProductOfferDetails productOfferDetails = ...; // Choose an offer from `StoreDetails`
+  PurchaseModel purchaseModel = product.ToPurchaseModel(productOfferDetails);
+
+  // Specifying offer ID via the `ToPurchaseModel` method:
+  PurchaseModel purchaseModel = product.ToPurchaseModel("offer_id");
+
+  // Specifying offer ID via the constructor:
+  PurchaseModel purchaseModel = PurchaseModel("productId", "offer_id");
+  PurchaseUpdateModel purchaseUpdateModel = PurchaseUpdateModel("newProductId", "oldProductId", "offer_id");
+
+  // Specifying offer ID after the purchase model creation:
+  purchaseModel.OfferId = "offer_id";
+  ```
+</CodeGroup>
+
+If provided, we will try to find and purchase the offer with the specified ID for the requested Qonversion product. If there is no offer with the specified ID, an error will be returned. If no offer ID is provided for the subscription purchase of Qonversion product with a specified base plan ID, then we will choose the most profitable offer for the client from all the available offers. We calculate the cheapest price for the client by comparing all the trial or intro phases and the base plan. For iOS, old Qonversion products (where the base plan ID is not specified), or in-app products, the offer ID is ignored.
+
+You can also remove any intro/trial offer from the purchase (use only a bare base plan). For that purpose, you should call `RemoveOffer` method of purchase model:
+
+<CodeGroup>
+  ```bash bash
+  purchaseModel.RemoveOffer();
+  ```
+</CodeGroup>
+
+## The other changes
+
+* The `CheckTrialIntroEligibility` method improved and now detects the eligibility based on store details on Android;
+* The `ProductDuration` and `TrialDuration` classes were removed;
+* The `ProrationMode` enum was removed and replaced with `PurchaseUpdatePolicy` ([read more](making-purchases)).
+
+***
+
+[React Native SDK 6.x to 7.x migration guide](react-native-7-migration-guide)
+
+[Cordova SDK 4.x to 5.x migration guide](cordova-5-migration-guide)

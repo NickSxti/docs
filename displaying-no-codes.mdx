@@ -1,0 +1,840 @@
+---
+title: "Displaying No-Codes"
+description: "First, you need to initialize the SDK. To do this, use the same project key that you use to initialize the Qonversion SDK."
+---
+
+<CodeGroup>
+  ```bash bash
+  // You can initialize using only project key
+  let configuration = NoCodesConfiguration(projectKey: "projectKey")
+  NoCodes.initialize(with: configuration)
+  ```
+
+  ```bash bash
+  // You can initialize using only project key
+  val noCodesConfig = NoCodesConfig.Builder(this, "projectKey").build()
+  NoCodes.initialize(noCodesConfig)
+  ```
+
+  ```bash bash
+  // You can initialize using only project key
+  final NoCodesConfig noCodesConfig = new NoCodesConfig.Builder(this, "projectKey").build();
+  NoCodes.initialize(noCodesConfig);
+  ```
+
+  ```bash bash
+  // You can initialize using only project key
+  const noCodesConfig = new NoCodesConfigBuilder('projectKey')
+    .build();
+  NoCodes.initialize(noCodesConfig);
+  ```
+
+  ```bash bash
+  // You can initialize using only project key
+  final noCodesConfig = new NoCodesConfigBuilder(projectKey).build();
+  NoCodes.initialize(noCodesConfig);
+  ```
+
+  ```bash bash
+  // You can initialize using only project key
+  var noCodesConfig = new NoCodesConfigBuilder("projectKey")
+      .Build();
+  NoCodes.Initialize(noCodesConfig);
+  ```
+
+  ```bash bash
+  // You can initialize using only project key
+  const noCodesConfig = new Qonversion.NoCodesConfigBuilder('projectKey')
+    .build();
+  Qonversion.NoCodes.initialize(noCodesConfig);
+  ```
+
+  ```bash bash
+  // You can initialize using only project key
+  const noCodesConfig = new NoCodesConfigBuilder('projectKey')
+    .build();
+  NoCodes.initialize(noCodesConfig);
+  ```
+</CodeGroup>
+
+Then you can set the delegates for handling events and customizing screens as follows - *(optional)*:
+
+<CodeGroup>
+  ```bash bash
+  // The first delegate is used for main events (e.g., screen opened, button tapped).
+  NoCodes.shared.set(delegate: self)
+  // The second is for screen customization (if you want to override default styles).
+  NoCodes.shared.set(screenCustomizationDelegate: self)
+
+  // Delegates can be also passed via the initialization throught the configuration:
+  let noCodesConfig = NoCodesConfiguration(projectKey: "projectKey", delegate: self, screenCustomizationDelegate: self)
+  ```
+
+  ```bash bash
+  // The first delegate is used for main events (e.g., screen opened, button tapped).
+  NoCodes.shared.setDelegate(this)
+  // The second is for screen customization (if you want to override default styles).
+  NoCodes.shared.setScreenCustomizationDelegate(this)
+
+  // Delegates can be also passed via the initialization throught the configuration:
+  val noCodesConfig = NoCodesConfig.Builder(this, "projectKey")
+    .setDelegate(this)
+    .setScreenCustomizationDelegate(this)
+    .build()
+  ```
+
+  ```bash bash
+  // The first delegate is used for main events (e.g., screen opened, button tapped).
+  NoCodes.getSharedInstance().setDelegate(this);
+  // The second is for screen customization (if you want to override default styles).
+  NoCodes.getSharedInstance().setScreenCustomizationDelegate(this);
+
+  // Delegates can be also passed via the initialization throught the configuration:
+  final NoCodesConfig noCodesConfig = new NoCodesConfig.Builder(this, "projectKey")
+    .setDelegate(this)
+    .setScreenCustomizationDelegate(this)
+    .build();
+  ```
+
+  ```bash bash
+  // Set the listener via the initialization throught the configuration
+  // It is used for main events (e.g., screen opened, button tapped).
+  const noCodesConfig = new NoCodesConfigBuilder('projectKey')
+    .setNoCodesListener(this)
+  .build();
+
+  // Set presentation style config before showing screen if needed
+  const screenConfig = new ScreenPresentationConfig(ScreenPresentationStyle.FULL_SCREEN, true);
+  NoCodes.getSharedInstance().setScreenPresentationConfig(screenConfig, 'yourContextKey');
+  ```
+
+  ```bash bash
+  // Set presentation style config before showing screen if needed
+  final config = NoCodesPresentationConfig(
+      animated: true,
+      presentationStyle: NoCodesPresentationStyle.fullScreen,
+  );
+
+  NoCodes.getSharedInstance().setScreenPresentationConfig(config, contextKey: 'yourContextKey');
+
+  // Subscribe to separate NoCodes event streams
+  _screenShownStream = NoCodes.getSharedInstance().screenShownStream.listen((event) {
+      // add functionality here
+  });
+
+  _finishedStream = NoCodes.getSharedInstance().finishedStream.listen((event) {
+      // add functionality here
+  });
+
+  _actionStartedStream = NoCodes.getSharedInstance().actionStartedStream.listen((event) {
+      // add functionality here
+  });
+
+  _actionFailedStream = NoCodes.getSharedInstance().actionFailedStream.listen((event) {
+      // add functionality here
+  });
+
+  _actionFinishedStream = NoCodes.getSharedInstance().actionFinishedStream.listen((event) {
+      // add functionality here
+  });
+
+  _screenFailedToLoadStream = NoCodes.getSharedInstance().screenFailedToLoadStream.listen((event) {
+      // add functionality here
+  });
+  ```
+
+  ```bash bash
+  // Set the delegate via the initialization through the configuration
+  // It is used for main events (e.g., screen opened, button tapped).
+  var noCodesConfig = new NoCodesConfigBuilder("projectKey")
+      .SetNoCodesDelegate(this)
+      .Build();
+  NoCodes.Initialize(noCodesConfig);
+
+  // Set presentation style config before showing screen if needed
+  var screenConfig = new ScreenPresentationConfig(ScreenPresentationStyle.FullScreen, true);
+  NoCodes.GetSharedInstance().SetScreenPresentationConfig(screenConfig, "yourContextKey");
+  ```
+
+  ```bash bash
+  // Set the listener via the initialization throught the configuration
+  // It is used for main events (e.g., screen opened, button tapped).
+  const noCodesConfig = new Qonversion.NoCodesConfigBuilder('projectKey')
+    .setNoCodesListener(this)
+  .build();
+
+  // Set presentation style config before showing screen if needed
+  const screenConfig = new Qonversion.ScreenPresentationConfig(Qonversion.ScreenPresentationStyle.FULL_SCREEN, true);
+  Qonversion.NoCodes.getSharedInstance().setScreenPresentationConfig(screenConfig, 'yourContextKey');
+  ```
+
+  ```bash bash
+  // Set the listener via the initialization throught the configuration
+  // It is used for main events (e.g., screen opened, button tapped).
+  const noCodesConfig = new NoCodesConfigBuilder('projectKey')
+    .setNoCodesListener(this)
+  .build();
+
+  // Set presentation style config before showing screen if needed
+  const screenConfig = new ScreenPresentationConfig(ScreenPresentationStyle.FULL_SCREEN, true);
+  NoCodes.getSharedInstance().setScreenPresentationConfig(screenConfig, 'yourContextKey');
+  ```
+</CodeGroup>
+
+After initializing the SDK, you can move forward and display the No-Codes screen:
+
+<CodeGroup>
+  ```bash bash
+  NoCodes.shared.showScreen(withContextKey: "yourContextKey")
+  ```
+
+  ```bash bash
+  NoCodes.shared.showScreen("yourContextKey")
+  ```
+
+  ```bash bash
+  NoCodes.getSharedInstance().showScreen("yourContextKey");
+  ```
+
+  ```bash bash
+  NoCodes.getSharedInstance().showScreen('yourContextKey');
+  ```
+
+  ```bash bash
+  NoCodes.getSharedInstance().showScreen('yourContextKey');
+  ```
+
+  ```bash bash
+  NoCodes.GetSharedInstance().ShowScreen("yourContextKey");
+  ```
+
+  ```bash bash
+  Qonversion.NoCodes.getSharedInstance().showScreen('yourContextKey');
+  ```
+
+  ```bash bash
+  NoCodes.getSharedInstance().showScreen('yourContextKey');
+  ```
+</CodeGroup>
+
+<Info>
+  If you want to use Qonversion No-Codes with your own purchase infrastructure, [see](using-no-codes-with-custom-purchases-handling) how you can do it in two simple steps.
+</Info>
+
+## Delegates
+
+Earlier, we discussed how to set delegates. Now, let's explore their purpose.
+
+### Main delegate
+
+The main delegate is needed so that you can receive messages about what is happening during the execution of No-Codes, as well as to provide us with the screen from which to start navigation and display the No-Codes screen. Let's go through this step by step.
+
+<Warning>
+  ### Unity Warning
+
+  On Android, when a No-Codes screen is displayed, Unity's game loop is paused because the No-Codes screen runs as a separate Activity on top of Unity's Activity. This means that all delegate events will be delivered with a delay - they will only be received after the No-Codes screen is closed and Unity resumes.
+</Warning>
+
+##### controllerForNavigation *(iOS only)*
+
+<CodeGroup>
+  ```bash bash
+  func controllerForNavigation() -> UIViewController?
+  ```
+</CodeGroup>
+
+In this function, you must return a UIViewController from which we will start displaying the No-Codes flow. If you do not provide one, we will take the topmost screen in the current stack.
+
+##### Screen shown event
+
+<CodeGroup>
+  ```bash bash
+  func noCodesHasShownScreen(id: String)
+  ```
+
+  ```bash bash
+  fun onScreenShown(screenId: String)
+  ```
+
+  ```bash bash
+  void onScreenShown(String screenId)
+  ```
+
+  ```bash bash
+  onScreenShown: (id: string) => {}
+  ```
+
+  ```bash bash
+  _screenShownStream = NoCodes.getSharedInstance().screenShownStream.listen((event) {
+      // add functionality here
+  });
+  ```
+
+  ```bash bash
+  void OnScreenShown(string contextKey)
+  ```
+
+  ```bash bash
+  onScreenShown: (id: string) => {}
+  ```
+
+  ```bash bash
+  onScreenShown: (id: string) => {}
+  ```
+</CodeGroup>
+
+This function notifies about the display of a screen with a specific identifier
+
+#### Action execution start event
+
+<CodeGroup>
+  ```bash bash
+  func noCodesStartsExecuting(action: NoCodesAction)
+  ```
+
+  ```bash bash
+  fun onActionStartedExecuting(action: QAction)
+  ```
+
+  ```bash bash
+  void onActionStartedExecuting(QAction action)
+  ```
+
+  ```bash bash
+  onActionStartedExecuting: (action: NoCodesAction) => {}
+  ```
+
+  ```bash bash
+  _actionStartedStream = NoCodes.getSharedInstance().actionStartedStream.listen((event) {
+      // add functionality here
+  });
+  ```
+
+  ```bash bash
+  void OnActionStarted(NoCodesAction action)
+  ```
+
+  ```bash bash
+  onActionStartedExecuting: (action: Qonversion.NoCodesAction) => {}
+  ```
+
+  ```bash bash
+  onActionStartedExecuting: (action: NoCodesAction) => {}
+  ```
+</CodeGroup>
+
+This function notifies you that executing the action you set up through our dashboard has begun.
+
+#### Action execution fail event
+
+<CodeGroup>
+  ```bash bash
+  func noCodesFailedToExecute(action: NoCodesAction, error: Error?)
+  ```
+
+  ```bash bash
+  fun onActionFailedToExecute(action: QAction) {
+    // For details look at the `error` property of the action
+  }
+  ```
+
+  ```bash bash
+  void onActionFailedToExecute(QAction action) {
+    // For details look at the `error` property of the action
+  }
+  ```
+
+  ```bash bash
+  onActionFailedToExecute: (action: NoCodesAction) => {}
+  ```
+
+  ```bash bash
+  _actionFailedStream = NoCodes.getSharedInstance().actionFailedStream.listen((event) {
+      // add functionality here
+  });
+  ```
+
+  ```bash bash
+  void OnActionFailed(NoCodesAction action)
+  ```
+
+  ```bash bash
+  onActionFailedToExecute: (action: Qonversion.NoCodesAction) => {}
+  ```
+
+  ```bash bash
+  onActionFailedToExecute: (action: NoCodesAction) => {}
+  ```
+</CodeGroup>
+
+This function notifies you that executing the action you set up through our dashboard has failed.
+
+#### Action execution finish event
+
+<CodeGroup>
+  ```bash bash
+  func noCodesFinishedExecuting(action: NoCodesAction)
+  ```
+
+  ```bash bash
+  fun onActionFinishedExecuting(action: QAction)
+  ```
+
+  ```bash bash
+  void onActionFinishedExecuting(QAction action)
+  ```
+
+  ```bash bash
+  onActionFinishedExecuting: (action: NoCodesAction) => {}
+  ```
+
+  ```bash bash
+  _actionFinishedStream = NoCodes.getSharedInstance().actionFinishedStream.listen((event) {
+      // add functionality here
+  });
+  ```
+
+  ```bash bash
+  void OnActionFinished(NoCodesAction action)
+  ```
+
+  ```bash bash
+  onActionFinishedExecuting: (action: Qonversion.NoCodesAction) => {}
+  ```
+
+  ```bash bash
+  onActionFinishedExecuting: (action: NoCodesAction) => {}
+  ```
+</CodeGroup>
+
+This function notifies you that the action you set up through our dashboard has been executed.
+
+#### Screen finished event
+
+<CodeGroup>
+  ```bash bash
+  func noCodesFinished()
+  ```
+
+  ```bash bash
+  fun onFinished()
+  ```
+
+  ```bash bash
+  void onFinished()
+  ```
+
+  ```bash bash
+  onFinished: () => {}
+  ```
+
+  ```bash bash
+  _finishedStream = NoCodes.getSharedInstance().finishedStream.listen((event) {
+      // add functionality here
+  });
+  ```
+
+  ```bash bash
+  void OnFinished(string contextKey)
+  ```
+
+  ```bash bash
+  onFinished: () => {}
+  ```
+
+  ```bash bash
+  onFinished: () => {}
+  ```
+</CodeGroup>
+
+This function notifies that the No-Codes flow has been completed and No-Codes has been finished.
+
+#### Screen loading failed
+
+<CodeGroup>
+  ```bash bash
+  func noCodesFailedToLoadScreen(error: Error?)
+  ```
+
+  ```bash bash
+  fun onScreenFailedToLoad(error: NoCodesError)
+  ```
+
+  ```bash bash
+  void onScreenFailedToLoad(NoCodesError error)
+  ```
+
+  ```bash bash
+  onScreenFailedToLoad: (error: NoCodesError) => {}
+  ```
+
+  ```bash bash
+  _screenFailedToLoadStream = NoCodes.getSharedInstance().screenFailedToLoadStream.listen((event) {
+      // add functionality here
+  });
+  ```
+
+  ```bash bash
+  void OnScreenFailedToLoad(NoCodesError error)
+  ```
+
+  ```bash bash
+  onScreenFailedToLoad: (error: Qonversion.NoCodesError) => {}
+  ```
+
+  ```bash bash
+  onScreenFailedToLoad: (error: NoCodesError) => {}
+  ```
+</CodeGroup>
+
+This function is called when No-Codes screen loading has failed.
+
+### Localization
+
+By default, No-Code screens automatically detect the device's system language and display the appropriate localization if available. You can override this behavior by setting a custom locale, which takes priority over the automatic system language detection.
+
+The locale should be in standard format (e.g., `"en"`, `"en-US"`, `"de"`, `"de-DE"`). Pass `nil`/`null` to reset to the system default locale.
+
+**Setting locale during initialization:**
+
+<CodeGroup>
+  ```bash bash
+  var config = NoCodesConfiguration(
+      projectKey: "your_project_key",
+      locale: "de-DE"
+  )
+  NoCodes.initialize(with: config)
+  ```
+
+  ```bash bash
+  val config = NoCodesConfig.Builder(context, "your_project_key")
+      .setLocale("de-DE")
+      .build()
+  NoCodes.initialize(config)
+  ```
+
+  ```bash bash
+  NoCodesConfig config = new NoCodesConfig.Builder(context, "your_project_key")
+      .setLocale("de-DE")
+      .build();
+  NoCodes.initialize(config);
+  ```
+
+  ```bash bash
+  const noCodesConfig = new NoCodesConfigBuilder("projectKey")
+      .setLocale("de-DE")
+      .build();
+  NoCodes.initialize(noCodesConfig);
+  ```
+
+  ```bash bash
+  final noCodesConfig = NoCodesConfigBuilder("projectKey")
+      .setLocale("de-DE")
+      .build();
+  NoCodes.initialize(noCodesConfig);
+  ```
+
+  ```bash bash
+  var noCodesConfig = new NoCodesConfigBuilder("projectKey")
+      .SetLocale("de-DE")
+      .Build();
+  NoCodes.Initialize(noCodesConfig);
+  ```
+
+  ```bash bash
+  const noCodesConfig = new Qonversion.NoCodesConfigBuilder("projectKey")
+      .setLocale("de-DE")
+      .build();
+  Qonversion.NoCodes.initialize(noCodesConfig);
+  ```
+
+  ```bash bash
+  const noCodesConfig = new NoCodesConfigBuilder("projectKey")
+      .setLocale("de-DE")
+      .build();
+  NoCodes.initialize(noCodesConfig);
+  ```
+</CodeGroup>
+
+**Setting locale after initialization:**
+
+<CodeGroup>
+  ```bash bash
+  NoCodes.shared.setLocale("fr-FR")
+  NoCodes.shared.showScreen(withContextKey: "your_context_key")
+
+  // Reset to system default
+  NoCodes.shared.setLocale(nil)
+  ```
+
+  ```bash bash
+  NoCodes.shared.setLocale("fr-FR")
+  NoCodes.shared.showScreen("your_context_key")
+
+  // Reset to system default
+  NoCodes.shared.setLocale(null)
+  ```
+
+  ```bash bash
+  NoCodes.getSharedInstance().setLocale("fr-FR");
+  NoCodes.getSharedInstance().showScreen("your_context_key");
+
+  // Reset to system default
+  NoCodes.getSharedInstance().setLocale(null);
+  ```
+
+  ```bash bash
+  NoCodes.getSharedInstance().setLocale("fr-FR");
+  NoCodes.getSharedInstance().showScreen("yourContextKey");
+
+  // Reset to system default
+  NoCodes.getSharedInstance().setLocale(null);
+  ```
+
+  ```bash bash
+  NoCodes.getSharedInstance().setLocale("fr-FR");
+  NoCodes.getSharedInstance().showScreen("yourContextKey");
+
+  // Reset to system default
+  NoCodes.getSharedInstance().setLocale(null);
+  ```
+
+  ```bash bash
+  NoCodes.GetSharedInstance().SetLocale("fr-FR");
+  NoCodes.GetSharedInstance().ShowScreen("yourContextKey");
+
+  // Reset to system default
+  NoCodes.GetSharedInstance().SetLocale(null);
+  ```
+
+  ```bash bash
+  Qonversion.NoCodes.getSharedInstance().setLocale("fr-FR");
+  Qonversion.NoCodes.getSharedInstance().showScreen("yourContextKey");
+
+  // Reset to system default
+  Qonversion.NoCodes.getSharedInstance().setLocale(null);
+  ```
+
+  ```bash bash
+  NoCodes.getSharedInstance().setLocale("fr-FR");
+  NoCodes.getSharedInstance().showScreen("yourContextKey");
+
+  // Reset to system default
+  NoCodes.getSharedInstance().setLocale(null);
+  ```
+</CodeGroup>
+
+### Theme
+
+No-Code screens support light and dark themes. By default, screens automatically adapt to the device's system appearance (Auto mode). You can override this behavior by setting a specific theme, which takes priority over the automatic system theme detection.
+
+<Warning>
+  Currently, the theme only affects skeleton loader colors, with full theming support for the No-Code Builder coming soon
+</Warning>
+
+Available theme modes:
+
+* **Auto** (default) - Follows the device's system appearance
+* **Light** - Forces light theme regardless of device settings
+* **Dark** - Forces dark theme regardless of device settings
+
+**Setting theme during initialization:**
+
+<CodeGroup>
+  ```bash bash
+  var config = NoCodesConfiguration(
+      projectKey: "your_project_key",
+      theme: .dark
+  )
+  NoCodes.initialize(with: config)
+  ```
+
+  ```bash bash
+  val config = NoCodesConfig.Builder(context, "your_project_key")
+      .setTheme(NoCodesTheme.Dark)
+      .build()
+  NoCodes.initialize(config)
+  ```
+
+  ```bash bash
+  NoCodesConfig config = new NoCodesConfig.Builder(context, "your_project_key")
+      .setTheme(NoCodesTheme.Dark)
+      .build();
+  NoCodes.initialize(config);
+  ```
+
+  ```bash bash
+  const noCodesConfig = new NoCodesConfigBuilder("projectKey")
+      .setTheme(NoCodesTheme.DARK)
+      .build();
+  NoCodes.initialize(noCodesConfig);
+  ```
+
+  ```bash bash
+  final noCodesConfig = NoCodesConfigBuilder("projectKey")
+      .setTheme(NoCodesTheme.dark)
+      .build();
+  NoCodes.initialize(noCodesConfig);
+  ```
+
+  ```bash bash
+  var noCodesConfig = new NoCodesConfigBuilder("projectKey")
+      .SetTheme(NoCodesTheme.Dark)
+      .Build();
+  NoCodes.Initialize(noCodesConfig);
+  ```
+
+  ```bash bash
+  const noCodesConfig = new Qonversion.NoCodesConfigBuilder("projectKey")
+      .setTheme(Qonversion.NoCodesTheme.DARK)
+      .build();
+  Qonversion.NoCodes.initialize(noCodesConfig);
+  ```
+
+  ```bash bash
+  const noCodesConfig = new NoCodesConfigBuilder("projectKey")
+      .setTheme(NoCodesTheme.DARK)
+      .build();
+  NoCodes.initialize(noCodesConfig);
+  ```
+</CodeGroup>
+
+**Setting theme after initialization:**
+
+<CodeGroup>
+  ```bash bash
+  NoCodes.shared.setTheme(.light)
+  NoCodes.shared.showScreen(withContextKey: "your_context_key")
+
+  // Reset to auto (follow system appearance)
+  NoCodes.shared.setTheme(.auto)
+  ```
+
+  ```bash bash
+  NoCodes.shared.setTheme(NoCodesTheme.Light)
+  NoCodes.shared.showScreen("your_context_key")
+
+  // Reset to auto (follow system appearance)
+  NoCodes.shared.setTheme(NoCodesTheme.Auto)
+  ```
+
+  ```bash bash
+  NoCodes.getSharedInstance().setTheme(NoCodesTheme.Light);
+  NoCodes.getSharedInstance().showScreen("your_context_key");
+
+  // Reset to auto (follow system appearance)
+  NoCodes.getSharedInstance().setTheme(NoCodesTheme.Auto);
+  ```
+
+  ```bash bash
+  NoCodes.getSharedInstance().setTheme(NoCodesTheme.LIGHT);
+  NoCodes.getSharedInstance().showScreen("yourContextKey");
+
+  // Reset to auto (follow system appearance)
+  NoCodes.getSharedInstance().setTheme(NoCodesTheme.AUTO);
+  ```
+
+  ```bash bash
+  NoCodes.getSharedInstance().setTheme(NoCodesTheme.light);
+  NoCodes.getSharedInstance().showScreen("yourContextKey");
+
+  // Reset to auto (follow system appearance)
+  NoCodes.getSharedInstance().setTheme(NoCodesTheme.auto);
+  ```
+
+  ```bash bash
+  NoCodes.GetSharedInstance().SetTheme(NoCodesTheme.Light);
+  NoCodes.GetSharedInstance().ShowScreen("yourContextKey");
+
+  // Reset to auto (follow system appearance)
+  NoCodes.GetSharedInstance().SetTheme(NoCodesTheme.Auto);
+  ```
+
+  ```bash bash
+  Qonversion.NoCodes.getSharedInstance().setTheme(Qonversion.NoCodesTheme.LIGHT);
+  Qonversion.NoCodes.getSharedInstance().showScreen("yourContextKey");
+
+  // Reset to auto (follow system appearance)
+  Qonversion.NoCodes.getSharedInstance().setTheme(Qonversion.NoCodesTheme.AUTO);
+  ```
+
+  ```bash bash
+  NoCodes.getSharedInstance().setTheme(NoCodesTheme.LIGHT);
+  NoCodes.getSharedInstance().showScreen("yourContextKey");
+
+  // Reset to auto (follow system appearance)
+  NoCodes.getSharedInstance().setTheme(NoCodesTheme.AUTO);
+  ```
+</CodeGroup>
+
+### Screen customization
+
+Use the screen customization delegate to customize the screen opening animation. For example, to enable or disable the animation (*iOS only*), specify the type of opening: push/popover (*iOS only*)/full screen. You can also pass a `statusBarHidden` flag that determines whether to show or hide the status bar when displaying the screen (*iOS only*).
+
+For example:
+
+<CodeGroup>
+  ```bash bash
+  func presentationConfigurationForScreen(contextKey: String) -> NoCodesPresentationConfiguration {
+    return NoCodesPresentationConfiguration(animated: true, presentationStyle: .push)
+  }
+  ```
+
+  ```bash bash
+  override fun getPresentationConfigurationForScreen(contextKey: String): QScreenPresentationConfig {
+    return QScreenPresentationConfig(QScreenPresentationStyle.Push)
+  }
+  ```
+
+  ```bash bash
+  @NonNull
+  @Override
+  public QScreenPresentationConfig getPresentationConfigurationForScreen(@NonNull String contextKey) {
+    return new QScreenPresentationConfig(QScreenPresentationStyle.Push);
+  }
+  ```
+
+  ```bash bash
+  // Set presentation style config before showing screen if needed
+  const screenConfig = new ScreenPresentationConfig(ScreenPresentationStyle.FULL_SCREEN, true);
+
+  NoCodes.getSharedInstance().setScreenPresentationConfig(screenConfig, 'yourContextKey');
+  ```
+
+  ```bash bash
+  // Set presentation style config before showing screen if needed
+  final config = NoCodesPresentationConfig(
+      animated: true,
+      presentationStyle: NoCodesPresentationStyle.fullScreen,
+  );
+
+  NoCodes.getSharedInstance().setScreenPresentationConfig(config, contextKey: 'yourContextKey');
+  ```
+
+  ```bash bash
+  // Set presentation style config before showing screen if needed
+  var screenConfig = new ScreenPresentationConfig(ScreenPresentationStyle.FullScreen, true);
+
+  NoCodes.GetSharedInstance().SetScreenPresentationConfig(screenConfig, "yourContextKey");
+  ```
+
+  ```bash bash
+  // Set presentation style config before showing screen if needed
+  const screenConfig = new Qonversion.ScreenPresentationConfig(Qonversion.ScreenPresentationStyle.FULL_SCREEN, true);
+
+  Qonversion.NoCodes.getSharedInstance().setScreenPresentationConfig(screenConfig, 'yourContextKey');
+  ```
+
+  ```bash bash
+  // Set presentation style config before showing screen if needed
+  const screenConfig = new ScreenPresentationConfig(ScreenPresentationStyle.FULL_SCREEN, true);
+
+  NoCodes.getSharedInstance().setScreenPresentationConfig(screenConfig, 'yourContextKey');
+  ```
+</CodeGroup>
+
+***
+
+[Screens Preloading](screens-preloading)
+
+[Success and Failure Actions](success-failure-actions)
