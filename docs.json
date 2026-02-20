@@ -441,10 +441,7 @@
       },
       {
         "tab": "API Reference",
-        "openapi": [
-          "api-reference/rest-api.yaml",
-          "api-reference/analytics-api.yaml"
-        ]
+        "href": "https://qonversion.io"
       },
       {
         "tab": "Changelog",
