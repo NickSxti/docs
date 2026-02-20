@@ -1,0 +1,113 @@
+---
+title: "[July 2025] Migration guide. Google Play Billing Library 8."
+description: "Google Play has recently launched a new major version of its billing library. We have incorporated all the updates in our latest major Android SDK - version 9. This article outlines the steps required to transition from the previous SDK version to the newest one."
+---
+
+## Upgrading version
+
+Increase the dependency version in your app *build.gradle* file to upgrade your Qonversion SDK to the latest version
+
+<CodeGroup>
+  ```bash bash
+  dependencies {    
+       implementation 'io.qonversion.android.sdk:sdk:9.+'
+  }
+  ```
+</CodeGroup>
+
+## Deprecated purchase methods with `QPurchaseModel` were removed
+
+We have been using various `purchase` methods with different signatures for quite some time, and since some of them have been deprecated, we have decided to remove them in this release.
+
+If your code relies on these methods, please take the time to upgrade to the newer methods as outlined below.
+
+<CodeGroup>
+  ```bash bash
+  // Old
+  Qonversion.shared.purchase(activity, product.toPurchaseModel(), callback)
+
+  Qonversion.shared.purchase(activity, product.toPurchaseModel(offerId), callback)
+
+  Qonversion.shared.purchase(activity, product.toPurchaseUpdateModel(oldProductId, updatePolicy), callback)
+
+  // New
+  Qonversion.shared.purchase(activity, product, callback)
+
+  val options = QPurchaseOptions.Builder()
+      .setOfferId(offerId)
+      .build()
+  Qonversion.shared.purchase(activity, product, options, callback)
+
+  val options = QPurchaseOptions.Builder()
+      .setOldProduct(oldProduct)
+      .setUpdatePolicy(updatePolicy)
+      .build()
+  Qonversion.shared.purchase(activity, product, options, callback)
+  ```
+
+  ```bash bash
+  // Old
+  Qonversion.getSharedInstance().purchase(activity, product.toPurchaseModel(), callback);
+
+  Qonversion.getSharedInstance().purchase(activity, product.toPurchaseModel(offerId), callback);
+
+  Qonversion.getSharedInstance().purchase(activity, product.toPurchaseUpdateModel(oldProductId, updatePolicy), callback);
+
+  // New
+  Qonversion.getSharedInstance().purchase(activity, product, callback)
+
+  QPurchaseOptions options = new QPurchaseOptions.Builder()
+      .setOfferId(offerId)
+      .build();
+  Qonversion.getSharedInstance().purchase(activity, product, options, callback);
+
+  QPurchaseOptions options = new QPurchaseOptions.Builder()
+      .setOldProduct(oldProduct)
+      .setUpdatePolicy(updatePolicy)
+      .build();
+  Qonversion.getSharedInstance().purchase(activity, product, options, callback);
+  ```
+</CodeGroup>
+
+## The deprecated field `QProduct.skuDetail` was removed
+
+Google has eliminated the ways to query deprecated `SkuDetails` for products, having transitioned to `ProductDetails`. We are keeping up with these updates and removing the `skuDetail` field from the `QProduct` class. Each `skuDetail` field has a corresponding entry in `QProduct.storeDetails`, so please consider migrating to the updated structure.
+
+Additionally, if you haven't done so already, please specify the base plan ID for subscription products in the Qonversion dashboard. Further details can be found in the next section.
+
+## Upgrade subscription products in Qonversion Dashboard
+
+Google Billing has eliminated deprecated methods related to `SkuDetails`, which were previously utilized to ascertain store details and facilitate product sales solely using their product ID. Following the product structure overhaul in Google Play Billing Library 6, Google introduced various base plans for the same subscription product. `SkuDetails` remained responsible for managing store details for the sole backwards-compatible base plan of the product.
+
+Consequently, to achieve the same functionality with subscription products that were previously identified solely by product ID, it is now necessary to specify the backwards-compatible base plan ID in the Qonversion Dashboard.
+
+![](/guides/images/docs/04c1f4bcd47289a1232bf7e6663217429c354dac385513f9c27af639591d0e7a--2025-07-18-11.13.49.png)
+
+## `restore`, `syncPurchases` and `syncHistoricalData` changes
+
+In Google Play Billing Library 8, the method for receiving historical purchases has been eliminated, and there are no alternative methods available. This indicates that fetching historical purchases, such as expired or consumed one-time products, is no longer possible.
+
+Implications for Qonversion:
+
+* The `syncHistoricalData` method has been deprecated, as it can't completely fulfill its purpose anymore. If you relied on this method for migrating your userbase purchases history to Qonversion, you will no longer be able to do so following this major update. For other available options, please refer to [our documentation](migrating-subscriptions#/).
+* The `restore` and `syncPurchases` methods will now function solely with active subscriptions and non-consumed one-time purchases. This change will not impact user experience, as expired subscriptions or consumed one-time purchases did not provide any entitlements previously. However, they will also not be reflected in Qonversion analytics if they were not tracked by Qonversion earlier, as we will not receive any data on them from Google Play Billing.
+
+## Renaming ID to Id in offerings and products
+
+We had been dealing with inconsistencies in the spelling of ID and Id across various property and method names for quite some time. Now, we’re aligning it with Google’s approach — using Id consistently everywhere. Below is a table outlining the places where the spelling has been updated. Please consider replacing ID with Id.
+
+| Old name                     | New name                     |
+| ---------------------------- | ---------------------------- |
+| `QOffering.offeringID`       | `QOffering.offeringId`       |
+| `QOffering.productForID()`   | `QOffering.productForId()`   |
+| `QOfferings.offeringForID()` | `QOfferings.offeringForId()` |
+| `QProduct.qonversionID`      | `QProduct.qonversionId`      |
+| `QProduct.storeID`           | `QProduct.storeId`           |
+| `QProduct.basePlanID`        | `QProduct.basePlanId`        |
+| `QProduct.offeringID`        | `QProduct.offeringId`        |
+
+***
+
+[\[Nov 2025\] Migration guide. React Native 10.](sep-2025-migration-guide-react-native-10)
+
+[\[Jul 2024\] Migration guide. Google Play Billing Library 7.](jan-2024-migration-guide-google-play-billing-library-6-copy)

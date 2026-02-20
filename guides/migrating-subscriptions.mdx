@@ -1,0 +1,169 @@
+---
+title: "Migrating In-App Subscriptions"
+description: "How to integrate Qonversion with existing subscriber base"
+---
+
+When you integrate Qonversion into your app with an existing subscriber base, it is important to migrate your subscribed users access management and import your historical transactions to get accurate historical analytics data.
+
+Below you can find a simple step-by-step guide on how to migrate to Qonversion for both [Analytics and Subscription management modes](quickstart).
+
+Additionally, you can [book a demo call](https://meetings.hubspot.com/qonversion/demo-request?utm_source=documentation\&utm_medium=link\&utm_campaign=migration) where we can discuss all the related details.
+
+# Migration process overview
+
+There are two mutually reinforcing types of data migration: client-side and server-side. Since both have pros and cons, we recommend following both of them to get accurate data in your Qonversion dashboard.
+
+## Client-side vs Server-side migration
+
+Client-side and Server-side are mutually reinforcing migration types, and here you can find why:
+
+|                                                                  | Client-side migration                                                                                                     | Server-side migration                                                                                                                                        |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Historical revenue data depth                                    | Transactions for Google Play are restored with limited accuracy.                                                          | Restores all the transactions.                                                                                                                               |
+| Historical revenue data quality                                  | Analytics properties like country, device OS, app version, and others are added automatically.                            | Analytics properties like country, device OS, app version, and others need to be provided from your side.                                                    |
+| New revenue data                                                 | Tracks only users who installed the app with Qonversion SDK integrated.                                                   | Tracks all the subscriptions active for the moment of data migration (but not new ones).                                                                     |
+| Grant subscribers premium access for cross-platform applications | Qonversion grants users an entitlement after launching the app only on the platform where the subscription was purchased. | Qonversion provides entitlements independently of the platform right after the app launches.                                                                 |
+| How to launch?                                                   | As easy as it sounds, add an additional line of code to your app                                                          | Needs resources allocation from your side: prepare a file with all the historical Base64 encoded receipt data for AppStore or purchase tokens for GooglePlay |
+
+## Recommended migration approach
+
+To leverage all the pros of both migration types, we recommend the following approach:
+
+### Client-side migration
+
+Let's start with client-side migration:
+
+1. **Integrate Qonversion SDK** to track analytics and entitlements for your new subscribers using our [quick start guide](quickstart).
+2. Сall the [*syncHistoricalData*](migrating-subscriptions#sdks-synchistoricaldata-method) method right after Qonversion SDK initialization to synchronize all the device-related data and ensure that none of the entitlements has been missed.
+3. Launch your app update to production.
+4. After the steps above, you will process new purchases with Qonversion, while your subscribers with the previous app version will continue tracking throughout your system.
+
+### Server-side migration
+
+Once you have the app version with Qonversion SDK up and running, it's time to proceed to the server-side migration.
+
+1. Prepare files with [AppStore with Base64 encoded receipt data](migrating-subscriptions#app-store-data-migration-file) or [Google Play with purchase tokens](migrating-subscriptions#google-play-data-migration-file).
+
+   1. If you do not have receipt data or purchase tokens on your side but are already running your subscription management with a third-party vendor, you should ask the vendor’s support team for the required data file.
+   2. Additionally, but not necessarily, to keep your historical data granular, provide us with such user attributes as [Country, IDFV, IDFA, GAID, AAID, etc.](migrating-subscriptions#additional-user-related-fields-for-analytics).
+
+2. Then simply **share the files with us** using our [support chat](https://dash.qonversion.io/account/profile?intercom=open) or [book a demo call](https://meetings.hubspot.com/qonversion/demo-request?utm_source=documentation\&utm_medium=link\&utm_campaign=migration) to discuss all the related details. Additionally, you can also contact us using [email](/guides/cdn-cgi/l/email-protection#59313c3529192836372f3c2b2a303637773036662a2c3b333c3a2d641d382d387914303e2b382d303637) and provide CSV files for iOS or Android.
+
+<Check>
+  ### Congratulations! After accomplishing the steps above, you will have accurate data and relevant entitlements for all of your users in Qonversion.
+</Check>
+
+# Migration details
+
+Every migration step has its own vital details:
+
+## Entitlements (Premium access) migration
+
+Ensure you [have configured Entitlements and Products](subscription-management-mode#1-configure-products--entitlements-permissions) before you start users' entitlements migration process, so Qonversion can determine what entitlements should be granted to a user based on product ID of the purchased product.
+
+## SDK's syncHistoricalData() method
+
+Calling the *syncHistoricalData* method on each app launch is safe. We have extra checks for such cases, so no additional logic is required.
+
+<CodeGroup>
+  ```bash bash
+  Qonversion.shared().syncHistoricalData()
+  ```
+
+  ```bash bash
+  [[Qonversion sharedInstance] syncHistoricalData];
+  ```
+
+  ```bash bash
+  // Deprecated starting Android SDK 9.+
+  Qonversion.getSharedInstance().syncHistoricalData();
+  ```
+
+  ```bash bash
+  // Deprecated starting Android SDK 9.+
+  Qonversion.shared.syncHistoricalData()
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().syncHistoricalData();
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().syncHistoricalData();
+  ```
+
+  ```bash bash
+  Qonversion.GetSharedInstance().SyncHistoricalData();
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().syncHistoricalData();
+  ```
+
+  ```bash bash
+  Qonversion.getSharedInstance().syncHistoricalData();
+  ```
+</CodeGroup>
+
+<Warning>
+  ### Qonversion Android SDK 9.+ limitation
+
+  For Qonversion Android SDK 9.+, the method `syncHistoricalData()` has been deprecated because of a limitation in Google Play Billing Library 8, which prevents the retrieval of historical purchases
+</Warning>
+
+## App Store data migration file
+
+There are several required fields in the file for App Store transactions import:
+
+| Field         | Required | Description                                                                                                                                                                                |
+| ------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `user_id`     | yes      | Your-side user identifier                                                                                                                                                                  |
+| `receipt`     | yes      | The Base64 encoded receipt data.                                                                                                                                                           |
+| `product_id`  | yes      | The unique identifier of the product purchased.                                                                                                                                            |
+| `original_id` | yes      | The transaction identifier of the original purchase. See the details here: [original\_transaction\_id](https://developer.apple.com/documentation/appstorereceipts/original_transaction_id) |
+| `price`       | yes      | The initial purchase price in the original currency at the time of transaction.                                                                                                            |
+| `currency`    | yes      |                                                                                                                                                                                            |
+
+## Google Play data migration file
+
+There are several required fields in the file for Google Play transactions import:
+
+| Field            | Required | Description                                                                                                                                                            |
+| ---------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `user_id`        | yes      | Your-side user identifier                                                                                                                                              |
+| `purchase_token` | yes      | The Base64 encoded purchase token.                                                                                                                                     |
+| `product_id`     | yes      | The unique identifier of the product purchased.                                                                                                                        |
+| `original_id`    | yes      | The original transaction ID, see the details here: [orderId](https://developer.android.com/reference/com/android/billingclient/api/Purchase#getOrderId\(\)) for Google |
+
+## Stripe data migration file
+
+There are several required fields in the file for Stripe transactions import:
+
+| Field             | Required | Description                                                                                                                                                          |
+| ----------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `user_id`         | yes      | Your-side user identifier                                                                                                                                            |
+| `product_id`      | yes      | Stripe unique identifier of the product purchased                                                                                                                    |
+| `subscription_id` | yes      | Stripe unique identifier for the subscription purchased                                                                                                              |
+| `currency`        | yes      | Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies) |
+| `price`           | yes      | A positive float with two decimal points (or zero for a free price) indicates the amount to charge                                                                   |
+| `purchase_date`   | no       | Unix timestamp of the purchase date                                                                                                                                  |
+
+## Additional user-related fields for analytics
+
+For more granular analytics, we also encourage you to provide us with the following data:
+
+| Field        | Required | Description  |
+| ------------ | -------- | ------------ |
+| `idfv`       | no       | iOS Only     |
+| `idfa`       | no       | iOS Only     |
+| `gaid`       | no       | Android Only |
+| `aaid`       | no       | Android Only |
+| `country`    | no       |              |
+| `model`      | no       |              |
+| `os_version` | no       |              |
+
+***
+
+[Google Developer Notifications](google-developer-notifications)
+
+[Migrating from RevenueCat](migrating-from-revenuecat-to-qonversion)

@@ -1,0 +1,64 @@
+---
+title: "Raw Data Export"
+description: "Download your raw  for the specific period, schedule report sending to your Email, Slack channel or Webhook."
+---
+
+## To export the data:
+
+Select [Export Data](http://dash.qonversion.io/export/raw-data) from the menu.
+
+1. Select the period at the top right corner.
+2. Select the events sorting option for the export. There are two options available:
+
+* sort by **Transaction date** (date of an event according to app stores)
+* sort by **Event receive date** (date of an event detected by Qonversion). Using this option, you can ensure that no new events will appear for the selected period if another export is performed sometime later.
+
+3. Click the **Download** button or send the download link to your email.
+
+![](/guides/images/docs/382fdda-Raw_Data_Export.png)
+
+<Info>
+  Generating your export file may take some time, depending on the file size.
+</Info>
+
+## Raw Data Export Fields
+
+| Name                 | Description                                                                                                                                                                                                                                                                                              |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Event Date           | Date and time Qonversion tracked the event                                                                                                                                                                                                                                                               |
+| Transaction ID       | Store Transaction ID                                                                                                                                                                                                                                                                                     |
+| Transaction Date     | App Store transaction date and time                                                                                                                                                                                                                                                                      |
+| Event Name           | Event name like Subscription Started or Trial Started. [Learn more.](integrations-overview#tracked-events)                                                                                                                                                      |
+| App Name             | Your App name in Qonversion                                                                                                                                                                                                                                                                              |
+| Platform             | iOS or Android                                                                                                                                                                                                                                                                                           |
+| App ID               | Your App ID in Qonversion                                                                                                                                                                                                                                                                                |
+| Product ID           | Product ID in App Stores                                                                                                                                                                                                                                                                                 |
+| Subscription Group   | Subscription group in App Stores                                                                                                                                                                                                                                                                         |
+| Currency             | Currency of the underlying product                                                                                                                                                                                                                                                                       |
+| Price                | Price of the underlying product                                                                                                                                                                                                                                                                          |
+| Proceeds             | Price excluding App Stores commission (-15% or -30%)                                                                                                                                                                                                                                                     |
+| Price USD            | Price of the underlying product converted to USD                                                                                                                                                                                                                                                         |
+| Proceeds USD         | Price excluding App Stores commission converted to USD                                                                                                                                                                                                                                                   |
+| \[Deprecated] Refund | App Store refund date. Follow to *Subscription Refunded* events to understand whether transactions were refunded. *Transaction ID* and *Transaction Date* fields in these events contain the base transaction ID and refund date, respectively.                                                          |
+| Q User ID            | User ID in generated by Qonversion                                                                                                                                                                                                                                                                       |
+| User ID              | External user ID set using *CustomUserId* from [User Properties](user-properties#defined-user-properties).                                                                                                                                                      |
+| Device               | Device type                                                                                                                                                                                                                                                                                              |
+| Device ID            | Device ID                                                                                                                                                                                                                                                                                                |
+| Local                | Device language                                                                                                                                                                                                                                                                                          |
+| Country              | ISO 3166-1 alpha-2 – two-letter country codes                                                                                                                                                                                                                                                            |
+| OS Version           | Operating System version                                                                                                                                                                                                                                                                                 |
+| Install Date         | Install date and time                                                                                                                                                                                                                                                                                    |
+| Media source         | Source of the ad (ad provider/advertising network) by which the customer was acquired.                                                                                                                                                                                                                   |
+| Campaign             | Advertising campaign                                                                                                                                                                                                                                                                                     |
+| Ad set               | A set of advertising offers                                                                                                                                                                                                                                                                              |
+| Ad                   | Advertising offer                                                                                                                                                                                                                                                                                        |
+| App version          | User's app version                                                                                                                                                                                                                                                                                       |
+| SDK version          | User's Qonversion SDK version                                                                                                                                                                                                                                                                            |
+| User properties      | Attributes you set using [Custom User Properties](user-properties).Example: \{""\_q\_fb\_anon\_id"": ""ZZZZE22V4T-14FF-4562-845E-333V86BATEEE"", ""\_q\_custom\_user\_id"": ""1555235760300-6102200"", ""\_q\_appsflyer\_user\_id"": ""1645555760360-6154600""} |
+| Event Receive Date   | Date the event was received by Qonversion                                                                                                                                                                                                                                                                |
+
+***
+
+[Analytics Overview](analytics-overview)
+
+[Scheduled Reports](scheduled-reports)

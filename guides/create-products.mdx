@@ -1,0 +1,36 @@
+---
+title: "Create Products"
+description: "Qonversion Product is a cross-platform entity representing products from Apple, Google, or Stripe. This mapping helps you provide users with  after making a purchase."
+---
+
+## Сreate a Product
+
+1. Navigate to the [Entitlements & Products configuration section](https://dash.qonversion.io/entitlements/products). Tap the Create button and select Product.
+
+![](/guides/images/docs/2298eb2-Screenshot_2024-02-06_at_16.57.17.png)
+
+2. Fill in the product details.
+
+![](/guides/images/docs/78c5028-Screenshot_2024-02-06_at_16.58.23.png)
+
+* **Qonversion Product ID** – create your unique product identifier in Qonversion that corresponds to a unique product on the Apple App Store and Google Play Store. The SDK will use it to make purchases.
+
+* **AppStore Product ID** – product identifier on Apple App Store. You can read [here](https://qonversion.io/blog/configure-iap-app-store-connect/) how to create a subscription.
+
+* **Google Play Product ID** – product identifier on Google Play Console. You can read [here](android-in-app-products) how to create a subscription.
+
+* **Google Play Base Plan ID** - identifier of the base plan for Google Play Product. Used for subscription products. Leave empty for in-apps. Different base plans of the same product can be used for different Qonversion products.
+
+* **Associated Entitlements** - choose the entitlements that should be granted once this product is purchased.
+
+<Info>
+  ### Change the promoted product in your app without releasing a new app version
+
+  You can change the App Store products associated with the Qonversion product by changing the App Store Product IDs.
+</Info>
+
+***
+
+[Create Entitlements](entitlements)
+
+[Displaying Products](displaying-products)

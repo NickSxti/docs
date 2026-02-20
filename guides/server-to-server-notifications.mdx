@@ -1,0 +1,28 @@
+---
+title: "Apple Server-to-Server Notifications (S2S)"
+description: "Enabling Server-to-Server Notifications from the App Store to Qonversion"
+---
+
+Qonversion checks user receipts regularly and does not require server-to-server (s2s) notifications from Apple. However, using server-to-server (s2s) notifications can help deliver subscription events faster.
+
+## Get Notification URL
+
+Navigate to your Qonversion [project settings](https://dash.qonversion.io/project-settings/stores). Copy the server-to-server (s2s) notification URL.
+
+![](/guides/images/docs/4321493-Screenshot_2024-02-06_at_17.04.47.png)
+
+## Configure App Store
+
+* Sign in to [App Store Connect](https://appstoreconnect.apple.com/apps) and select your app.
+* Navigate to the App Information section.
+* Paste the URL you got from Qonversion into the **Production Server URL** field.
+* Choose **Version 1** or **Version 2** for Server Notifications URL.
+* Click **Save** at the top of the page.
+
+![](/guides/images/docs/2058751-App_Store_Connect.png)
+
+***
+
+[Server Notifications](server-notifications)
+
+[Google Developer Notifications](google-developer-notifications)
