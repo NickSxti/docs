@@ -437,16 +437,7 @@
       },
       {
         "tab": "API Reference",
-        "groups": [
-          {
-            "group": "REST API",
-            "openapi": "api-reference/rest-api.yaml"
-          },
-          {
-            "group": "Analytics API",
-            "openapi": "api-reference/analytics-api.yaml"
-          }
-        ]
+        "href": "https://qonversion.io"
       },
       {
         "tab": "Changelog",
